@@ -33,7 +33,7 @@ The project `.npmrc` selects the official npm registry. Initial direct packages 
 
 `@fastify/static` currently requests an older glob major. The root override selects patched **glob 14.0.3** (with minimatch 11) instead of downgrading Fastify's static plugin. Static serving and authenticated APIs were exercised after this change. Reassess the override when upstream updates its dependency range.
 
-The dependency snapshot below is generated from installed workspace manifests. Original operating-system tools and NVIDIA drivers are installed through their own supported distribution/vendor channels, not npm. Local execution used Node.js 26.8.1; installation documentation recommends the current stable LTS, not a prerelease.
+The dependency snapshot below is generated from installed workspace manifests. Original operating-system tools and NVIDIA drivers are installed through their own supported distribution/vendor channels, not npm. Installation documentation recommends a supported stable Node.js LTS rather than a prerelease; no particular developer machine or personal runtime layout is required.
 
 | Package          | Installed |
 | ---------------- | --------- |

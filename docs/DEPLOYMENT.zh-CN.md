@@ -87,7 +87,7 @@ bash scripts/install-systemd.sh --node "$(node -p 'process.execPath')" --npm "$(
 
 生成的应用服务使用实际 Node 绝对路径与 `ProtectHome=read-only`，保留只读家目录和 Unix 权限限制，仅应用数据目录可写。每次启动不需要加载 shell 或 nvm。以后删除或切换该 Node 版本时，重新运行安装器更新服务路径即可。`deploy/` 下的文件是模板，需由安装器渲染；本次修改模板不会直接操作服务器。
 
-服务默认开机启动。第一次打开网页后，默认仍停止采集；登录后选择设备与参数再开始。NVIDIA 1050 可选择 `h264_nvenc`，但需要 NVIDIA 驱动和 FFmpeg 的 NVENC 实际可用。未配置真实硬件的机器不要直接套用 GPU 设置。
+服务默认开机启动。第一次打开网页后，默认仍停止采集；登录后选择设备与参数再开始。支持 NVENC 的 NVIDIA 显卡可选择 `h264_nvenc`，但需要 NVIDIA 驱动和 FFmpeg 的 NVENC 实际可用。未配置真实硬件的机器不要直接套用 GPU 设置。
 
 ```bash
 sudo systemctl status lanvoryn.service lanvoryn-media.service

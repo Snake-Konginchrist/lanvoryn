@@ -21,7 +21,8 @@ Lanvoryn captures video and audio with FFmpeg, routes H.264 + Opus through Media
 - Browser snapshots, local recording with a 10-minute limit, fullscreen and picture-in-picture, where supported.
 - Configuration import/export without credentials, responsive layout, event history and systemd deployment.
 - System, light and dark themes, with remembered preferences and live system-theme updates.
-- **Eight UI languages:** Simplified Chinese, Traditional Chinese, English, Japanese, Korean, Spanish, French and German. Uses i18next / react-i18next with bundled local resources and remembered preferences.
+
+The interface supports language switching with locally bundled translations. See [language settings](docs/CONFIGURATION.md#languages).
 
 ## Stack
 

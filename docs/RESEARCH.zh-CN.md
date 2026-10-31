@@ -13,7 +13,7 @@
 
 初始化使用官方 `npm init -y`、`npm create vite@latest`；依赖通过 `npm install 包名@latest -w 工作区` 安装，卸载通过 `npm uninstall`。项目 `.npmrc` 指向 npm 官方 registry，锁文件记录解析快照；部署的 `npm ci` 用于复现，不会在每次开机偷偷升级。
 
-MediaMTX 通过官方稳定 Release 下载并校验 SHA-256，本机验证为 **v1.21.3**。系统 FFmpeg 使用发行版或上游支持的安装渠道，驱动使用 NVIDIA 支持渠道。当前本机 Node 为 26.8.1，部署建议当前稳定 LTS，避免 alpha/beta。
+MediaMTX 通过官方稳定 Release 下载并校验 SHA-256，本机验证为 **v1.21.3**。系统 FFmpeg 使用发行版或上游支持的安装渠道，驱动使用 NVIDIA 支持渠道。部署建议受支持的稳定 Node.js LTS，避免 alpha/beta；不依赖开发者个人机器或运行时布局。
 
 `@fastify/static` 当前依赖较旧 glob 主版本，根配置通过 npm override 选择已修复的 **glob 14.0.3**（minimatch 11），未降级静态插件。已在该依赖组合下完成静态页面与认证 API 测试；上游依赖更新后应重新评估此 override。
 
