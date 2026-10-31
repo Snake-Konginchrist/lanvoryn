@@ -1,76 +1,93 @@
 .sidebar {
 	overflow-y: auto;
 }
-.preferences {
-	position: relative;
-	min-width: 0;
-}
-.preferences summary {
+.preferences-trigger {
 	display: flex;
 	align-items: center;
 	gap: 10px;
+	width: 100%;
 	min-height: 44px;
 	padding: 8px;
 	border-radius: 8px;
 	color: var(--muted);
-	cursor: pointer;
-	list-style: none;
+	background: transparent;
 	font-size: 13px;
+	text-align: start;
 }
-.preferences summary::-webkit-details-marker {
-	display: none;
-}
-.preferences summary:hover,
-.preferences[open] summary {
+.preferences-trigger:hover,
+.preferences-trigger[aria-expanded="true"] {
 	color: var(--accent);
 	background: var(--tone-293421);
 }
-.preferences summary:focus-visible {
+.preferences-trigger:focus-visible {
 	outline: 2px solid var(--accent);
 	outline-offset: 2px;
 }
-.preferences summary > span {
-	flex: 1;
+.preferences-trigger.compact {
+	justify-content: center;
+	width: 44px;
+	border: 1px solid var(--border);
 }
-.preferences[open] .preferences-chevron {
-	transform: rotate(180deg);
+.preferences-dialog {
+	width: min(400px, calc(100vw - 40px));
+	max-height: calc(100dvh - 40px);
+	margin: auto;
+	padding: 0;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	color: var(--tone-e9ece5);
+	background: var(--tone-151915);
+	border: 1px solid var(--border);
+	border-radius: 16px;
+	box-shadow: 0 20px 80px #0004;
+}
+.preferences-dialog::backdrop {
+	background: #0008;
+}
+.preferences-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 16px 20px;
+	border-bottom: 1px solid var(--border);
+}
+.preferences-header h2 {
+	font-size: 17px;
+	font-weight: 600;
+	margin: 0;
+}
+.preferences-header .icon-button {
+	min-width: 44px;
+	min-height: 44px;
 }
 .preferences-panel {
 	display: grid;
-	gap: 12px;
-	padding: 12px 8px;
+	gap: 20px;
+	padding: 24px;
+}
+.preference-row {
+	display: grid;
+	gap: 10px;
 	min-width: 0;
+}
+.preference-row > span {
+	color: var(--muted);
+	font-size: 13px;
 }
 .preferences-panel .theme-switch,
 .preferences-panel .language-switch {
 	min-width: 0;
 	width: 100%;
+	gap: 10px;
 }
 .preferences-panel select {
 	flex: 1;
 	min-width: 0;
 	width: 100%;
 	max-width: none;
-	min-height: 40px;
-	font-size: 13px;
-}
-.preferences.compact summary {
-	justify-content: center;
-	width: 44px;
-	padding: 8px;
-	border: 1px solid var(--border);
-}
-.preferences.compact .preferences-panel {
-	position: absolute;
-	top: calc(100% + 8px);
-	right: 0;
-	z-index: 30;
-	width: min(250px, calc(100vw - 48px));
-	padding: 16px;
-	border: 1px solid var(--border);
-	border-radius: 12px;
-	background: var(--tone-151915);
-	box-shadow: 0 8px 24px #0002;
+	min-height: 44px;
+	font-size: 14px;
 }
 @media (max-width: 720px) {
 	.topbar {
@@ -82,15 +99,20 @@
 	.breadcrumb {
 		flex: 1;
 	}
-	.preferences-panel select {
-		min-height: 44px;
-		font-size: 16px;
-	}
 	.sidebar-bottom {
 		padding-top: 24px;
 	}
-}
-
-.preferences:not([open]) > .preferences-panel {
-	display: none;
+	.preferences-dialog {
+		position: fixed;
+		inset: auto 0 0;
+		width: 100%;
+		max-width: 100%;
+		max-height: 85dvh;
+		margin: 0;
+		padding-bottom: env(safe-area-inset-bottom);
+		border-radius: 20px 20px 0 0;
+	}
+	.preferences-panel select {
+		font-size: 16px;
+	}
 }

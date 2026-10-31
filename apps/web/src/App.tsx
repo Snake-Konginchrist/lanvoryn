@@ -196,7 +196,8 @@ export default function App() {
 			if (desktop.matches) setSidebar(false);
 		};
 		const closeOnEscape = (event: KeyboardEvent) => {
-			if (event.key === "Escape") setSidebar(false);
+			if (event.key === "Escape" && !document.querySelector("dialog[open]"))
+				setSidebar(false);
 		};
 		closeOnDesktop();
 		desktop.addEventListener("change", closeOnDesktop);
