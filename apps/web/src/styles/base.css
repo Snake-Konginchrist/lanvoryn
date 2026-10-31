@@ -406,3 +406,7 @@ code,
 	font-size: 6px;
 	letter-spacing: 0.8px;
 }
+
+.toast.error > svg {
+	color: var(--tone-ff7d6d);
+}

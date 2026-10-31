@@ -8,12 +8,13 @@ import {
 import {
 	ArrowUpRight,
 	AudioLines,
-	Check,
 	ChevronRight,
+	CircleAlert,
 	Clock3,
 	Copy,
 	ExternalLink,
 	FileText,
+	Info,
 	LogOut,
 	Menu,
 	Monitor,
@@ -39,6 +40,7 @@ import { Security } from "./components/Security";
 import { Settings } from "./components/Settings";
 import { ThemeSwitch } from "./components/ThemeSwitch";
 import { SaveBar } from "./components/ui";
+import { afterControl, afterSave } from "./config-draft";
 import { locale, t, translateMessage } from "./i18n";
 
 type Page = "live" | "settings" | "schedules" | "security" | "events";
@@ -93,7 +95,13 @@ export default function App() {
 	const [busy, setBusy] = useState(false);
 	const [loadError, setLoadError] = useState("");
 	const [notice, setNotice] = useState("");
-	const notify = (message: string) => setNotice(message);
+	const [noticeKind, setNoticeKind] = useState<"info" | "error">("info");
+	const [noticeSequence, setNoticeSequence] = useState(0);
+	const notify = (message: string, kind: "info" | "error" = "info") => {
+		setNotice(message);
+		setNoticeKind(kind);
+		setNoticeSequence((value) => value + 1);
+	};
 	const logoutLocal = useCallback(() => {
 		setRole(null);
 		setStatus(null);
@@ -106,6 +114,8 @@ export default function App() {
 		const expired = () => {
 			logoutLocal();
 			setNotice(t("登录已结束，请重新登录"));
+			setNoticeKind("info");
+			setNoticeSequence((value) => value + 1);
 		};
 		window.addEventListener("lanvoryn:unauthorized", expired);
 		void api<{ role: Role }>("/auth/me")
@@ -117,7 +127,7 @@ export default function App() {
 		if (!notice) return;
 		const timer = setTimeout(() => setNotice(""), 6000);
 		return () => clearTimeout(timer);
-	}, [notice]);
+	}, [notice, noticeSequence]);
 	useEffect(() => {
 		if (!role) return;
 		let active = true;
@@ -166,7 +176,7 @@ export default function App() {
 		try {
 			await task();
 		} catch (error) {
-			notify(error instanceof Error ? error.message : t("操作失败"));
+			notify(error instanceof Error ? error.message : t("操作失败"), "error");
 		} finally {
 			setBusy(false);
 		}
@@ -186,7 +196,7 @@ export default function App() {
 				body: { revision: saved.revision, config: parsed.data },
 			});
 			setSaved(result);
-			setDraft(structuredClone(result.config));
+			setDraft((current) => afterSave(current, draft, result.config));
 			notify(t("配置已保存并应用"));
 			await refreshStatus();
 		});
@@ -197,11 +207,7 @@ export default function App() {
 				method: "POST",
 			});
 			setSaved(result);
-			setDraft((previous) =>
-				previous
-					? { ...previous, capture: structuredClone(result.config.capture) }
-					: structuredClone(result.config),
-			);
+			setDraft((previous) => afterControl(previous, result.config, action));
 			notify(
 				action === "stop"
 					? t("采集已停止，所有观看连接已断开")
@@ -213,8 +219,11 @@ export default function App() {
 		});
 	};
 	const toast = notice && (
-		<div className="toast" role="status">
-			<Check size={17} />
+		<div
+			className={`toast ${noticeKind}`}
+			role={noticeKind === "error" ? "alert" : "status"}
+		>
+			{noticeKind === "error" ? <CircleAlert size={17} /> : <Info size={17} />}
 			<span>{notice}</span>
 			<button
 				type="button"
@@ -243,7 +252,11 @@ export default function App() {
 	const dirty = Boolean(
 		saved && draft && JSON.stringify(saved.config) !== JSON.stringify(draft),
 	);
-	const address = status?.addresses[0] ?? window.location.origin;
+	const address = ["localhost", "127.0.0.1", "[::1]"].includes(
+		window.location.hostname,
+	)
+		? (status?.addresses[0] ?? window.location.origin)
+		: window.location.origin;
 	const captureLabel =
 		status?.state === "running" && status.streamReady
 			? t("采集中")
@@ -487,7 +500,7 @@ export default function App() {
 											onClick={() => {
 												void copyAddress(address)
 													.then(() => notify(t("访问地址已复制")))
-													.catch((error) => notify(error.message));
+													.catch((error) => notify(error.message, "error"));
 											}}
 										>
 											<Copy size={15} />
