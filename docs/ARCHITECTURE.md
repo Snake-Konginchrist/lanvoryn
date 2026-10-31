@@ -21,7 +21,7 @@ MediaMTX routes media; it does not automatically convert MJPEG to H.264. FFmpeg 
 
 ## Access boundary
 
-Administrators change settings, schedules and credentials; guests can only inspect status and watch/listen. Credentials require local setup, have no default password, and use salted scrypt hashes. Opaque in-memory sessions are carried by HttpOnly / SameSite=Strict cookies. Restarting the application invalidates all logins. Only language preferences go into localStorage.
+Administrators change settings, schedules and credentials; guests can only inspect status and watch/listen. Credentials require local setup, have no default password, and use salted scrypt hashes. Opaque in-memory sessions are carried by HttpOnly / SameSite=Strict cookies. Restarting the application invalidates all logins. Only language and theme preferences go into localStorage.
 
 Raw RTSP, WHEP and management listeners bind to loopback. MediaMTX internal permissions also restrict source IPs to loopback. External clients must pass Lanvoryn authentication before negotiating a media session. The media port is not an anonymous player and uses WebRTC session keys. The host OS and local users are trusted; this is not an isolation mechanism between local system accounts.
 

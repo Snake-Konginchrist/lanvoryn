@@ -28,7 +28,7 @@ MediaMTX 负责媒体路由，不负责把 MJPEG 自动转成 H.264。视频转�
 
 ## 权限
 
-管理员可设置设备、参数、计划和密码；访客仅能读取运行状态并观看。账号由本地交互设置，没有默认密码。密码使用独立随机盐的 scrypt，令牌放 HttpOnly / SameSite=Strict Cookie，不进入 localStorage；localStorage 仅记录语言偏好。
+管理员可设置设备、参数、计划和密码；访客仅能读取运行状态并观看。账号由本地交互设置，没有默认密码。密码使用独立随机盐的 scrypt，令牌放 HttpOnly / SameSite=Strict Cookie，不进入 localStorage；localStorage 仅记录语言与主题偏好。
 
 MediaMTX 的信令、管理和 RTSP 只绑定回环地址，内部用户也只允许回环源 IP。外部客户端必须通过 Lanvoryn 认证后才能取得 WebRTC 协商结果。8189 是媒体端口，不是匿名播放网页；媒体使用 WebRTC 的会话密钥。信任本机 OS 和本机用户，不能把这个边界当成本机多用户隔离。
 

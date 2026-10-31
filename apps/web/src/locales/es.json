@@ -297,5 +297,9 @@
 	"未收到媒体数据，请检查 UDP/TCP 8189 端口和服务器地址": "Sin datos. Comprueba UDP/TCP 8189 y la dirección del servidor.",
 	"播放失败": "Reproducción fallida",
 	"流尚未就绪，或 WebRTC 协商失败，请检查采集状态": "Flujo no disponible o negociación WebRTC fallida. Revisa la captura.",
-	"该设备未报告此分辨率 / 帧率 / 输入格式组合，请先检查设备能力": "La cámara no admite esta combinación de resolución, frecuencia y formato."
+	"该设备未报告此分辨率 / 帧率 / 输入格式组合，请先检查设备能力": "La cámara no admite esta combinación de resolución, frecuencia y formato.",
+	"界面主题": "Apariencia",
+	"跟随系统": "Sistema",
+	"浅色": "Claro",
+	"深色": "Oscuro"
 }

@@ -32,6 +32,7 @@ import { api } from "./api";
 import { ConfigTransfer } from "./components/ConfigTransfer";
 import { Events } from "./components/Events";
 import { LanguageSwitch } from "./components/LanguageSwitch";
+import { ThemeSwitch } from "./components/ThemeSwitch";
 import { Login } from "./components/Login";
 import { Player } from "./components/Player";
 import { Schedules } from "./components/Schedules";
@@ -345,6 +346,7 @@ export default function App() {
 						<strong>{t(current.title)}</strong>
 					</div>
 					<div className="topbar-right">
+						<ThemeSwitch />
 						<LanguageSwitch />
 						<span className="private-badge">
 							<ShieldCheck size={13} />

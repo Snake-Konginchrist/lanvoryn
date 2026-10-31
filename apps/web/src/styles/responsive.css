@@ -195,7 +195,7 @@
 		position: fixed;
 		inset: 0;
 		z-index: 19;
-		background: #0009;
+		background: var(--tone-00000099);
 	}
 	.main-shell {
 		margin-left: 0;
@@ -570,8 +570,8 @@
 		height: 65px;
 		margin: 14px 0;
 		box-shadow:
-			0 0 0 8px #a4cc7205,
-			0 0 0 18px #a4cc7204;
+			0 0 0 8px var(--tone-a4cc7205),
+			0 0 0 18px var(--tone-a4cc7204);
 	}
 	.audio-orb svg {
 		width: 40px;
@@ -596,7 +596,7 @@
 		min-height: auto;
 		padding: 28px;
 		border: 0;
-		border-bottom: 1px solid #33462a;
+		border-bottom: 1px solid var(--tone-33462a);
 	}
 	.login-story .brand > span {
 		font-size: 21px;

@@ -1,0 +1,81 @@
+.theme-switch {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--muted);
+	flex-shrink: 0;
+}
+.theme-switch select {
+	width: auto;
+	max-width: 132px;
+	min-height: 32px;
+	padding: 5px 7px;
+	background: transparent;
+	border-color: var(--border);
+	font-size: 10px;
+}
+.appearance-controls {
+	display: flex;
+	align-self: flex-end;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-bottom: 32px;
+}
+/* A system preference is resolved before React mounts, including native controls. */
+input[type="time"] {
+	color-scheme: inherit;
+}
+.brand > span {
+	font-size: 18px;
+	letter-spacing: 1px;
+}
+.brand i {
+	font-size: 6px;
+	letter-spacing: 0.8px;
+}
+:root[data-theme="light"] .panel {
+	box-shadow: 0 3px 16px #24351b05;
+}
+:root[data-theme="light"] .primary {
+	color: #fff;
+}
+:root[data-theme="light"] .segmented button[aria-pressed="true"] {
+	color: #29491b;
+}
+@media (max-width: 720px) {
+	.topbar {
+		padding-inline: 12px;
+	}
+	.topbar-right {
+		gap: 8px;
+	}
+	.breadcrumb {
+		gap: 4px;
+	}
+	.breadcrumb > span,
+	.breadcrumb > svg {
+		display: none;
+	}
+	.theme-switch,
+	.language-switch {
+		gap: 3px;
+	}
+	.theme-switch select,
+	.language-switch select {
+		max-width: 104px;
+		padding-inline: 4px;
+	}
+	.appearance-controls {
+		margin-bottom: 23px;
+		gap: 10px;
+	}
+}
+@media (max-width: 380px) {
+	.topbar .breadcrumb strong {
+		display: none;
+	}
+	.topbar-right {
+		gap: 5px;
+	}
+}

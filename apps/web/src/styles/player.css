@@ -11,13 +11,13 @@
 	align-items: center;
 	gap: 7px;
 	font-size: 10px;
-	color: #c9d1c1;
+	color: var(--tone-c9d1c1);
 }
 .segmented {
 	display: flex;
 	gap: 2px;
-	background: #10160f;
-	border: 1px solid #2a3428;
+	background: var(--tone-10160f);
+	border: 1px solid var(--tone-2a3428);
 	padding: 3px;
 	border-radius: 7px;
 }
@@ -29,13 +29,13 @@
 	gap: 5px;
 	border-radius: 4px;
 	background: transparent;
-	color: #7b8b75;
+	color: var(--tone-7b8b75);
 	white-space: nowrap;
 }
 .segmented button[aria-pressed="true"] {
-	background: #2b3823;
-	color: #cfe9af;
-	box-shadow: 0 1px 3px #0002;
+	background: var(--tone-2b3823);
+	color: var(--tone-cfe9af);
+	box-shadow: 0 1px 3px var(--tone-00000022);
 }
 .player-stage {
 	position: relative;
@@ -185,14 +185,14 @@
 }
 .sound-controls > span {
 	font-size: 9px;
-	color: #7a8974;
+	color: var(--tone-7a8974);
 	white-space: nowrap;
 }
 .player-toolbar > .actions {
 	gap: 2px;
 }
 .is-recording {
-	color: #ff9886 !important;
+	color: var(--tone-ff9886) !important;
 }
 .recording-pill {
 	position: absolute;
@@ -231,7 +231,7 @@
 }
 .stream-metrics span {
 	display: block;
-	color: #7c8c76;
+	color: var(--tone-7c8c76);
 	font-size: 9px;
 	margin-bottom: 11px;
 }
@@ -240,12 +240,12 @@
 	font-size: 21px;
 	font-weight: 400;
 	white-space: nowrap;
-	color: #dbe6cf;
+	color: var(--tone-dbe6cf);
 }
 .stream-metrics small {
 	font-family: "Manrope Variable", sans-serif;
 	font-size: 8px;
-	color: #74846d;
+	color: var(--tone-74846d);
 }
 .player-footnote {
 	padding: 12px 20px;
@@ -254,7 +254,7 @@
 	justify-content: space-between;
 	border-top: 1px solid var(--border);
 	gap: 8px;
-	color: #64755c;
+	color: var(--tone-64755c);
 	font-size: 9px;
 }
 .player-footnote .text-button {

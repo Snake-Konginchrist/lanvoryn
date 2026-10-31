@@ -297,5 +297,9 @@
 	"未收到媒体数据，请检查 UDP/TCP 8189 端口和服务器地址": "Keine Mediendaten. UDP/TCP 8189 und Serveradresse prüfen.",
 	"播放失败": "Wiedergabe fehlgeschlagen",
 	"流尚未就绪，或 WebRTC 协商失败，请检查采集状态": "Stream nicht bereit oder WebRTC-Aushandlung fehlgeschlagen. Aufnahmestatus prüfen.",
-	"该设备未报告此分辨率 / 帧率 / 输入格式组合，请先检查设备能力": "Die Kamera meldet diese Kombination aus Auflösung, Bildrate und Format nicht."
+	"该设备未报告此分辨率 / 帧率 / 输入格式组合，请先检查设备能力": "Die Kamera meldet diese Kombination aus Auflösung, Bildrate und Format nicht.",
+	"界面主题": "Darstellung",
+	"跟随系统": "System",
+	"浅色": "Hell",
+	"深色": "Dunkel"
 }

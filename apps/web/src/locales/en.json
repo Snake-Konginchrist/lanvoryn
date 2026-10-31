@@ -297,5 +297,9 @@
 	"未收到媒体数据，请检查 UDP/TCP 8189 端口和服务器地址": "No media received. Check UDP/TCP 8189 and the server address.",
 	"播放失败": "Playback failed",
 	"流尚未就绪，或 WebRTC 协商失败，请检查采集状态": "Stream unavailable or WebRTC negotiation failed. Check capture status.",
-	"该设备未报告此分辨率 / 帧率 / 输入格式组合，请先检查设备能力": "This camera does not report this resolution, frame rate and format combination."
+	"该设备未报告此分辨率 / 帧率 / 输入格式组合，请先检查设备能力": "This camera does not report this resolution, frame rate and format combination.",
+	"界面主题": "Appearance",
+	"跟随系统": "System",
+	"浅色": "Light",
+	"深色": "Dark"
 }

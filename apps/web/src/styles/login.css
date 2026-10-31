@@ -2,7 +2,7 @@
 	min-height: 100dvh;
 	display: grid;
 	grid-template-columns: 1.05fr 1fr;
-	background: #121712;
+	background: var(--tone-121712);
 }
 .login-story {
 	padding: 54px 60px;
@@ -10,9 +10,9 @@
 	position: relative;
 	overflow: hidden;
 	background:
-		radial-gradient(ellipse at 10% 90%, #658b3025, transparent 55%),
-		linear-gradient(145deg, #24331e, #151e12);
-	border-right: 1px solid #35452b;
+		radial-gradient(ellipse at 10% 90%, var(--tone-658b3025), transparent 55%),
+		linear-gradient(145deg, var(--tone-24331e), var(--tone-151e12));
+	border-right: 1px solid var(--tone-35452b);
 	display: flex;
 	flex-direction: column;
 }
@@ -27,7 +27,7 @@
 }
 .story-copy > .eyebrow {
 	font-size: 10px;
-	color: #a9c087;
+	color: var(--tone-a9c087);
 	letter-spacing: 2px;
 }
 .story-copy h1 {
@@ -36,21 +36,21 @@
 	font-weight: 550;
 	letter-spacing: -3px;
 	margin: 17px 0 20px;
-	color: #e0ebd2;
+	color: var(--tone-e0ebd2);
 }
 .story-copy h1 > span {
-	color: #c7eb92;
+	color: var(--tone-c7eb92);
 }
 .story-copy p {
 	font-size: 13px;
-	color: #859a73;
+	color: var(--tone-859a73);
 	line-height: 2.2;
 }
 .login-story > footer {
 	display: flex;
 	align-items: center;
 	gap: 9px;
-	color: #9bb383;
+	color: var(--tone-9bb383);
 	font-size: 10px;
 	margin-top: auto;
 	padding-top: 110px;
@@ -66,7 +66,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: #75934c66;
+	color: var(--tone-75934c66);
 }
 .signal-art > span {
 	position: absolute;
@@ -74,28 +74,28 @@
 	font-family: "IBM Plex Mono", monospace;
 	font-size: 8px;
 	letter-spacing: 3px;
-	color: #738958;
+	color: var(--tone-738958);
 }
 .signal-orbit {
 	position: absolute;
 	inset: 0;
-	border: 1px solid #9dc8651c;
+	border: 1px solid var(--tone-9dc8651c);
 	border-radius: 50%;
 	box-shadow:
-		0 0 0 35px #9dc86508,
-		0 0 0 70px #9dc86505,
-		0 0 0 110px #9dc86504;
+		0 0 0 35px var(--tone-9dc86508),
+		0 0 0 70px var(--tone-9dc86505),
+		0 0 0 110px var(--tone-9dc86504);
 }
 .signal-orbit:after {
 	content: "";
 	position: absolute;
 	width: 10px;
 	height: 10px;
-	background: #d9ba7788;
+	background: var(--tone-d9ba7788);
 	left: 28px;
 	top: 62px;
 	border-radius: 50%;
-	box-shadow: 0 0 25px #d9ba7740;
+	box-shadow: 0 0 25px var(--tone-d9ba7740);
 }
 .login-side {
 	display: flex;
@@ -115,15 +115,15 @@
 	justify-content: center;
 	width: 49px;
 	height: 49px;
-	background: #28371e;
-	border: 1px solid #465e32;
+	background: var(--tone-28371e);
+	border: 1px solid var(--tone-465e32);
 	border-radius: 12px;
-	color: #c6e999;
+	color: var(--tone-c6e999);
 	margin-bottom: 27px;
 }
 .login-card > .eyebrow {
 	font-size: 9px;
-	color: #8f9f80;
+	color: var(--tone-8f9f80);
 	letter-spacing: 1.7px;
 }
 .login-card h2 {
@@ -134,7 +134,7 @@
 }
 .login-card > p {
 	font-size: 11px;
-	color: #839276;
+	color: var(--tone-839276);
 	margin-top: 13px;
 	line-height: 1.9;
 	margin-bottom: 36px;
@@ -145,8 +145,8 @@
 }
 .login-card input {
 	min-height: 46px;
-	background: #0f160d;
-	border-color: #3c4c31;
+	background: var(--tone-0f160d);
+	border-color: var(--tone-3c4c31);
 }
 .login-submit {
 	width: 100%;
@@ -157,7 +157,7 @@
 	padding: 12px 17px;
 }
 .login-note {
-	border-top: 1px solid #2f3d25;
+	border-top: 1px solid var(--tone-2f3d25);
 	margin-top: 28px;
 	padding-top: 21px;
 	display: flex;
@@ -165,21 +165,21 @@
 	align-items: flex-start;
 	font-size: 10px;
 	line-height: 1.9;
-	color: #748a63;
+	color: var(--tone-748a63);
 }
 .login-note svg {
 	flex-shrink: 0;
 	margin-top: 2px;
-	color: #8ca771;
+	color: var(--tone-8ca771);
 }
 .login-note code {
 	font-size: 9px;
-	color: #a2b98b;
+	color: var(--tone-a2b98b);
 	white-space: nowrap;
 }
 .login-version {
 	font-family: "IBM Plex Mono", monospace;
-	color: #4d6540;
+	color: var(--tone-4d6540);
 	font-size: 8px;
 	letter-spacing: 1.3px;
 	margin-top: 55px;
@@ -197,4 +197,6 @@
 	animation: enter 0.8s 0.2s both ease-out;
 }
 
-.login-story .brand > span { font-size: 22px; }
+.login-story .brand > span {
+	font-size: 22px;
+}

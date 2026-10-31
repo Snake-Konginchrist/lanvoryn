@@ -10,6 +10,7 @@ import { useState } from "react";
 import { api } from "../api";
 import { t } from "../i18n";
 import { LanguageSwitch } from "./LanguageSwitch";
+import { ThemeSwitch } from "./ThemeSwitch";
 
 export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 	const [username, setUsername] = useState("admin");
@@ -50,7 +51,10 @@ export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 				</footer>
 			</div>
 			<div className="login-side">
-				<LanguageSwitch />
+				<div className="appearance-controls">
+					<ThemeSwitch />
+					<LanguageSwitch />
+				</div>
 				<form
 					className="login-card"
 					onSubmit={(event) => {

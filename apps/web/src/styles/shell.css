@@ -9,7 +9,7 @@
 	display: flex;
 	flex-direction: column;
 	padding: 37px 22px 19px;
-	background: #151915;
+	background: var(--tone-151915);
 	border-right: 1px solid var(--border);
 	z-index: 20;
 }
@@ -25,7 +25,7 @@
 	font-weight: 850;
 	letter-spacing: 2px;
 	line-height: 1.05;
-	color: #f0f4eb;
+	color: var(--tone-f0f4eb);
 }
 .brand i {
 	display: block;
@@ -34,12 +34,12 @@
 	font-size: 7px;
 	letter-spacing: 1.6px;
 	font-weight: 400;
-	color: #9ba795;
+	color: var(--tone-9ba795);
 	line-height: 2.6;
 }
 .workspace-label {
 	margin: 47px 9px 20px;
-	color: #81917e;
+	color: var(--tone-81917e);
 	font-size: 10px;
 	display: flex;
 	align-items: center;
@@ -57,7 +57,7 @@
 	align-items: center;
 	gap: 12px;
 	background: transparent;
-	color: #8f9d8f;
+	color: var(--tone-8f9d8f);
 	text-align: left;
 	border-radius: 7px;
 	padding: 0 12px;
@@ -68,35 +68,35 @@
 	flex: 1;
 }
 .sidebar nav button:hover {
-	background: #222a22;
-	color: #e6eee0;
+	background: var(--tone-222a22);
+	color: var(--tone-e6eee0);
 }
 .sidebar nav button.active {
-	background: #293421;
-	color: #d0eea8;
-	border: 1px solid #3c4e2d;
+	background: var(--tone-293421);
+	color: var(--tone-d0eea8);
+	border: 1px solid var(--tone-3c4e2d);
 }
 .sidebar-bottom {
 	margin-top: auto;
 	padding-top: 40px;
 }
 .privacy-card {
-	background: linear-gradient(135deg, #232d20, #1a2119);
+	background: linear-gradient(135deg, var(--tone-232d20), var(--tone-1a2119));
 	padding: 18px 15px;
-	border: 1px solid #303d2b;
+	border: 1px solid var(--tone-303d2b);
 	border-radius: 10px;
 }
 .privacy-card svg {
-	color: #a6bd91;
+	color: var(--tone-a6bd91);
 	margin-bottom: 13px;
 }
 .privacy-card strong {
 	font-size: 11px;
 	display: block;
-	color: #cdd8c5;
+	color: var(--tone-cdd8c5);
 }
 .privacy-card p {
-	color: #7e8e77;
+	color: var(--tone-7e8e77);
 	font-size: 10px;
 	line-height: 1.9;
 	margin-top: 8px;
@@ -112,13 +112,13 @@
 .avatar {
 	width: 31px;
 	height: 31px;
-	background: #30392b;
-	border: 1px solid #4a5940;
+	background: var(--tone-30392b);
+	border: 1px solid var(--tone-4a5940);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	border-radius: 50%;
-	color: #cfe3b4;
+	color: var(--tone-cfe3b4);
 	font-size: 12px;
 	font-weight: 700;
 }
@@ -137,7 +137,7 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	font-size: 9px;
-	color: #85907e;
+	color: var(--tone-85907e);
 	margin-top: 4px;
 }
 .account-row .icon-button {
@@ -160,24 +160,24 @@
 	display: flex;
 	align-items: center;
 	gap: 12px;
-	color: #718071;
+	color: var(--tone-718071);
 	font-size: 11px;
 }
 .breadcrumb strong {
-	color: #b3bfb0;
+	color: var(--tone-b3bfb0);
 	font-weight: 450;
 }
 .topbar-right {
 	display: flex;
 	align-items: center;
 	gap: 22px;
-	color: #647260;
+	color: var(--tone-647260);
 }
 .private-badge {
 	display: flex;
 	align-items: center;
 	gap: 6px;
-	color: #a7be92;
+	color: var(--tone-a7be92);
 	font-size: 10px;
 }
 .main-content {
@@ -200,7 +200,7 @@
 	margin-top: 7px;
 }
 .page-heading p {
-	color: #82907d;
+	color: var(--tone-82907d);
 	font-size: 11px;
 	margin-top: 8px;
 	line-height: 1.8;
@@ -235,7 +235,7 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 8px;
-	color: #b4cf94;
+	color: var(--tone-b4cf94);
 }
 .card-title > .eyebrow {
 	font-size: 9px;
@@ -251,10 +251,10 @@
 	display: flex;
 	align-items: center;
 	gap: 7px;
-	color: #8a9781;
+	color: var(--tone-8a9781);
 }
 .signal-state.online {
-	color: #b9d39b;
+	color: var(--tone-b9d39b);
 }
 .signal-details {
 	margin: 22px 0 18px;
@@ -268,11 +268,11 @@
 	margin-top: 16px;
 }
 .signal-details dt {
-	color: #7c8b74;
+	color: var(--tone-7c8b74);
 	flex-shrink: 0;
 }
 .signal-details dd {
-	color: #c3d0b8;
+	color: var(--tone-c3d0b8);
 	margin: 0;
 	display: flex;
 	align-items: center;
@@ -290,7 +290,7 @@
 }
 .connection-card {
 	padding: 20px;
-	background: linear-gradient(145deg, #20291b, #181e16);
+	background: linear-gradient(145deg, var(--tone-20291b), var(--tone-181e16));
 }
 .connection-card > .eyebrow {
 	font-size: 8px;
@@ -302,13 +302,13 @@
 }
 .connection-card p {
 	font-size: 10px;
-	color: #819176;
+	color: var(--tone-819176);
 	line-height: 1.8;
 }
 .address-box {
 	margin: 15px 0 11px;
-	background: #10160e;
-	border: 1px solid #33422a;
+	background: var(--tone-10160e);
+	border: 1px solid var(--tone-33422a);
 	border-radius: 6px;
 	padding: 5px 6px 5px 10px;
 	display: flex;
@@ -320,7 +320,7 @@
 .address-box code {
 	font-size: 9px;
 	overflow-wrap: anywhere;
-	color: #b7ce9e;
+	color: var(--tone-b7ce9e);
 }
 .address-box .icon-button {
 	width: 25px;
@@ -331,7 +331,7 @@
 }
 .health-card {
 	padding: 2px 7px;
-	color: #7b8b73;
+	color: var(--tone-7b8b73);
 	font-size: 10px;
 }
 .health-card > div {
@@ -344,7 +344,7 @@
 	font-size: 9px;
 	margin-left: auto;
 	font-weight: 400;
-	color: #afc09d;
+	color: var(--tone-afc09d);
 }
 .health-card p {
 	font-size: 9px;
@@ -358,11 +358,11 @@
 }
 .capture-error {
 	grid-column: 1 / -1;
-	border: 1px solid #68483c;
-	background: #2b1f19;
+	border: 1px solid var(--tone-68483c);
+	background: var(--tone-2b1f19);
 	padding: 20px;
 	border-radius: 10px;
-	color: #efb7a2;
+	color: var(--tone-efb7a2);
 }
 .capture-error strong {
 	font-size: 12px;
@@ -381,8 +381,8 @@
 	gap: 15px;
 	align-items: center;
 	font-size: 9px;
-	color: #5b6b53;
-	border-top: 1px solid #253021;
+	color: var(--tone-5b6b53);
+	border-top: 1px solid var(--tone-253021);
 	padding: 23px 0;
 	margin-top: 38px;
 }
@@ -392,7 +392,7 @@
 	letter-spacing: 1.2px;
 }
 .page-footer > span:first-child > span {
-	color: #374431;
+	color: var(--tone-374431);
 	margin: 0 8px;
 }
 .mobile-menu {
