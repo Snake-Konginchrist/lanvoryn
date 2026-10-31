@@ -8,6 +8,8 @@ See `.env.example`. `LANVORYN_SOURCE=linux` selects real devices; `demo` explici
 
 `LANVORYN_ALLOWED_CIDRS` accepts comma-separated IPv4/IPv6 networks. If enabled, include every required client and loopback management address. State lives under `LANVORYN_DATA_DIR` (`/var/lib/lanvoryn` for systemd): password hashes in `credentials.json`, revisioned settings in `config.json`, and the latest 200 events in `events.json`. Exported settings exclude credentials.
 
+For systemd deployments, the running service reads `/etc/lanvoryn/lanvoryn.env`. The source checkout’s `.env` is copied only on first installation; reinstalling preserves the deployed environment file. After editing it, run `sudo systemctl restart lanvoryn`. If `LANVORYN_MEDIA_HOST` changes, regenerate and install the media configuration too; restarting the application alone is insufficient.
+
 ## Capture settings
 
 Default video is 1080p30, 4 Mbps and CPU libx264. Test devices before choosing NVENC or 4K. Presets only fill settings; they cannot add device capabilities. On Linux, the API checks camera resolution/frame-rate/format combinations when changed. MJPEG is preferred; raw YUYV often hits USB bandwidth limits. H.264 uses baseline without B-frames, with a one-to-five-second keyframe interval. A 90°/270° rotation swaps the displayed dimensions.

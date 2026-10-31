@@ -8,6 +8,8 @@
 
 运行时凭据与配置保存在 `LANVORYN_DATA_DIR` 下；systemd 安装默认使用 `/var/lib/lanvoryn`。`credentials.json` 只存密码哈希，`config.json` 是带 revision 的设置，`events.json` 最多 200 条。导出的配置不包含账号或密码。
 
+使用 systemd 部署时，服务实际读取 `/etc/lanvoryn/lanvoryn.env`。源码目录 `.env` 仅在首次安装时复制，重新安装会保留已部署的环境文件。修改后执行 `sudo systemctl restart lanvoryn`。若修改 `LANVORYN_MEDIA_HOST`，还需重新生成并安装媒体配置，仅重启应用不够。
+
 ## 视频
 
 默认 1080p30、4 Mbps、CPU libx264，先验证设备再选择 NVENC 或 4K。预设只是快捷填值，不能赋予设备不支持的能力；Linux 保存时会检查分辨率/帧率/格式组合。MJPEG 优先，YUYV 常受 USB 带宽限制。H.264 使用 baseline / 无 B 帧；关键帧间隔 1–5 秒。旋转 90°/270° 会交换实际显示宽高。
