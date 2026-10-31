@@ -16,10 +16,6 @@ export function ConfigTransfer({
 	const file = useRef<HTMLInputElement>(null);
 	return (
 		<div className="config-transfer">
-			<div>
-				<strong>{t("配置随你迁移")}</strong>
-				<p>{t("导入导出采集参数与定时计划，不包含密码或登录会话。")}</p>
-			</div>
 			<div className="actions">
 				<button
 					type="button"

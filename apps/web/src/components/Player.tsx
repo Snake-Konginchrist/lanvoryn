@@ -224,16 +224,14 @@ export function Player({
 				)}
 				{connected && !hasVideo && (
 					<div className="audio-scene">
-						<span className="eyebrow">LISTEN TO THIS MOMENT</span>
 						<div className="audio-orb">
 							<AudioLines size={66} strokeWidth={1.2} />
 						</div>
-						<h2>{t("声音，也是现场。")}</h2>
+						<h2>{t("仅音频")}</h2>
 						<p>
 							{status.source === "demo"
 								? t("440 Hz 合成测试音")
 								: t("正在接收现场音频")}
-							{t("· 视频轨道未订阅")}
 						</p>
 						<meter
 							className="audio-meter"
@@ -251,13 +249,7 @@ export function Player({
 							<Radio size={40} strokeWidth={1} />
 							<span />
 						</div>
-						<span className="eyebrow">YOUR LOCAL WINDOW</span>
 						<h2>{stateText}</h2>
-						<p>
-							{!status.desired
-								? t("开启采集后，画面和声音将在这里出现。")
-								: t("连接成功后，将显示真实采集的音视频。")}
-						</p>
 						{!watching && (
 							<button
 								type="button"

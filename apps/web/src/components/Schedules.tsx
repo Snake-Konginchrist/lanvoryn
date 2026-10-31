@@ -28,13 +28,7 @@ export function Schedules({
 	const { capture } = config;
 	return (
 		<div className="settings-content">
-			<Section
-				eyebrow="ON YOUR TERMS"
-				title={t("让现场按你的时间开放")}
-				description={t(
-					"计划控制服务器的摄像头与麦克风采集。停止时会释放设备，也会中断所有正在观看的连接。",
-				)}
-			>
+			<Section title={t("让现场按你的时间开放")}>
 				<div className="policy-grid">
 					{(
 						[
@@ -101,13 +95,7 @@ export function Schedules({
 					</p>
 				</div>
 			</Section>
-			<Section
-				eyebrow="WEEKLY WINDOWS"
-				title={t("每周开放时段")}
-				description={t(
-					"多个时段可以叠加。定时模式没有任何时段时，采集始终关闭。",
-				)}
-			>
+			<Section title={t("每周开放时段")}>
 				{capture.windows.map((window, index) => (
 					<div className="schedule-window" key={window.id}>
 						<div className="window-header">

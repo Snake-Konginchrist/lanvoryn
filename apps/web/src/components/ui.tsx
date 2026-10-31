@@ -117,22 +117,16 @@ export function SaveBar({
 	);
 }
 export function Section({
-	eyebrow,
 	title,
-	description,
 	children,
 }: {
-	eyebrow: string;
 	title: string;
-	description?: string;
 	children: ReactNode;
 }) {
 	return (
 		<section className="panel">
 			<div className="section-heading">
-				<span className="eyebrow">{eyebrow}</span>
 				<h2>{title}</h2>
-				{description && <p>{description}</p>}
 			</div>
 			{children}
 		</section>

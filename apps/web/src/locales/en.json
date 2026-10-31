@@ -218,7 +218,7 @@
 	"会话有效期 {{p0}} 小时。结束会话将同时结束该设备的媒体连接。": "Sessions last {{p0}} hours. Ending a session also closes its media connections.",
 	"刷新设备列表": "Refresh device list",
 	"当前设备": "This device",
-	"登录": "signed in",
+	"登录": "Sign in",
 	"该设备会话已结束": "Device session ended",
 	"结束会话": "End session",
 	"已启用 Secure Cookie，请通过 HTTPS 访问。": "Secure cookies enabled. Access over HTTPS.",
@@ -301,5 +301,7 @@
 	"界面主题": "Appearance",
 	"跟随系统": "System",
 	"浅色": "Light",
-	"深色": "Dark"
+	"深色": "Dark",
+	"访问地址": "Access URL",
+	"事件日志": "Event log"
 }

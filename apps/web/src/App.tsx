@@ -32,12 +32,12 @@ import { api } from "./api";
 import { ConfigTransfer } from "./components/ConfigTransfer";
 import { Events } from "./components/Events";
 import { LanguageSwitch } from "./components/LanguageSwitch";
-import { ThemeSwitch } from "./components/ThemeSwitch";
 import { Login } from "./components/Login";
 import { Player } from "./components/Player";
 import { Schedules } from "./components/Schedules";
 import { Security } from "./components/Security";
 import { Settings } from "./components/Settings";
+import { ThemeSwitch } from "./components/ThemeSwitch";
 import { SaveBar } from "./components/ui";
 import { locale, t } from "./i18n";
 
@@ -299,15 +299,6 @@ export default function App() {
 						))}
 				</nav>
 				<div className="sidebar-bottom">
-					<div className="privacy-card">
-						<ShieldCheck size={22} />
-						<strong>{t("你的网络，你的权限。")}</strong>
-						<p>
-							{t("音视频由本机服务传输，")}
-							<br />
-							{t("无需第三方云端中转。")}
-						</p>
-					</div>
 					<div className="account-row">
 						<span className="avatar">{role === "admin" ? "A" : "V"}</span>
 						<span>
@@ -358,20 +349,7 @@ export default function App() {
 				<main className="main-content">
 					<div className="page-heading">
 						<div>
-							<span className="eyebrow">{current.subtitle}</span>
-							<h1>
-								{page === "live" ? t("与此刻，保持连接。") : t(current.title)}
-							</h1>
-							<p>
-								{page === "live"
-									? t("画面与声音，在你掌控的网络里实时发生。")
-									: {
-											settings: t("让设备的每一个参数，都刚刚好。"),
-											schedules: t("何时开放，何时安静，由你决定。"),
-											security: t("只把现场，分享给你信任的人。"),
-											events: t("从连接到采集，了解服务的每一次变化。"),
-										}[page]}
-							</p>
+							<h1>{t(current.title)}</h1>
 						</div>
 						{page === "live" && role === "admin" && (
 							<button
@@ -421,7 +399,6 @@ export default function App() {
 							<aside className="monitor-aside">
 								<section className="signal-card panel">
 									<div className="card-title">
-										<span className="eyebrow">CURRENT SIGNAL</span>
 										<Radio size={18} />
 									</div>
 									<h2>{status?.name ?? t("我的局域网现场")}</h2>
@@ -503,9 +480,7 @@ export default function App() {
 									)}
 								</section>
 								<section className="connection-card panel">
-									<span className="eyebrow">OPEN ON YOUR NETWORK</span>
-									<h3>{t("换个设备，也在现场。")}</h3>
-									<p>{t("同一局域网内，输入地址并登录即可观看。")}</p>
+									<h3>{t("访问地址")}</h3>
 									<div className="address-box">
 										<code>{address}</code>
 										<button

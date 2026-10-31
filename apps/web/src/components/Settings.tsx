@@ -39,11 +39,7 @@ export function Settings({ config, onChange, notify }: Props) {
 
 	return (
 		<div className="settings-content">
-			<Section
-				eyebrow="CAPTURE IDENTITY"
-				title={t("给现场一个名字")}
-				description={t("显示在所有观看设备的控制台中。")}
-			>
+			<Section title={t("给现场一个名字")}>
 				<Field label={t("现场名称")}>
 					<input
 						maxLength={48}
@@ -52,13 +48,7 @@ export function Settings({ config, onChange, notify }: Props) {
 					/>
 				</Field>
 			</Section>
-			<Section
-				eyebrow="VIDEO INPUT"
-				title={t("视频采集")}
-				description={t(
-					"选择设备支持的分辨率与帧率组合。保存后，现有观看设备会重新连接。",
-				)}
-			>
+			<Section title={t("视频采集")}>
 				<Toggle
 					label={t("启用摄像头")}
 					checked={config.video.enabled}
@@ -211,13 +201,7 @@ export function Settings({ config, onChange, notify }: Props) {
 					</details>
 				) : null}
 			</Section>
-			<Section
-				eyebrow="AUDIO INPUT"
-				title={t("音频采集")}
-				description={t(
-					"Opus 编码用于浏览器低延迟播放。采集增益影响所有观看者，播放器音量只影响当前设备。",
-				)}
-			>
+			<Section title={t("音频采集")}>
 				<Toggle
 					label={t("启用麦克风")}
 					checked={config.audio.enabled}
@@ -303,13 +287,7 @@ export function Settings({ config, onChange, notify }: Props) {
 					/>
 				</div>
 			</Section>
-			<Section
-				eyebrow="DEVICE CONTROLS"
-				title={t("摄像头硬件控制")}
-				description={t(
-					"直接读取设备支持的亮度、曝光、对焦等控制项；这里的更改立即生效，断电后可能由设备复位。",
-				)}
-			>
+			<Section title={t("摄像头硬件控制")}>
 				<button
 					type="button"
 					className="button ghost"

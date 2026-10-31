@@ -35,9 +35,7 @@ export function Events() {
 		<section className="panel logs-panel">
 			<div className="logs-toolbar">
 				<div>
-					<span className="eyebrow">A CLEAR PICTURE OF YOUR SYSTEM</span>
-					<h2>{t("每一步，都有迹可循。")}</h2>
-					<p>{t("最近 200 条应用事件，包含采集故障、配置变更和登录记录。")}</p>
+					<h2>{t("事件日志")}</h2>
 				</div>
 				<div className="actions">
 					<ListFilter size={17} />

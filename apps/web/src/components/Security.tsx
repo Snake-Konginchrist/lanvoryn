@@ -61,24 +61,7 @@ export function Security({
 	return (
 		<div className="settings-content">
 			{error && <p className="inline-warning">{error}</p>}
-			<div className="security-banner">
-				<ShieldCheck size={26} />
-				<div>
-					<strong>{t("访问权限在服务器验证")}</strong>
-					<p>
-						{t(
-							"网页接口和 WebRTC 信令均需登录；修改密码或撤销会话，也会断开对应的媒体播放。",
-						)}
-					</p>
-				</div>
-			</div>
-			<Section
-				eyebrow="READ-ONLY ACCESS"
-				title={t("只读访客账号")}
-				description={t(
-					"访客可以观看和收听，无法修改采集参数、计划或管理员设置。账号固定为 viewer，使用独立密码。",
-				)}
-			>
+			<Section title={t("只读访客账号")}>
 				<form
 					onSubmit={(event) => {
 						event.preventDefault();
@@ -132,14 +115,7 @@ export function Security({
 					</button>
 				</form>
 			</Section>
-			<Section
-				eyebrow="ADMINISTRATOR"
-				title={t("修改管理员密码")}
-				description={t(
-					"管理员账号：{{p0}}。修改后，所有管理员设备需要重新登录。",
-					{ p0: data?.username ?? "…" },
-				)}
-			>
+			<Section title={t("修改管理员密码")}>
 				<form
 					onSubmit={(event) => {
 						event.preventDefault();
@@ -202,14 +178,7 @@ export function Security({
 					</button>
 				</form>
 			</Section>
-			<Section
-				eyebrow="ACTIVE SESSIONS"
-				title={t("已登录设备")}
-				description={t(
-					"会话有效期 {{p0}} 小时。结束会话将同时结束该设备的媒体连接。",
-					{ p0: data?.sessionHours ?? "…" },
-				)}
-			>
+			<Section title={t("已登录设备")}>
 				<button
 					type="button"
 					className="button ghost"
@@ -268,7 +237,6 @@ export function Security({
 						: t(
 								"当前适用于可信局域网 HTTP 访问。密码登录保护访问权限，HTTP 本身不加密登录信息；公共或不可信网络应按部署文档启用 HTTPS。",
 							)}
-					{t("IP 白名单和域名由服务器环境变量配置。")}
 				</p>
 			</div>
 		</div>
