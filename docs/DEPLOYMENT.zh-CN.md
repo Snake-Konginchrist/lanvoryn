@@ -12,7 +12,7 @@
 node --version
 npm --version
 sudo apt update
-sudo apt install ffmpeg v4l-utils alsa-utils rsync ca-certificates curl
+sudo apt install ffmpeg v4l-utils alsa-utils rsync ca-certificates curl git
 v4l2-ctl --list-devices
 arecord -l
 ls -l /dev/v4l/by-id/
@@ -35,7 +35,8 @@ nvidia-smi
 在独立源码文件夹中执行，不要把所有项目共用的父文件夹初始化为仓库：
 
 ```bash
-cd /你的路径/lanvoryn
+git clone https://github.com/Snake-Konginchrist/lanvoryn.git
+cd lanvoryn
 npm ci
 cp .env.example .env
 ```
@@ -76,6 +77,14 @@ bash scripts/install-systemd.sh
 ```
 
 请从已加载所需 Node/npm 的用户终端运行安装器。脚本在申请 sudo 之前解析当前选中的 Node 路径，并默认使用该用户运行服务，使私有 nvm 目录正常可用，无需修改家目录权限。服务用户加入 `video`、`audio` 组；安装应用到 `/opt/lanvoryn`，环境与媒体配置到 `/etc/lanvoryn`，可写数据到 `/var/lib/lanvoryn`。首次会在服务器终端交互设置管理员密码，输入不回显，不要在聊天或命令行参数里提供密码。
+
+首次安装依次出现以下提示：
+
+1. `sudo` 密码：输入服务器上当前 Linux 用户的密码。
+2. `管理员账号 [admin]：`：直接回车使用 `admin`，也可输入自定义账号。这是网页管理员账号，与 Linux 用户无关。
+3. 管理员密码：输入 12–128 个字符的密码，再次输入确认；输入时不显示字符。
+
+账号保存于 `/var/lib/lanvoryn/credentials.json`，密码以带随机盐的 scrypt 哈希保存，不使用数据库。若设置失败，不要关闭终端；根据最后的错误修正后重新运行安装命令。已有凭据的安装会保留原账号。
 
 如需显式指定现有运行时和服务用户：
 

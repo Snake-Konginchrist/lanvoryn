@@ -12,7 +12,7 @@ Use your existing Node.js 24+ installation, including nvm installations in your 
 node --version
 npm --version
 sudo apt update
-sudo apt install ffmpeg v4l-utils alsa-utils rsync ca-certificates curl
+sudo apt install ffmpeg v4l-utils alsa-utils rsync ca-certificates curl git
 v4l2-ctl --list-devices
 arecord -l
 ls -l /dev/v4l/by-id/
@@ -27,7 +27,8 @@ Prefer a stable `/dev/v4l/by-id/...-video-index0` camera path and an ALSA identi
 ## 2. Build in a dedicated directory
 
 ```bash
-cd /path/to/lanvoryn
+git clone https://github.com/Snake-Konginchrist/lanvoryn.git
+cd lanvoryn
 npm ci
 cp .env.example .env
 ```
@@ -68,6 +69,14 @@ bash scripts/install-systemd.sh
 ```
 
 Run the installer from the user shell where your preferred Node/npm are available. It resolves the selected Node executable before requesting sudo and defaults to running the services as that user, so private nvm directories remain accessible without permission changes. The service user is added to `video` and `audio`. It installs the application in `/opt/lanvoryn`, environment and media settings in `/etc/lanvoryn`, and writable state in `/var/lib/lanvoryn`. On first installation it prompts for an administrator password in the local terminal without echoing it. Do not put passwords in chat, shell arguments or tracked files.
+
+The first installation prompts for:
+
+1. Your current Linux user's password for `sudo`.
+2. `管理员账号 [admin]：`: press Enter to use `admin`, or enter a custom username. This web administrator account is separate from the Linux user.
+3. An administrator password of 12–128 characters, followed by confirmation. Password input is hidden.
+
+Credentials are stored in `/var/lib/lanvoryn/credentials.json`; passwords use salted scrypt hashes, without a database. If setup fails, keep the terminal open, address its final error and rerun the installation command. Existing credentials are retained on subsequent installations.
 
 To choose executables or a different service account explicitly:
 
