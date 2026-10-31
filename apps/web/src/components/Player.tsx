@@ -155,7 +155,7 @@ export function Player({
 	const stateText = !watching
 		? t("已暂停观看")
 		: !status.desired
-			? t("隐私模式 · 采集已关闭")
+			? t("隐私模式 - 采集已关闭")
 			: !status.streamReady
 				? t("等待采集信号")
 				: connection === "connecting"
@@ -417,7 +417,7 @@ export function Player({
 			</div>
 			<div className="player-footnote">
 				<span>
-					WebRTC · {hasVideo ? "H.264" : ""}
+					WebRTC - {hasVideo ? "H.264" : ""}
 					{hasVideo && hasAudio ? " + " : ""}
 					{hasAudio ? "Opus" : ""}
 				</span>

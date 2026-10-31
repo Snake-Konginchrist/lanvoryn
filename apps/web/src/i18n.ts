@@ -61,11 +61,11 @@ export function translateMessage(
 	message: string,
 	values?: Record<string, string | number>,
 ): string {
-	if (values) return t(message, values);
+	if (values) return t(message.replaceAll("·", "-"), values);
 	const patterns: [RegExp, string, string[]][] = [
-		[/^登录失败 · (.+)$/, "登录失败 · {{ip}}", ["ip"]],
-		[/^管理员登录 · (.+)$/, "管理员登录 · {{ip}}", ["ip"]],
-		[/^访客登录 · (.+)$/, "访客登录 · {{ip}}", ["ip"]],
+		[/^登录失败 [·-] (.+)$/, "登录失败 - {{ip}}", ["ip"]],
+		[/^管理员登录 [·-] (.+)$/, "管理员登录 - {{ip}}", ["ip"]],
+		[/^访客登录 [·-] (.+)$/, "访客登录 - {{ip}}", ["ip"]],
 		[
 			/^摄像头控制项 (.+) 已更新为 (.+)$/,
 			"摄像头控制项 {{name}} 已更新为 {{value}}",
@@ -98,8 +98,8 @@ export function translateMessage(
 export const locale = () => i18next.resolvedLanguage ?? "en";
 i18next.on("languageChanged", (language) => {
 	document.documentElement.lang = language;
-	document.title = `Lanvoryn · ${t("你的私有现场")}`;
+	document.title = `Lanvoryn - ${t("你的私有现场")}`;
 });
 document.documentElement.lang = locale();
-document.title = `Lanvoryn · ${t("你的私有现场")}`;
+document.title = `Lanvoryn - ${t("你的私有现场")}`;
 export default i18next;

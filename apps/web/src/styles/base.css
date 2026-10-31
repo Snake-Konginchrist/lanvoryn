@@ -194,9 +194,9 @@ code,
 }
 .status-dot,
 .tiny-dot {
-	width: 6px;
-	height: 6px;
-	border-radius: 50%;
+	width: 8px;
+	height: 2px;
+	border-radius: 0;
 	display: inline-block;
 	flex-shrink: 0;
 	background: var(--tone-788379);
@@ -204,7 +204,6 @@ code,
 .status-dot.online,
 .tiny-dot {
 	background: var(--accent);
-	box-shadow: 0 0 0 3px var(--tone-caf18b0c);
 }
 .status-dot.recording {
 	background: var(--tone-ff7d6d);

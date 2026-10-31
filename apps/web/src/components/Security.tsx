@@ -29,7 +29,7 @@ function locationLabel(location?: IpLocation): string {
 		: "";
 	return [
 		...new Set([country, location.region, location.city].filter(Boolean)),
-	].join(" · ");
+	].join(" - ");
 }
 export function Security({
 	notify,

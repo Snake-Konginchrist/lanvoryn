@@ -55,12 +55,12 @@ export async function routes(
 				reply,
 			);
 			if (!session) {
-				store.event("warn", "登录失败 · {{ip}}", { ip: request.ip });
+				store.event("warn", "登录失败 - {{ip}}", { ip: request.ip });
 				return reply.code(401).send({ message: "账号或密码错误" });
 			}
 			store.event(
 				"info",
-				session.role === "admin" ? "管理员登录 · {{ip}}" : "访客登录 · {{ip}}",
+				session.role === "admin" ? "管理员登录 - {{ip}}" : "访客登录 - {{ip}}",
 				{ ip: request.ip },
 			);
 			return { role: session.role };

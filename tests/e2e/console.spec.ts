@@ -105,7 +105,7 @@ test("真实 WebRTC：登录、音视频、单轨切换、截图录制、参数�
 		page.getByRole("button", { name: "开始采集", exact: true }),
 	).toBeVisible();
 	await expect(
-		page.getByRole("heading", { name: "隐私模式 · 采集已关闭" }),
+		page.getByRole("heading", { name: "隐私模式 - 采集已关闭" }),
 	).toBeVisible();
 	await page.getByRole("button", { name: "定时计划", exact: true }).click();
 	await page.getByRole("button", { name: "添加开放时段" }).click();

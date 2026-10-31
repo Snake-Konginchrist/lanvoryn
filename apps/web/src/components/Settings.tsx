@@ -75,7 +75,7 @@ export function Settings({ config, onChange, notify }: Props) {
 								{preset.height === 2160 ? "4K" : `${preset.height}p`}
 							</strong>
 							<small>
-								{preset.fps} FPS · {preset.bitrateKbps / 1000} Mbps
+								{preset.fps} FPS - {preset.bitrateKbps / 1000} Mbps
 							</small>
 						</button>
 					))}
@@ -91,7 +91,7 @@ export function Settings({ config, onChange, notify }: Props) {
 						)}
 						{devices?.cameras.map((c) => (
 							<option key={c.path} value={c.path}>
-								{t(c.name)} · {c.path}
+								{t(c.name)} - {c.path}
 							</option>
 						))}
 					</SelectField>
@@ -151,8 +151,8 @@ export function Settings({ config, onChange, notify }: Props) {
 							})
 						}
 					>
-						<option value="libx264">CPU · libx264</option>
-						<option value="h264_nvenc">NVIDIA · NVENC</option>
+						<option value="libx264">CPU - libx264</option>
+						<option value="h264_nvenc">NVIDIA - NVENC</option>
 					</SelectField>
 					<NumberField
 						label={t("关键帧间隔 / 秒")}
@@ -193,7 +193,7 @@ export function Settings({ config, onChange, notify }: Props) {
 						<div className="capability-list">
 							{devices.modes.map((m) => (
 								<span key={`${m.inputFormat}-${m.width}-${m.height}`}>
-									{m.width} × {m.height} · {m.inputFormat} · {m.fps.join(" / ")}{" "}
+									{m.width} × {m.height} - {m.inputFormat} - {m.fps.join(" / ")}{" "}
 									FPS
 								</span>
 							))}
@@ -220,7 +220,7 @@ export function Settings({ config, onChange, notify }: Props) {
 						)}
 						{devices?.microphones.map((m) => (
 							<option value={m.id} key={m.id}>
-								{t(m.name)} · {m.id}
+								{t(m.name)} - {m.id}
 							</option>
 						))}
 					</SelectField>
@@ -311,7 +311,7 @@ export function Settings({ config, onChange, notify }: Props) {
 								hint={
 									control.readOnly
 										? t("设备报告为只读或当前不可调")
-										: t("默认 {{p0}} · 范围 {{p1}}–{{p2}}", {
+										: t("默认 {{p0}} - 范围 {{p1}}–{{p2}}", {
 												p0: control.default,
 												p1: control.min,
 												p2: control.max,

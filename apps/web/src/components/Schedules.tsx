@@ -221,7 +221,7 @@ export function Schedules({
 								timeZone: status.timezone,
 								hour12: false,
 							})}{" "}
-							· {status.next.enabled ? t("开始采集") : t("停止采集")}
+							- {status.next.enabled ? t("开始采集") : t("停止采集")}
 						</strong>
 						<small>{status.timezone}</small>
 					</span>

@@ -145,7 +145,7 @@ export async function getDevices(device: string): Promise<Devices> {
 		const text = await run("arecord", ["-l"]);
 		result.microphones = [
 			...text.matchAll(/^card \d+: (\S+) \[([^\]]+)\], device (\d+): (.+)$/gm),
-		].map((m) => ({ id: `plughw:${m[1]},${m[3]}`, name: `${m[2]} · ${m[4]}` }));
+		].map((m) => ({ id: `plughw:${m[1]},${m[3]}`, name: `${m[2]} - ${m[4]}` }));
 	} catch {
 		result.warnings.push("无法枚举麦克风，请检查 alsa-utils 和 audio 组权限。");
 	}

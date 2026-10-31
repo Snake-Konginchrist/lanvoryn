@@ -435,7 +435,7 @@ export default function App() {
 											<dt>{t("音频输入")}</dt>
 											<dd>
 												{status?.audio.enabled
-													? t("Opus · {{p0}}声道", {
+													? t("Opus - {{p0}}声道", {
 															p0:
 																status.audio.channels === 2 ? t("双") : t("单"),
 														})
