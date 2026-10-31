@@ -512,3 +512,21 @@ fieldset.weekday-list {
 	margin: 0;
 	min-width: 0;
 }
+
+.section-heading h2 {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+.section-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 36px;
+	height: 36px;
+	border-radius: 10px;
+	color: var(--accent);
+	background: var(--tone-28371e);
+	border: 1px solid var(--tone-465e32);
+}

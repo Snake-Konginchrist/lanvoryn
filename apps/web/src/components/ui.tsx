@@ -1,4 +1,4 @@
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, type LucideIcon } from "lucide-react";
 import type {
 	InputHTMLAttributes,
 	ReactNode,
@@ -117,16 +117,25 @@ export function SaveBar({
 	);
 }
 export function Section({
+	icon: Icon,
 	title,
 	children,
 }: {
+	icon?: LucideIcon;
 	title: string;
 	children: ReactNode;
 }) {
 	return (
 		<section className="panel">
 			<div className="section-heading">
-				<h2>{title}</h2>
+				<h2>
+					{Icon && (
+						<span className="section-icon">
+							<Icon size={19} aria-hidden="true" />
+						</span>
+					)}
+					{title}
+				</h2>
 			</div>
 			{children}
 		</section>

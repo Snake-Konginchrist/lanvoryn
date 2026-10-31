@@ -80,7 +80,7 @@ export function Security({
 	return (
 		<div className="settings-content">
 			{error && <p className="inline-warning">{error}</p>}
-			<Section title={t("只读访客账号")}>
+			<Section icon={ShieldCheck} title={t("只读访客账号")}>
 				<form
 					onSubmit={(event) => {
 						event.preventDefault();
@@ -134,7 +134,7 @@ export function Security({
 					</button>
 				</form>
 			</Section>
-			<Section title={t("修改管理员密码")}>
+			<Section icon={KeyRound} title={t("修改管理员密码")}>
 				<form
 					onSubmit={(event) => {
 						event.preventDefault();
@@ -197,7 +197,7 @@ export function Security({
 					</button>
 				</form>
 			</Section>
-			<Section title={t("已登录设备")}>
+			<Section icon={Users} title={t("已登录设备")}>
 				<button
 					type="button"
 					className="button ghost"

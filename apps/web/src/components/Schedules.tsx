@@ -1,5 +1,5 @@
 import type { AppConfig, RuntimeStatus } from "@lanvoryn/shared";
-import { Clock3, Plus, Trash2 } from "lucide-react";
+import { CalendarDays, Clock3, Plus, Trash2 } from "lucide-react";
 import { locale, t } from "../i18n";
 import { Field, Section, SelectField } from "./ui";
 
@@ -28,7 +28,7 @@ export function Schedules({
 	const { capture } = config;
 	return (
 		<div className="settings-content">
-			<Section title={t("让现场按你的时间开放")}>
+			<Section icon={Clock3} title={t("采集策略")}>
 				<div className="policy-grid">
 					{(
 						[
@@ -95,7 +95,7 @@ export function Schedules({
 					</p>
 				</div>
 			</Section>
-			<Section title={t("每周开放时段")}>
+			<Section icon={CalendarDays} title={t("每周开放时段")}>
 				{capture.windows.map((window, index) => (
 					<div className="schedule-window" key={window.id}>
 						<div className="window-header">

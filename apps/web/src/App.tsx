@@ -344,6 +344,7 @@ export default function App() {
 					<div className="page-heading">
 						<div>
 							<h1>{t(current.title)}</h1>
+							{page === "live" && status?.name && <p>{status.name}</p>}
 						</div>
 						{page === "live" && role === "admin" && (
 							<button

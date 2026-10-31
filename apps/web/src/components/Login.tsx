@@ -19,7 +19,12 @@ export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 					<span>Lanvoryn</span>
 				</a>
 				<div className="story-copy">
-					<h1>{t("音视频")}</h1>
+					<h1>
+						{t("在场，")}
+						<br />
+						{t("不必在现场")}
+					</h1>
+					<p>{t("把画面与声音留在你的网络。")}</p>
 				</div>
 				<div className="signal-art" aria-hidden="true">
 					<div className="signal-orbit" />
@@ -53,6 +58,7 @@ export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 						<LockKeyhole size={23} />
 					</div>
 					<h2>{t("登录")}</h2>
+					<p>{t("使用管理员或只读访客账号登录。")}</p>
 					<label className="field">
 						<span>{t("账号")}</span>
 						<input

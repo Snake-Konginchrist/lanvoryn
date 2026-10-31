@@ -1,5 +1,12 @@
 import { type AppConfig, type Devices, presets } from "@lanvoryn/shared";
-import { Cpu, RefreshCw, SlidersHorizontal } from "lucide-react";
+import {
+	AudioLines,
+	Cpu,
+	Radio,
+	RefreshCw,
+	SlidersHorizontal,
+	Video,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { api } from "../api";
 import { t } from "../i18n";
@@ -39,7 +46,7 @@ export function Settings({ config, onChange, notify }: Props) {
 
 	return (
 		<div className="settings-content">
-			<Section title={t("给现场一个名字")}>
+			<Section icon={Radio} title={t("现场名称")}>
 				<Field label={t("现场名称")}>
 					<input
 						maxLength={48}
@@ -48,7 +55,7 @@ export function Settings({ config, onChange, notify }: Props) {
 					/>
 				</Field>
 			</Section>
-			<Section title={t("视频采集")}>
+			<Section icon={Video} title={t("视频采集")}>
 				<Toggle
 					label={t("启用摄像头")}
 					checked={config.video.enabled}
@@ -201,7 +208,7 @@ export function Settings({ config, onChange, notify }: Props) {
 					</details>
 				) : null}
 			</Section>
-			<Section title={t("音频采集")}>
+			<Section icon={AudioLines} title={t("音频采集")}>
 				<Toggle
 					label={t("启用麦克风")}
 					checked={config.audio.enabled}
@@ -287,7 +294,7 @@ export function Settings({ config, onChange, notify }: Props) {
 					/>
 				</div>
 			</Section>
-			<Section title={t("摄像头硬件控制")}>
+			<Section icon={SlidersHorizontal} title={t("摄像头硬件控制")}>
 				<button
 					type="button"
 					className="button ghost"
