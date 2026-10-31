@@ -21,7 +21,8 @@ PrivateTmp=true
 ProtectHome=read-only
 ProtectSystem=strict
 ReadWritePaths=/var/lib/lanvoryn
-RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+# Node.js 枚举本机网卡需要 AF_NETLINK。
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
 LimitNOFILE=4096
 
 [Install]
