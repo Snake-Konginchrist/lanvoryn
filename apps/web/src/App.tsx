@@ -187,6 +187,31 @@ export default function App() {
 		document.title = `Lanvoryn - ${t(title)}`;
 	}, [location.pathname, page, i18n.resolvedLanguage]);
 
+	// 抽屉打开时锁定背景滚动；返回页面或切到桌面布局时释放。
+	useEffect(() => {
+		if (!sidebar) return;
+		const previous = document.body.style.overflow;
+		document.body.style.overflow = "hidden";
+		const desktop = window.matchMedia("(min-width: 721px)");
+		const closeOnDesktop = () => {
+			if (desktop.matches) setSidebar(false);
+		};
+		const closeOnEscape = (event: KeyboardEvent) => {
+			if (event.key === "Escape") setSidebar(false);
+		};
+		closeOnDesktop();
+		desktop.addEventListener("change", closeOnDesktop);
+		window.addEventListener("keydown", closeOnEscape);
+		return () => {
+			document.body.style.overflow = previous;
+			desktop.removeEventListener("change", closeOnDesktop);
+			window.removeEventListener("keydown", closeOnEscape);
+		};
+	}, [sidebar]);
+	useEffect(() => {
+		setSidebar(false);
+	}, [location.pathname]);
+
 	const run = async (task: () => Promise<void>) => {
 		setBusy(true);
 		try {
