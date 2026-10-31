@@ -58,7 +58,14 @@ export interface RuntimeStatus {
 	timezone: string;
 	serverTime: string;
 }
+export interface IpLocation {
+	status: "local" | "located" | "unavailable" | "disabled";
+	countryCode?: string;
+	region?: string;
+	city?: string;
+}
 export interface SessionInfo {
+	location?: IpLocation;
 	id: string;
 	role: Role;
 	ip: string;

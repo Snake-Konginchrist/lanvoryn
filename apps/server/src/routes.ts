@@ -9,6 +9,7 @@ import { type Auth, passwordSchema, verifyPassword } from "./auth.js";
 import type { Capture } from "./capture.js";
 import { getDevices, setCameraControl } from "./devices.js";
 import { env } from "./environment.js";
+import { Geolocation } from "./geolocation.js";
 import type { Store } from "./storage.js";
 import type { WebRTC } from "./webrtc.js";
 
@@ -184,10 +185,18 @@ export async function routes(
 	app.get("/api/events", { preHandler: auth.admin }, () => ({
 		events: [...store.events].reverse(),
 	}));
-	app.get("/api/security", { preHandler: auth.admin }, (request) => ({
+	const geolocation = new Geolocation(env.LANVORYN_IP_GEOLOCATION === "true");
+	app.get("/api/security", { preHandler: auth.admin }, async (request) => ({
 		viewerEnabled: auth.credentials.viewer.enabled,
 		username: auth.credentials.admin.username,
-		sessions: auth.list(request.session!.id),
+		sessions: await Promise.all(
+			auth
+				.list(request.session!.id)
+				.map(async (session) => ({
+					...session,
+					location: await geolocation.lookup(session.ip),
+				})),
+		),
 		secureCookie: env.LANVORYN_SECURE_COOKIE === "true",
 		sessionHours: env.LANVORYN_SESSION_HOURS,
 	}));

@@ -36,3 +36,11 @@ Input audio rate must be supported by the device. Opus output uses 48 kHz, with 
 Bundled i18next resources cover Simplified/Traditional Chinese, English, Japanese, Korean, Spanish, French and German. Browser language is detected and can be overridden on the login page or console. `zh-Hant`, `zh-TW`, `zh-HK` and `zh-MO` select Traditional Chinese.
 
 Device names, V4L2 identifiers and raw FFmpeg/system diagnostics retain their original technical text. Displayed dates follow the selected language, while capture windows always execute in the saved schedule time zone.
+
+## IP geolocation
+
+Administrators can view IP locations in the Access & security session list. The server queries [FreeIPAPI](https://freeipapi.com/) over HTTPS for public addresses, without an account or API key. This sends the queried public IP to that provider. Local and reserved addresses are classified locally and never submitted. Country names follow the UI language; region and city names retain the provider’s spelling. IP locations are approximate and do not identify a device’s physical position.
+
+`LANVORYN_IP_GEOLOCATION=true` is enabled by default. Set it to `false` and restart the application to disable public lookups. Successful results stay in memory for 24 hours and failures for one minute. Queries are deduplicated and limited to eight per ten seconds. The provider currently allows 60 per minute and ten per ten seconds on its free plan. Errors and timeouts do not affect authentication or playback. Only session addresses are queried; event logs retain their original IPs.
+
+With `trustProxy=false`, the connection peer is used. Behind a reverse proxy this may be the proxy address; arbitrary forwarded client headers are not trusted.

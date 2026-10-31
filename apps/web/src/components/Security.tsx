@@ -1,4 +1,4 @@
-import type { SessionInfo } from "@lanvoryn/shared";
+import type { IpLocation, SessionInfo } from "@lanvoryn/shared";
 import { KeyRound, RefreshCw, ShieldCheck, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { api } from "../api";
@@ -11,6 +11,25 @@ interface SecurityData {
 	sessions: SessionInfo[];
 	secureCookie: boolean;
 	sessionHours: number;
+}
+function locationLabel(location?: IpLocation): string {
+	if (!location) return "";
+	if (location.status !== "located")
+		return t(
+			{
+				local: "局域网或保留地址",
+				unavailable: "属地暂不可用",
+				disabled: "属地查询已关闭",
+			}[location.status],
+		);
+	const country = location.countryCode
+		? new Intl.DisplayNames([locale()], { type: "region" }).of(
+				location.countryCode,
+			)
+		: "";
+	return [
+		...new Set([country, location.region, location.city].filter(Boolean)),
+	].join(" · ");
 }
 export function Security({
 	notify,
@@ -202,6 +221,7 @@ export function Security({
 									)}
 								</strong>
 								<span className="mono">{session.ip}</span>
+								<small>{locationLabel(session.location)}</small>
 								<small>
 									{new Date(session.createdAt).toLocaleString(locale())}
 									{t("登录")}

@@ -22,6 +22,7 @@ const schema = z.object({
 	LANVORYN_SESSION_HOURS: z.coerce.number().min(0.1).max(168).default(12),
 	LANVORYN_SECURE_COOKIE: z.enum(["true", "false"]).default("false"),
 	LANVORYN_PUBLIC_ORIGIN: z.string().default(""),
+	LANVORYN_IP_GEOLOCATION: z.enum(["true", "false"]).default("true"),
 	LANVORYN_ALLOWED_CIDRS: z.string().default(""),
 });
 

@@ -138,3 +138,11 @@ LANVORYN_SECURE_COOKIE=true
 备份 `/etc/lanvoryn`、`/var/lib/lanvoryn` 和原来的 uStreamer 服务文件；凭据备份必须保密。升级时在独立源码目录 `npm ci`、构建、安装上游媒体包并重新运行安装脚本。已有账号和环境文件会保留，媒体配置会采用你本次生成的版本；先检查 IP 和端口。
 
 回退：停止 `lanvoryn` 和 `lanvoryn-media`，运行 `sudo systemctl start ustreamer.service`。不要同时启用两套摄像头采集。需要卸载时先 disable/stop 两个 Lanvoryn 服务，再按实际需要删除部署文件；不要未经备份删除 `/var/lib/lanvoryn`。
+
+## IP 属地
+
+管理员在“访问安全”的会话列表中查看 IP 属地。公网地址由服务器通过 HTTPS 查询 [FreeIPAPI](https://freeipapi.com/)，无需账号或密钥；查询会向该服务发送被查询的公网 IP。局域网和保留地址在本地识别，不外发。国家名称随界面语言显示，省市名称使用数据源原文。属地是 IP 的大致位置，不代表设备实际位置。
+
+`LANVORYN_IP_GEOLOCATION=true` 默认开启；设为 `false` 并重启应用可关闭公网查询。成功结果内存缓存 24 小时，失败缓存 1 分钟；每 10 秒最多 8 次请求，并合并同一 IP 的并发查询。官方免费档当前为每分钟 60 次、每 10 秒 10 次；超限、超时或不可用时显示状态，不影响登录和播放。只查询会话列表，事件日志继续记录原始 IP。
+
+当前 `trustProxy=false`，使用实际连接来源；反向代理后可能显示代理 IP，不信任任意客户端转发头。

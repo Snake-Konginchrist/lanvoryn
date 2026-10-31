@@ -342,5 +342,8 @@
 	"启动 20 秒后仍未收到编码进度，请检查 MediaMTX、设备占用和硬件编码支持。": "No encoding progress after 20 seconds. Check MediaMTX, device availability and encoder support.",
 	"播放会话已达上限，请关闭其他播放页面": "Playback session limit reached. Close other players.",
 	"MediaMTX 返回了无效的会话地址": "MediaMTX returned an invalid session URL",
-	"尚未设置管理员密码。请先运行 npm run setup。": "Administrator password not configured. Run npm run setup."
+	"尚未设置管理员密码。请先运行 npm run setup。": "Administrator password not configured. Run npm run setup.",
+	"局域网或保留地址": "Local or reserved address",
+	"属地暂不可用": "Location unavailable",
+	"属地查询已关闭": "Location lookup disabled"
 }

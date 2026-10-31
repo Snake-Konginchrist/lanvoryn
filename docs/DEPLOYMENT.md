@@ -130,3 +130,11 @@ Permit SDP requests of at least 64 KB. WHEP uses HTTP POST/DELETE, not WebSocket
 Back up `/etc/lanvoryn`, `/var/lib/lanvoryn` and the original uStreamer unit. Protect credential backups. Update from a separate source checkout, run `npm ci`, build, install and regenerate the desired media release, then rerun the installation script. Existing accounts and the deployed environment file are retained; the newly generated media configuration replaces the previous one, so check IPs and ports first.
 
 To roll back, stop `lanvoryn` and `lanvoryn-media`, then start `ustreamer.service`. Do not run both camera capture pipelines. To uninstall, disable and stop both Lanvoryn units, then remove deployment files as appropriate; retain state until you have a verified backup.
+
+## IP geolocation
+
+Administrators can view IP locations in the Access & security session list. The server queries [FreeIPAPI](https://freeipapi.com/) over HTTPS for public addresses, without an account or API key. This sends the queried public IP to that provider. Local and reserved addresses are classified locally and never submitted. Country names follow the UI language; region and city names retain the provider’s spelling. IP locations are approximate and do not identify a device’s physical position.
+
+`LANVORYN_IP_GEOLOCATION=true` is enabled by default. Set it to `false` and restart the application to disable public lookups. Successful results stay in memory for 24 hours and failures for one minute. Queries are deduplicated and limited to eight per ten seconds. The provider currently allows 60 per minute and ten per ten seconds on its free plan. Errors and timeouts do not affect authentication or playback. Only session addresses are queried; event logs retain their original IPs.
+
+With `trustProxy=false`, the connection peer is used. Behind a reverse proxy this may be the proxy address; arbitrary forwarded client headers are not trusted.
