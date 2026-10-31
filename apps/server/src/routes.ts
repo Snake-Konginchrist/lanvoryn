@@ -54,12 +54,13 @@ export async function routes(
 				reply,
 			);
 			if (!session) {
-				store.event("warn", `登录失败 · ${request.ip}`);
+				store.event("warn", "登录失败 · {{ip}}", { ip: request.ip });
 				return reply.code(401).send({ message: "账号或密码错误" });
 			}
 			store.event(
 				"info",
-				`${session.role === "admin" ? "管理员" : "访客"}登录 · ${request.ip}`,
+				session.role === "admin" ? "管理员登录 · {{ip}}" : "访客登录 · {{ip}}",
+				{ ip: request.ip },
 			);
 			return { role: session.role };
 		},
@@ -140,7 +141,11 @@ export async function routes(
 			}
 			store.event(
 				"info",
-				`管理员执行${{ start: "开始采集", stop: "隐私停止", restart: "重启采集" }[action]}`,
+				{
+					start: "管理员开始采集",
+					stop: "管理员停止采集",
+					restart: "管理员重启采集",
+				}[action],
 			);
 			return store.document;
 		}),
@@ -169,7 +174,10 @@ export async function routes(
 				body.name,
 				body.value,
 			);
-			store.event("info", `摄像头控制项 ${body.name} 已更新为 ${body.value}`);
+			store.event("info", "摄像头控制项 {{name}} 已更新为 {{value}}", {
+				name: body.name,
+				value: body.value,
+			});
 			return { ok: true };
 		}),
 	);
@@ -197,7 +205,7 @@ export async function routes(
 			else await auth.disableViewer();
 			store.event(
 				"info",
-				`访客访问已${body.enabled ? "启用 / 更新密码" : "关闭"}`,
+				body.enabled ? "访客访问已启用或密码已更新" : "访客访问已关闭",
 			);
 			return { ok: true };
 		}),

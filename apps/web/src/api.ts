@@ -27,7 +27,9 @@ export async function api<T>(
 	if (!response.ok) {
 		const error = await response
 			.json()
-			.catch(() => ({ message: `请求失败（${response.status}）` }));
+			.catch(() => ({
+				message: t("请求失败（{{status}}）", { status: response.status }),
+			}));
 		if (response.status === 401 && path !== "/auth/login")
 			window.dispatchEvent(new Event("lanvoryn:unauthorized"));
 		throw new ApiError(t(error.message ?? "操作失败"), response.status);

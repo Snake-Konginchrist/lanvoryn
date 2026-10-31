@@ -56,6 +56,45 @@ void i18next
 
 export const t = (key: string, values?: Record<string, unknown>) =>
 	String(i18next.t(key, values));
+// 兼容已保存的旧事件；设备型号和第三方诊断原文不作为翻译键改写。
+export function translateMessage(
+	message: string,
+	values?: Record<string, string | number>,
+): string {
+	if (values) return t(message, values);
+	const patterns: [RegExp, string, string[]][] = [
+		[/^登录失败 · (.+)$/, "登录失败 · {{ip}}", ["ip"]],
+		[/^管理员登录 · (.+)$/, "管理员登录 · {{ip}}", ["ip"]],
+		[/^访客登录 · (.+)$/, "访客登录 · {{ip}}", ["ip"]],
+		[
+			/^摄像头控制项 (.+) 已更新为 (.+)$/,
+			"摄像头控制项 {{name}} 已更新为 {{value}}",
+			["name", "value"],
+		],
+	];
+	const legacy: Record<string, string> = {
+		管理员执行开始采集: "管理员开始采集",
+		管理员执行隐私停止: "管理员停止采集",
+		管理员执行重启采集: "管理员重启采集",
+		"访客访问已启用 / 更新密码": "访客访问已启用或密码已更新",
+	};
+	return message
+		.split("\n")
+		.map((line) => {
+			for (const [pattern, key, names] of patterns) {
+				const match = line.match(pattern);
+				if (match)
+					return t(
+						key,
+						Object.fromEntries(
+							names.map((name, index) => [name, match[index + 1]]),
+						),
+					);
+			}
+			return t(legacy[line] ?? line);
+		})
+		.join("\n");
+}
 export const locale = () => i18next.resolvedLanguage ?? "en";
 i18next.on("languageChanged", (language) => {
 	document.documentElement.lang = language;

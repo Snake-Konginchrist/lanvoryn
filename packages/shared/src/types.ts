@@ -5,6 +5,7 @@ export interface EventEntry {
 	at: string;
 	level: "info" | "warn" | "error";
 	message: string;
+	values?: Record<string, string | number>;
 }
 export interface ConfigDocument {
 	revision: number;

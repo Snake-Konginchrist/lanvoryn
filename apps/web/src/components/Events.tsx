@@ -2,7 +2,7 @@ import type { EventEntry } from "@lanvoryn/shared";
 import { Download, ListFilter } from "lucide-react";
 import { useEffect, useState } from "react";
 import { api, downloadBlob, fileStamp } from "../api";
-import { locale, t } from "../i18n";
+import { locale, t, translateMessage } from "../i18n";
 
 export function Events() {
 	const [events, setEvents] = useState<EventEntry[]>([]);
@@ -74,8 +74,14 @@ export function Events() {
 							<time>
 								{new Date(event.at).toLocaleString(locale(), { hour12: false })}
 							</time>
-							<span className="log-level">{event.level.toUpperCase()}</span>
-							<pre>{event.message}</pre>
+							<span className="log-level">
+								{t(
+									{ info: "正常事件", warn: "警告", error: "错误" }[
+										event.level
+									],
+								)}
+							</span>
+							<pre>{translateMessage(event.message, event.values)}</pre>
 						</article>
 					))
 				) : (

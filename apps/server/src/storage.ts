@@ -58,12 +58,17 @@ export class Store {
 		this.document = document;
 	}
 
-	event(level: EventEntry["level"], message: string) {
+	event(
+		level: EventEntry["level"],
+		message: string,
+		values?: EventEntry["values"],
+	) {
 		this.events.push({
 			id: randomUUID(),
 			at: new Date().toISOString(),
 			level,
 			message: message.slice(0, 1500),
+			...(values ? { values } : {}),
 		});
 		this.events = this.events.slice(-200);
 		this.eventWrite = this.eventWrite

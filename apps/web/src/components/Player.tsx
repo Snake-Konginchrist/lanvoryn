@@ -215,7 +215,7 @@ export function Player({
 					<div className="video-overlay">
 						<span className="video-label">
 							<span className="status-dot online" />
-							{status.source === "demo" ? "TEST SIGNAL" : "LIVE SIGNAL"}
+							{status.source === "demo" ? t("测试信号") : t("实时信号")}
 						</span>
 						<span>
 							{status.video.width} × {status.video.height}

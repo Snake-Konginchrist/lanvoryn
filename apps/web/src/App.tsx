@@ -39,33 +39,29 @@ import { Security } from "./components/Security";
 import { Settings } from "./components/Settings";
 import { ThemeSwitch } from "./components/ThemeSwitch";
 import { SaveBar } from "./components/ui";
-import { locale, t } from "./i18n";
+import { locale, t, translateMessage } from "./i18n";
 
 type Page = "live" | "settings" | "schedules" | "security" | "events";
 const navigation = [
-	{ id: "live", title: "实时监看", subtitle: "LIVE MONITOR", icon: Monitor },
+	{ id: "live", title: "实时监看", icon: Monitor },
 	{
 		id: "settings",
 		title: "采集参数",
-		subtitle: "CAPTURE SETTINGS",
 		icon: Settings2,
 	},
 	{
 		id: "schedules",
 		title: "定时计划",
-		subtitle: "YOUR SCHEDULE",
 		icon: Clock3,
 	},
 	{
 		id: "security",
 		title: "访问安全",
-		subtitle: "PRIVATE ACCESS",
 		icon: ShieldCheck,
 	},
 	{
 		id: "events",
 		title: "运行日志",
-		subtitle: "SYSTEM EVENTS",
 		icon: FileText,
 	},
 ] as const;
@@ -270,9 +266,7 @@ export default function App() {
 			<aside className={`sidebar ${sidebar ? "open" : ""}`}>
 				<a className="brand" href="/" aria-label={t("Lanvoryn 首页")}>
 					<Radio size={29} />
-					<span>
-						Lanvoryn<i>REAL-TIME LAN AUDIO / VIDEO</i>
-					</span>
+					<span>Lanvoryn</span>
 				</a>
 				<div className="workspace-label">
 					<span className="tiny-dot" />
@@ -549,7 +543,7 @@ export default function App() {
 							{status?.error && (
 								<div className="capture-error">
 									<strong>{t("采集需要关注")}</strong>
-									<pre>{status.error}</pre>
+									<pre>{translateMessage(status.error)}</pre>
 									{role === "admin" && (
 										<button
 											type="button"
@@ -594,13 +588,6 @@ export default function App() {
 						<Security notify={notify} onLogout={logoutLocal} />
 					)}
 					{page === "events" && <Events />}
-					<footer className="page-footer">
-						<span>
-							Lanvoryn <span> / </span>
-							{t("一个属于你的现场。")}
-						</span>
-						<span>LOCAL FIRST. ALWAYS.</span>
-					</footer>
 				</main>
 			</div>
 			{toast}

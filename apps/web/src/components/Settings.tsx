@@ -91,7 +91,7 @@ export function Settings({ config, onChange, notify }: Props) {
 						)}
 						{devices?.cameras.map((c) => (
 							<option key={c.path} value={c.path}>
-								{c.name} · {c.path}
+								{t(c.name)} · {c.path}
 							</option>
 						))}
 					</SelectField>
@@ -220,7 +220,7 @@ export function Settings({ config, onChange, notify }: Props) {
 						)}
 						{devices?.microphones.map((m) => (
 							<option value={m.id} key={m.id}>
-								{m.name} · {m.id}
+								{t(m.name)} · {m.id}
 							</option>
 						))}
 					</SelectField>
@@ -298,8 +298,8 @@ export function Settings({ config, onChange, notify }: Props) {
 				</button>
 				{deviceError && <p className="form-error">{deviceError}</p>}
 				{devices?.warnings.map((message) => (
-					<p className="inline-warning" key={message}>
-						{message}
+					<p className="inline-warning" key={t(message)}>
+						{t(message)}
 					</p>
 				))}
 				{devices?.controls.length ? (

@@ -16,9 +16,7 @@ export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 			<div className="login-story">
 				<a className="brand" href="/" aria-label={t("Lanvoryn 首页")}>
 					<Radio size={30} />
-					<span>
-						Lanvoryn<i>REAL-TIME LAN AUDIO / VIDEO</i>
-					</span>
+					<span>Lanvoryn</span>
 				</a>
 				<div className="story-copy">
 					<h1>{t("音视频")}</h1>
@@ -92,7 +90,7 @@ export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 						<ArrowUpRight size={18} />
 					</button>
 				</form>
-				<span className="login-version">Lanvoryn / OPEN SOURCE / v0.1.0</span>
+				<span className="login-version">Lanvoryn / v0.1.0</span>
 			</div>
 		</main>
 	);

@@ -67,7 +67,9 @@ export class Capture {
 		this.since = new Date().toISOString();
 		this.store.event(
 			"info",
-			`启动${env.LANVORYN_SOURCE === "demo" ? "合成测试" : "设备"}音视频采集`,
+			env.LANVORYN_SOURCE === "demo"
+				? "启动合成测试音视频采集"
+				: "启动设备音视频采集",
 		);
 		this.watchdog = setTimeout(() => {
 			this.logs.push(

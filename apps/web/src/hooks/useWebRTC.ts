@@ -1,6 +1,6 @@
-import { t } from "../i18n";
 import type { PlaybackMode } from "@lanvoryn/shared";
 import { useEffect, useRef, useState } from "react";
+import { t } from "../i18n";
 
 export interface StreamStats {
 	fps: number;
@@ -112,14 +112,21 @@ export function useWebRTC(mode: PlaybackMode, active: boolean) {
 				method: "POST",
 				credentials: "same-origin",
 				signal: controller.signal,
-				headers: { "Content-Type": "application/sdp", "X-Lanvoryn-Request": "1" },
+				headers: {
+					"Content-Type": "application/sdp",
+					"X-Lanvoryn-Request": "1",
+				},
 				body: peer.localDescription!.sdp,
 			});
 			if (!response.ok) {
 				if (response.status === 401)
 					window.dispatchEvent(new Event("lanvoryn:unauthorized"));
 				const body = await response.json().catch(() => null);
-				throw new Error(body?.message ?? `播放连接失败（${response.status}）`);
+				throw new Error(
+					body?.message
+						? t(body.message)
+						: t("播放连接失败（{{status}}）", { status: response.status }),
+				);
 			}
 			location = response.headers.get("Location");
 			await peer.setRemoteDescription({
