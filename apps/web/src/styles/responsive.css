@@ -1,0 +1,730 @@
+@media (min-width: 1600px) {
+	.monitor-grid {
+		grid-template-columns: minmax(0, 1fr) 300px;
+		gap: 26px;
+	}
+	.main-content {
+		padding: 42px 48px 0;
+	}
+	.player-top {
+		padding: 20px 22px;
+	}
+	.segmented button {
+		font-size: 11px;
+		padding: 7px 12px;
+	}
+	.stream-metrics {
+		padding: 26px 0;
+	}
+	.signal-card,
+	.connection-card {
+		padding: 24px;
+	}
+	.signal-details > div {
+		margin-top: 20px;
+	}
+	.signal-card h2 {
+		font-size: 18px;
+	}
+	.signal-details dt,
+	.signal-details dd {
+		font-size: 11px;
+	}
+}
+@media (max-width: 1180px) {
+	.sidebar {
+		width: 190px;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+	.main-shell {
+		margin-left: 190px;
+	}
+	.main-content {
+		padding: 28px 25px 0;
+	}
+	.topbar {
+		padding: 0 25px;
+	}
+	.monitor-grid {
+		grid-template-columns: minmax(0, 1fr) 235px;
+		gap: 16px;
+	}
+	.player-top {
+		padding: 13px;
+	}
+	.segmented button {
+		padding: 6px 7px;
+	}
+	.stream-metrics > div {
+		padding: 0 12px;
+	}
+	.stream-metrics strong {
+		font-size: 18px;
+	}
+	.player-toolbar {
+		flex-wrap: wrap;
+		gap: 4px;
+	}
+	.signal-card,
+	.connection-card {
+		padding: 16px;
+	}
+	.signal-card h2 {
+		font-size: 14px;
+	}
+	.page-heading h1 {
+		font-size: 25px;
+	}
+	.config-transfer {
+		flex-wrap: wrap;
+	}
+	.login-story {
+		padding: 45px;
+	}
+	.story-copy {
+		margin-top: 100px;
+	}
+}
+@media (max-width: 970px) {
+	.monitor-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.monitor-aside {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 16px;
+	}
+	.health-card {
+		grid-column: 1 / -1;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px 25px;
+		align-items: center;
+		padding: 0 5px;
+	}
+	.health-card > div {
+		gap: 10px;
+		margin: 0;
+	}
+	.health-card strong {
+		margin-left: 5px;
+	}
+	.health-card .text-button {
+		margin-left: auto;
+	}
+	.health-card p {
+		border: 0;
+		padding: 0;
+		margin: 0;
+	}
+	.capture-error {
+		grid-column: auto;
+	}
+	.player-toolbar {
+		flex-wrap: nowrap;
+	}
+	.player-top {
+		padding: 16px;
+	}
+	.signal-details {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 14px 20px;
+		margin: 20px 0;
+	}
+	.signal-details > div {
+		display: block;
+		margin: 0;
+	}
+	.signal-details dd {
+		margin-top: 8px;
+		text-align: left;
+	}
+	.signal-card h2 {
+		font-size: 15px;
+	}
+	.connection-card {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.policy-grid {
+		gap: 9px;
+	}
+	.policy-card {
+		padding: 15px 10px;
+	}
+	.policy-card small {
+		font-size: 9px;
+	}
+	.settings-content > .panel {
+		padding: 22px;
+	}
+	.login-story {
+		padding: 36px;
+	}
+	.story-copy h1 {
+		font-size: 50px;
+	}
+	.login-side {
+		padding: 45px 35px;
+	}
+	.story-copy {
+		margin-top: 90px;
+	}
+	.login-story > footer {
+		font-size: 9px;
+	}
+	.signal-art {
+		bottom: 80px;
+		right: -160px;
+	}
+}
+@media (max-width: 720px) {
+	.sidebar {
+		transform: translateX(-100%);
+		transition: transform 0.22s;
+		width: 220px;
+	}
+	.sidebar.open {
+		transform: translateX(0);
+	}
+	.sidebar-backdrop {
+		display: block;
+		position: fixed;
+		inset: 0;
+		z-index: 19;
+		background: #0009;
+	}
+	.main-shell {
+		margin-left: 0;
+	}
+	.mobile-menu {
+		display: inline-flex !important;
+		margin-right: 0;
+	}
+	.topbar {
+		height: 60px;
+		padding: 0 17px;
+	}
+	.breadcrumb {
+		gap: 8px;
+	}
+	.topbar-right {
+		gap: 12px;
+	}
+	.topbar-right > .mono {
+		font-size: 9px;
+	}
+	.main-content {
+		padding: 24px 18px 0;
+	}
+	.page-heading {
+		align-items: flex-start;
+		margin-bottom: 22px;
+	}
+	.page-heading h1 {
+		font-size: 22px;
+		letter-spacing: -0.8px;
+		margin-top: 9px;
+	}
+	.page-heading p {
+		font-size: 10px;
+		max-width: 230px;
+	}
+	.page-heading > .button {
+		padding: 9px 12px;
+		min-height: 36px;
+		font-size: 10px;
+		margin-top: 26px;
+	}
+	.eyebrow {
+		font-size: 9px;
+	}
+	.demo-banner {
+		font-size: 10px;
+		padding: 10px 12px;
+		margin-bottom: 18px;
+	}
+	.monitor-grid {
+		gap: 18px;
+	}
+	.player-top {
+		padding: 12px;
+		gap: 12px;
+	}
+	.live-title {
+		font-size: 9px;
+	}
+	.segmented button {
+		font-size: 9px;
+		padding: 6px 9px;
+	}
+	.segmented button svg {
+		width: 12px;
+	}
+	.player-empty {
+		padding: 15px;
+	}
+	.viewfinder {
+		width: 52px;
+		height: 47px;
+		margin-bottom: 12px;
+	}
+	.viewfinder svg {
+		width: 30px;
+	}
+	.player-empty h2 {
+		font-size: 15px;
+		margin-top: 9px;
+	}
+	.player-empty p {
+		font-size: 9px;
+		margin: 7px 0 10px;
+	}
+	.player-empty > .eyebrow {
+		font-size: 7px;
+	}
+	.player-toolbar {
+		padding: 8px 9px;
+		gap: 6px;
+	}
+	.player-toolbar .icon-button {
+		width: 27px;
+		height: 29px;
+	}
+	.player-toolbar .icon-button svg {
+		width: 16px;
+	}
+	.sound-controls {
+		gap: 4px;
+	}
+	.sound-controls > input {
+		width: 48px;
+	}
+	.sound-controls > span {
+		font-size: 8px;
+	}
+	.player-toolbar > .actions {
+		gap: 1px;
+	}
+	.stream-metrics {
+		padding: 18px 0;
+	}
+	.stream-metrics > div {
+		padding: 0 11px;
+	}
+	.stream-metrics span {
+		font-size: 8px;
+		margin-bottom: 8px;
+	}
+	.stream-metrics strong {
+		font-size: 17px;
+	}
+	.stream-metrics small {
+		font-size: 7px;
+	}
+	.player-footnote {
+		padding: 10px 13px;
+		font-size: 8px;
+	}
+	.player-footnote .text-button {
+		font-size: 8px;
+	}
+	.monitor-aside {
+		gap: 14px;
+	}
+	.signal-card,
+	.connection-card {
+		padding: 16px;
+	}
+	.signal-details {
+		gap: 14px 10px;
+	}
+	.signal-details dt {
+		font-size: 9px;
+	}
+	.signal-details dd {
+		font-size: 9px;
+	}
+	.card-title > .eyebrow {
+		font-size: 8px;
+	}
+	.signal-card h2 {
+		font-size: 14px;
+		line-height: 1.8;
+	}
+	.connection-card > .eyebrow {
+		font-size: 7px;
+	}
+	.connection-card h3 {
+		font-size: 12px;
+		line-height: 1.8;
+	}
+	.connection-card p {
+		font-size: 9px;
+	}
+	.address-box {
+		padding-left: 8px;
+	}
+	.address-box code {
+		font-size: 8px;
+	}
+	.health-card {
+		gap: 15px 20px;
+		padding: 3px;
+	}
+	.health-card > div {
+		font-size: 9px;
+	}
+	.health-card .text-button {
+		font-size: 9px;
+	}
+	.page-footer {
+		font-size: 8px;
+		align-items: flex-start;
+		gap: 18px;
+		margin-top: 28px;
+		line-height: 1.8;
+		padding: 20px 0;
+	}
+	.page-footer > span:last-child {
+		font-size: 7px;
+		letter-spacing: 0.8px;
+	}
+	.settings-content {
+		gap: 17px;
+	}
+	.settings-content > .panel {
+		padding: 20px 17px;
+	}
+	.section-heading h2 {
+		font-size: 17px;
+	}
+	.section-heading p {
+		font-size: 10px;
+	}
+	.form-grid {
+		gap: 0 15px;
+	}
+	.field {
+		font-size: 10px;
+		margin-bottom: 18px;
+	}
+	.field > small {
+		font-size: 9px;
+	}
+	.field input,
+	.field select {
+		font-size: 11px;
+		min-height: 40px;
+		padding: 10px;
+	}
+	.toggle-row {
+		font-size: 11px;
+		gap: 15px;
+	}
+	.toggle-row small {
+		font-size: 9px;
+	}
+	.preset-grid {
+		gap: 8px;
+	}
+	.preset {
+		padding: 13px 10px;
+	}
+	.preset > span {
+		font-size: 9px;
+	}
+	.preset > strong {
+		font-size: 21px;
+	}
+	.preset small {
+		font-size: 8px;
+		line-height: 1.8;
+	}
+	.policy-grid {
+		grid-template-columns: 1fr;
+	}
+	.policy-card {
+		display: grid;
+		grid-template-columns: 15px 75px 1fr;
+		align-items: center;
+		gap: 9px;
+		padding: 16px 13px;
+	}
+	.policy-card strong {
+		font-size: 11px;
+	}
+	.policy-card small {
+		font-size: 9px;
+	}
+	.schedule-window {
+		padding: 15px 13px;
+	}
+	.weekday-list {
+		gap: 7px;
+	}
+	.weekday-list > button {
+		width: 32px;
+		height: 32px;
+	}
+	.time-range {
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+	.time-range > .field {
+		width: 115px;
+	}
+	.time-range > small {
+		font-size: 9px;
+	}
+	.schedule-note {
+		font-size: 10px;
+		padding: 15px;
+	}
+	.save-bar {
+		padding: 13px 15px;
+		bottom: 10px;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+	.save-bar > span {
+		font-size: 10px;
+	}
+	.save-bar > .actions {
+		margin-left: auto;
+	}
+	.save-bar .button {
+		font-size: 10px;
+		padding: 9px 11px;
+		min-height: 36px;
+	}
+	.config-transfer {
+		padding: 19px;
+		gap: 17px;
+	}
+	.config-transfer strong {
+		font-size: 11px;
+	}
+	.config-transfer p {
+		font-size: 9px;
+	}
+	.config-transfer .button {
+		font-size: 10px;
+		min-height: 35px;
+		padding: 8px 12px;
+	}
+	.security-banner {
+		padding: 18px;
+		gap: 12px;
+	}
+	.security-banner strong {
+		font-size: 12px;
+	}
+	.security-banner p {
+		font-size: 9px;
+	}
+	.session-row {
+		gap: 9px;
+	}
+	.session-row strong {
+		font-size: 10px;
+		gap: 6px;
+	}
+	.session-row > .button {
+		padding: 7px 9px;
+		font-size: 9px;
+	}
+	.session-avatar {
+		width: 30px;
+		height: 30px;
+	}
+	.logs-panel {
+		padding: 20px 17px;
+	}
+	.logs-toolbar {
+		gap: 20px;
+	}
+	.logs-toolbar h2 {
+		font-size: 16px;
+	}
+	.log-row {
+		grid-template-columns: 1fr 45px;
+		gap: 5px 14px;
+	}
+	.log-row pre {
+		grid-column: 1 / -1;
+		font-size: 10px;
+		margin-top: 6px;
+	}
+	.log-level {
+		text-align: right;
+	}
+	.log-row time {
+		font-size: 9px;
+	}
+	.audio-orb {
+		width: 65px;
+		height: 65px;
+		margin: 14px 0;
+		box-shadow:
+			0 0 0 8px #a4cc7205,
+			0 0 0 18px #a4cc7204;
+	}
+	.audio-orb svg {
+		width: 40px;
+	}
+	.audio-scene h2 {
+		font-size: 17px;
+	}
+	.audio-scene p {
+		font-size: 9px;
+		margin-top: 7px;
+	}
+	.audio-meter {
+		margin-top: 14px;
+	}
+	.audio-scene > .eyebrow {
+		font-size: 7px;
+	}
+	.login-shell {
+		grid-template-columns: 1fr;
+	}
+	.login-story {
+		min-height: auto;
+		padding: 28px;
+		border: 0;
+		border-bottom: 1px solid #33462a;
+	}
+	.login-story .brand > span {
+		font-size: 21px;
+	}
+	.story-copy {
+		margin-top: 35px;
+	}
+	.story-copy > .eyebrow {
+		font-size: 8px;
+	}
+	.story-copy h1 {
+		font-size: 39px;
+		margin: 10px 0 12px;
+		line-height: 1.4;
+		letter-spacing: -1px;
+	}
+	.story-copy h1 > br {
+		display: none;
+	}
+	.story-copy p {
+		font-size: 11px;
+		line-height: 1.9;
+	}
+	.login-story > footer {
+		padding-top: 26px;
+		font-size: 8px;
+	}
+	.signal-art {
+		right: -100px;
+		bottom: -95px;
+		width: 270px;
+		height: 270px;
+	}
+	.signal-art > svg {
+		opacity: 0.2;
+	}
+	.signal-art > span {
+		display: none;
+	}
+	.login-side {
+		padding: 36px 28px;
+	}
+	.login-icon {
+		display: none;
+	}
+	.login-card h2 {
+		font-size: 23px;
+	}
+	.login-card > p {
+		margin-bottom: 27px;
+		font-size: 11px;
+	}
+	.login-card > .eyebrow {
+		font-size: 8px;
+	}
+	.login-version {
+		margin-top: 30px;
+		font-size: 7px;
+	}
+	.login-note {
+		font-size: 9px;
+	}
+	.login-card {
+		max-width: 420px;
+	}
+	.toast {
+		font-size: 11px;
+		bottom: 16px;
+		gap: 8px;
+		padding: 12px;
+	}
+}
+@media (max-width: 380px) {
+	.monitor-aside {
+		grid-template-columns: 1fr;
+	}
+	.health-card {
+		grid-column: auto;
+	}
+	.player-top {
+		padding: 10px;
+	}
+	.segmented {
+		width: 100%;
+		justify-content: space-between;
+	}
+	.segmented button {
+		flex: 1;
+		justify-content: center;
+	}
+	.sound-controls > span {
+		display: none;
+	}
+	.main-content {
+		padding-left: 13px;
+		padding-right: 13px;
+	}
+	.stream-metrics > div {
+		padding: 0 9px;
+	}
+	.stream-metrics strong {
+		font-size: 15px;
+	}
+	.page-heading h1 {
+		font-size: 20px;
+	}
+	.form-grid {
+		grid-template-columns: 1fr;
+	}
+	.policy-card {
+		grid-template-columns: 15px 70px 1fr;
+	}
+	.weekday-list {
+		gap: 5px;
+	}
+	.weekday-list > button {
+		width: 29px;
+	}
+	.page-footer > span:last-child {
+		display: none;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*:before,
+	*:after {
+		animation: none !important;
+		transition: none !important;
+		scroll-behavior: auto !important;
+	}
+}

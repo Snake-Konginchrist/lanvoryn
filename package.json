@@ -1,0 +1,53 @@
+{
+	"name": "lanvoryn",
+	"version": "0.1.0",
+	"description": "Private, low-latency audio and video for your local network",
+	"main": "index.js",
+	"scripts": {
+		"test": "npm run build -w @lanvoryn/shared && node --import tsx --test tests/*.test.ts",
+		"dev": "npm run build -w @lanvoryn/shared && concurrently -k -n api,web \"node --env-file-if-exists=.env --import tsx --watch apps/server/src/index.ts\" \"npm run dev -w @lanvoryn/web\"",
+		"build": "npm run build -w @lanvoryn/shared && npm run build -w @lanvoryn/server && npm run build -w @lanvoryn/web",
+		"start": "node --env-file-if-exists=.env apps/server/dist/index.js",
+		"setup": "node --env-file-if-exists=.env scripts/setup.mjs",
+		"media:install": "node scripts/install-media.mjs",
+		"media:config": "node --env-file-if-exists=.env scripts/media-config.mjs",
+		"media:start": "node --env-file-if-exists=.env scripts/start-media.mjs",
+		"check": "npm run build -w @lanvoryn/shared && tsc --noEmit -p apps/server/tsconfig.json && npm run typecheck -w @lanvoryn/web",
+		"test:e2e": "playwright test",
+		"lint": "biome check .",
+		"format": "biome check --write ."
+	},
+	"keywords": [
+		"webrtc",
+		"usb-camera",
+		"local-network"
+	],
+	"type": "module",
+	"private": true,
+	"license": "MIT",
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"devDependencies": {
+		"@babel/parser": "^8.0.10",
+		"@biomejs/biome": "^2.6.4",
+		"@playwright/test": "^1.64.1",
+		"@types/node": "^26.6.6",
+		"concurrently": "^10.0.6",
+		"opencc-js": "^1.4.2",
+		"tsx": "^4.23.15",
+		"typescript": "^7.0.2"
+	},
+	"allowScripts": {
+		"esbuild@0.28.2": true
+	},
+	"engines": {
+		"node": ">=24"
+	},
+	"overrides": {
+		"@fastify/static": {
+			"glob": "14.0.3"
+		}
+	}
+}

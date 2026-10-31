@@ -1,0 +1,81 @@
+# Dependencies and package-manager caches; keep manifests and package-lock.json.
+node_modules/
+.npm/
+.pnpm-store/
+
+# Generated builds and caches in every workspace.
+dist/
+dist-ssr/
+build/
+*.tsbuildinfo
+.vite/
+.cache/
+.turbo/
+
+# Local environment files; only sanitized example templates belong in Git.
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Runtime binaries, downloads, credentials, recordings and application state.
+.runtime/
+/data/
+/logs/
+/recordings/
+/snapshots/
+/backups/
+credentials.json
+sessions.json
+*.sqlite
+*.sqlite3
+*.sqlite-shm
+*.sqlite-wal
+*.db
+*.db-shm
+*.db-wal
+
+# TLS/SSH secrets and generated certificates, including MediaMTX auto.key/auto.crt.
+*.key
+*.pem
+*.crt
+*.cer
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.srl
+id_rsa*
+id_ed25519*
+.ssh/
+.secrets/
+
+# Reports and disposable browser profiles. Keep intentional UI/docs media assets.
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+
+# Logs, editor backups and OS metadata.
+*.log
+*.log.*
+npm-debug.log*
+*.tmp
+*.temp
+*.sw?
+*~
+*.orig
+*.rej
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+.idea/
+.history/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json

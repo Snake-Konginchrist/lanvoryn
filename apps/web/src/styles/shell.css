@@ -1,0 +1,403 @@
+.app-shell {
+	display: flex;
+	min-height: 100dvh;
+}
+.sidebar {
+	width: 220px;
+	position: fixed;
+	inset: 0 auto 0 0;
+	display: flex;
+	flex-direction: column;
+	padding: 37px 22px 19px;
+	background: #151915;
+	border-right: 1px solid var(--border);
+	z-index: 20;
+}
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: var(--accent);
+	width: max-content;
+}
+.brand > span {
+	font-size: 23px;
+	font-weight: 850;
+	letter-spacing: 2px;
+	line-height: 1.05;
+	color: #f0f4eb;
+}
+.brand i {
+	display: block;
+	font-style: normal;
+	font-family: "IBM Plex Mono", monospace;
+	font-size: 7px;
+	letter-spacing: 1.6px;
+	font-weight: 400;
+	color: #9ba795;
+	line-height: 2.6;
+}
+.workspace-label {
+	margin: 47px 9px 20px;
+	color: #81917e;
+	font-size: 10px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	letter-spacing: 1px;
+}
+.sidebar nav {
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+}
+.sidebar nav button {
+	height: 45px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	background: transparent;
+	color: #8f9d8f;
+	text-align: left;
+	border-radius: 7px;
+	padding: 0 12px;
+	font-size: 12px;
+	transition: background 0.18s;
+}
+.sidebar nav button > span {
+	flex: 1;
+}
+.sidebar nav button:hover {
+	background: #222a22;
+	color: #e6eee0;
+}
+.sidebar nav button.active {
+	background: #293421;
+	color: #d0eea8;
+	border: 1px solid #3c4e2d;
+}
+.sidebar-bottom {
+	margin-top: auto;
+	padding-top: 40px;
+}
+.privacy-card {
+	background: linear-gradient(135deg, #232d20, #1a2119);
+	padding: 18px 15px;
+	border: 1px solid #303d2b;
+	border-radius: 10px;
+}
+.privacy-card svg {
+	color: #a6bd91;
+	margin-bottom: 13px;
+}
+.privacy-card strong {
+	font-size: 11px;
+	display: block;
+	color: #cdd8c5;
+}
+.privacy-card p {
+	color: #7e8e77;
+	font-size: 10px;
+	line-height: 1.9;
+	margin-top: 8px;
+}
+.account-row {
+	display: flex;
+	gap: 9px;
+	align-items: center;
+	margin-top: 23px;
+	padding-top: 20px;
+	border-top: 1px solid var(--border);
+}
+.avatar {
+	width: 31px;
+	height: 31px;
+	background: #30392b;
+	border: 1px solid #4a5940;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	color: #cfe3b4;
+	font-size: 12px;
+	font-weight: 700;
+}
+.account-row > span:nth-child(2) {
+	min-width: 0;
+	flex: 1;
+}
+.account-row strong {
+	font-size: 11px;
+	display: block;
+}
+.account-row small {
+	display: block;
+	max-width: 95px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 9px;
+	color: #85907e;
+	margin-top: 4px;
+}
+.account-row .icon-button {
+	width: 26px;
+}
+.main-shell {
+	margin-left: 220px;
+	flex: 1;
+	min-width: 0;
+}
+.topbar {
+	height: 72px;
+	border-bottom: 1px solid var(--border);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 36px;
+}
+.breadcrumb {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	color: #718071;
+	font-size: 11px;
+}
+.breadcrumb strong {
+	color: #b3bfb0;
+	font-weight: 450;
+}
+.topbar-right {
+	display: flex;
+	align-items: center;
+	gap: 22px;
+	color: #647260;
+}
+.private-badge {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: #a7be92;
+	font-size: 10px;
+}
+.main-content {
+	padding: 34px 36px 0;
+	max-width: 1720px;
+	margin: 0 auto;
+}
+.page-heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
+	margin-bottom: 28px;
+}
+.page-heading h1 {
+	font-size: 28px;
+	line-height: 1.5;
+	font-weight: 650;
+	letter-spacing: -1px;
+	margin-top: 7px;
+}
+.page-heading p {
+	color: #82907d;
+	font-size: 11px;
+	margin-top: 8px;
+	line-height: 1.8;
+}
+.page-heading > .button {
+	font-size: 11px;
+}
+.panel {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+}
+.monitor-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 268px;
+	gap: 22px;
+	align-items: start;
+}
+.monitor-panel {
+	overflow: hidden;
+}
+.monitor-aside {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+}
+.signal-card {
+	padding: 20px;
+}
+.card-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	color: #b4cf94;
+}
+.card-title > .eyebrow {
+	font-size: 9px;
+}
+.signal-card h2 {
+	font-size: 16px;
+	font-weight: 550;
+	margin: 16px 0 12px;
+	overflow-wrap: anywhere;
+}
+.signal-state {
+	font-size: 9px;
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	color: #8a9781;
+}
+.signal-state.online {
+	color: #b9d39b;
+}
+.signal-details {
+	margin: 22px 0 18px;
+}
+.signal-details > div {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	font-size: 10px;
+	margin-top: 16px;
+}
+.signal-details dt {
+	color: #7c8b74;
+	flex-shrink: 0;
+}
+.signal-details dd {
+	color: #c3d0b8;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-family: "IBM Plex Mono", "PingFang SC", monospace;
+	font-size: 10px;
+	text-align: right;
+}
+.signal-link {
+	border-top: 1px solid var(--border);
+	padding-top: 16px;
+	width: 100%;
+	justify-content: space-between;
+	font-size: 10px;
+}
+.connection-card {
+	padding: 20px;
+	background: linear-gradient(145deg, #20291b, #181e16);
+}
+.connection-card > .eyebrow {
+	font-size: 8px;
+}
+.connection-card h3 {
+	font-size: 13px;
+	font-weight: 550;
+	margin: 12px 0 9px;
+}
+.connection-card p {
+	font-size: 10px;
+	color: #819176;
+	line-height: 1.8;
+}
+.address-box {
+	margin: 15px 0 11px;
+	background: #10160e;
+	border: 1px solid #33422a;
+	border-radius: 6px;
+	padding: 5px 6px 5px 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 4px;
+	min-width: 0;
+}
+.address-box code {
+	font-size: 9px;
+	overflow-wrap: anywhere;
+	color: #b7ce9e;
+}
+.address-box .icon-button {
+	width: 25px;
+	height: 27px;
+}
+.connection-card > .text-button {
+	font-size: 9px;
+}
+.health-card {
+	padding: 2px 7px;
+	color: #7b8b73;
+	font-size: 10px;
+}
+.health-card > div {
+	display: flex;
+	gap: 7px;
+	align-items: center;
+	margin: 13px 0;
+}
+.health-card strong {
+	font-size: 9px;
+	margin-left: auto;
+	font-weight: 400;
+	color: #afc09d;
+}
+.health-card p {
+	font-size: 9px;
+	line-height: 1.8;
+	border-top: 1px solid var(--border);
+	padding-top: 13px;
+	margin-bottom: 13px;
+}
+.health-card .text-button {
+	font-size: 9px;
+}
+.capture-error {
+	grid-column: 1 / -1;
+	border: 1px solid #68483c;
+	background: #2b1f19;
+	padding: 20px;
+	border-radius: 10px;
+	color: #efb7a2;
+}
+.capture-error strong {
+	font-size: 12px;
+}
+.capture-error pre {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	font-size: 10px;
+	line-height: 1.8;
+	margin: 12px 0;
+	font-family: "IBM Plex Mono", monospace;
+}
+.page-footer {
+	display: flex;
+	justify-content: space-between;
+	gap: 15px;
+	align-items: center;
+	font-size: 9px;
+	color: #5b6b53;
+	border-top: 1px solid #253021;
+	padding: 23px 0;
+	margin-top: 38px;
+}
+.page-footer > span:last-child {
+	font-family: "IBM Plex Mono", monospace;
+	font-size: 8px;
+	letter-spacing: 1.2px;
+}
+.page-footer > span:first-child > span {
+	color: #374431;
+	margin: 0 8px;
+}
+.mobile-menu {
+	display: none !important;
+}
+.sidebar-backdrop {
+	display: none;
+}

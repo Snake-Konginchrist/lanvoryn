@@ -1,0 +1,18 @@
+{
+	"name": "@lanvoryn/shared",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "tsc -p tsconfig.json"
+	},
+	"keywords": [],
+	"type": "module",
+	"private": true,
+	"dependencies": {
+		"zod": "^4.6.7"
+	},
+	"exports": "./dist/index.js",
+	"types": "./dist/index.d.ts"
+}
