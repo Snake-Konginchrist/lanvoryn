@@ -1,5 +1,5 @@
 import type { Role } from "@lanvoryn/shared";
-import { ArrowUpRight, AudioLines, LockKeyhole, Radio } from "lucide-react";
+import { ArrowUpRight, AudioLines, LockKeyhole } from "lucide-react";
 import { useState } from "react";
 import { api } from "../api";
 import { t } from "../i18n";
@@ -15,7 +15,13 @@ export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 		<main className="login-shell">
 			<div className="login-story">
 				<a className="brand" href="/" aria-label={t("Lanvoryn 首页")}>
-					<Radio size={30} />
+					<img
+						className="brand-mark"
+						src="/logo.svg"
+						alt=""
+						width="30"
+						height="30"
+					/>
 					<span>Lanvoryn</span>
 				</a>
 				<div className="story-copy">

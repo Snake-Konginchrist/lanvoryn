@@ -280,7 +280,13 @@ export default function App() {
 			)}
 			<aside className={`sidebar ${sidebar ? "open" : ""}`}>
 				<a className="brand" href="/" aria-label={t("Lanvoryn 首页")}>
-					<Radio size={29} />
+					<img
+						className="brand-mark"
+						src="/logo.svg"
+						alt=""
+						width="30"
+						height="30"
+					/>
 					<span>Lanvoryn</span>
 				</a>
 				<div className="workspace-label">
