@@ -29,6 +29,13 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import {
+	Link,
+	Navigate,
+	NavLink,
+	useLocation,
+	useNavigate,
+} from "react-router";
 import { api } from "./api";
 import { ConfigTransfer } from "./components/ConfigTransfer";
 import { Events } from "./components/Events";
@@ -42,8 +49,8 @@ import { ThemeSwitch } from "./components/ThemeSwitch";
 import { SaveBar } from "./components/ui";
 import { afterControl, afterSave } from "./config-draft";
 import { locale, t, translateMessage } from "./i18n";
+import { loginDestination, pageFromPath, pagePaths } from "./routes";
 
-type Page = "live" | "settings" | "schedules" | "security" | "events";
 const navigation = [
 	{ id: "live", title: "实时监看", icon: Monitor },
 	{
@@ -85,9 +92,11 @@ async function copyAddress(text: string) {
 }
 
 export default function App() {
-	useTranslation();
+	const { i18n } = useTranslation();
+	const location = useLocation();
+	const navigate = useNavigate();
+	const page = pageFromPath(location.pathname) ?? "live";
 	const [role, setRole] = useState<Role | null | undefined>(undefined);
-	const [page, setPage] = useState<Page>("live");
 	const [sidebar, setSidebar] = useState(false);
 	const [status, setStatus] = useState<RuntimeStatus | null>(null);
 	const [saved, setSaved] = useState<ConfigDocument | null>(null);
@@ -107,7 +116,6 @@ export default function App() {
 		setStatus(null);
 		setSaved(null);
 		setDraft(null);
-		setPage("live");
 	}, []);
 
 	useEffect(() => {
@@ -170,6 +178,14 @@ export default function App() {
 			clearInterval(timer);
 		};
 	}, [role]);
+
+	useEffect(() => {
+		const title =
+			location.pathname === "/login"
+				? "登录"
+				: (navigation.find((item) => item.id === page)?.title ?? "实时监看");
+		document.title = `Lanvoryn - ${t(title)}`;
+	}, [location.pathname, page, i18n.resolvedLanguage]);
 
 	const run = async (task: () => Promise<void>) => {
 		setBusy(true);
@@ -241,6 +257,8 @@ export default function App() {
 				<p>{t("正在连接你的现场…")}</p>
 			</main>
 		);
+	if (!role && location.pathname !== "/login")
+		return <Navigate to="/login" replace state={{ from: pagePaths[page] }} />;
 	if (!role)
 		return (
 			<>
@@ -248,6 +266,15 @@ export default function App() {
 				{toast}
 			</>
 		);
+	if (location.pathname === "/login")
+		return (
+			<Navigate replace to={loginDestination(role, location.state?.from)} />
+		);
+	if (
+		!pageFromPath(location.pathname) ||
+		(role === "viewer" && page !== "live")
+	)
+		return <Navigate replace to={pagePaths.live} />;
 	const current = navigation.find((item) => item.id === page)!;
 	const dirty = Boolean(
 		saved && draft && JSON.stringify(saved.config) !== JSON.stringify(draft),
@@ -279,7 +306,11 @@ export default function App() {
 				/>
 			)}
 			<aside className={`sidebar ${sidebar ? "open" : ""}`}>
-				<a className="brand" href="/" aria-label={t("Lanvoryn 首页")}>
+				<Link
+					className="brand"
+					to={pagePaths.live}
+					aria-label={t("Lanvoryn 首页")}
+				>
 					<img
 						className="brand-mark"
 						src="/logo.svg"
@@ -288,7 +319,7 @@ export default function App() {
 						height="30"
 					/>
 					<span>Lanvoryn</span>
-				</a>
+				</Link>
 				<div className="workspace-label">
 					<span className="tiny-dot" />
 					{t("你的私有现场")}
@@ -297,20 +328,19 @@ export default function App() {
 					{navigation
 						.filter((item) => role === "admin" || item.id === "live")
 						.map((item) => (
-							<button
-								type="button"
+							<NavLink
+								to={pagePaths[item.id]}
 								key={item.id}
 								aria-current={page === item.id ? "page" : undefined}
 								className={page === item.id ? "active" : ""}
 								onClick={() => {
-									setPage(item.id);
 									setSidebar(false);
 								}}
 							>
 								<item.icon size={19} />
 								<span>{t(item.title)}</span>
 								{page === item.id && <ChevronRight size={15} />}
-							</button>
+							</NavLink>
 						))}
 				</nav>
 				<div className="sidebar-bottom">
@@ -488,7 +518,7 @@ export default function App() {
 										<button
 											type="button"
 											className="text-button signal-link"
-											onClick={() => setPage("settings")}
+											onClick={() => navigate(pagePaths.settings)}
 										>
 											{t("调整采集参数")}
 											<ArrowUpRight size={16} />
@@ -570,7 +600,7 @@ export default function App() {
 										<button
 											type="button"
 											className="text-button"
-											onClick={() => setPage("events")}
+											onClick={() => navigate(pagePaths.events)}
 										>
 											{t("查看运行日志")}
 											<ArrowUpRight size={14} />

@@ -46,3 +46,7 @@ Administrators can view IP locations in the Access & security session list. The 
 `LANVORYN_IP_GEOLOCATION=true` is enabled by default. Set it to `false` and restart the application to disable public lookups. Successful results stay in memory for 24 hours and failures for one minute. Queries are deduplicated and limited to eight per ten seconds. The provider currently allows 60 per minute and ten per ten seconds on its free plan. Errors and timeouts do not affect authentication or playback. Only session addresses are queried; event logs retain their original IPs.
 
 With `trustProxy=false`, the connection peer is used. Behind a reverse proxy this may be the proxy address; arbitrary forwarded client headers are not trusted.
+
+## Page URLs
+
+`/login` signs in; `/live` monitors the stream; `/settings` configures capture; `/schedules` manages schedules; `/security` manages access; `/events` shows logs. Direct links, refresh and browser history are supported. Guests can only access live monitoring.

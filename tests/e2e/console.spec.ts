@@ -91,30 +91,30 @@ test("真实 WebRTC：登录、音视频、单轨切换、截图录制、参数�
 	).toBeVisible();
 	await page.getByRole("button", { name: "恢复观看", exact: true }).click();
 	await expect.poll(() => media.evaluate((el) => el.videoWidth)).toBe(1280);
-	await page.getByRole("button", { name: "采集参数", exact: true }).click();
+	await page.getByRole("link", { name: "采集参数", exact: true }).click();
 	await page.getByLabel("目标帧率 / FPS", { exact: true }).fill("25");
 	await page.getByRole("button", { name: "保存并应用", exact: true }).click();
 	await expect(
 		page.getByText("配置已保存并应用", { exact: true }),
 	).toBeVisible();
-	await page.getByRole("button", { name: "定时计划", exact: true }).click();
+	await page.getByRole("link", { name: "定时计划", exact: true }).click();
 	await page.getByRole("button", { name: /按计划开放/ }).click();
 	await page.getByRole("button", { name: "保存并应用", exact: true }).click();
-	await page.getByRole("button", { name: "实时监看", exact: true }).click();
+	await page.getByRole("link", { name: "实时监看", exact: true }).click();
 	await expect(
 		page.getByRole("button", { name: "开始采集", exact: true }),
 	).toBeVisible();
 	await expect(
 		page.getByRole("heading", { name: "隐私模式 - 采集已关闭" }),
 	).toBeVisible();
-	await page.getByRole("button", { name: "定时计划", exact: true }).click();
+	await page.getByRole("link", { name: "定时计划", exact: true }).click();
 	await page.getByRole("button", { name: "添加开放时段" }).click();
 	await page.getByLabel("开始时间", { exact: true }).fill("22:00");
 	await page.getByLabel("结束时间", { exact: true }).fill("06:00");
 	await expect(page.getByText("次日结束", { exact: true })).toBeVisible();
 	await page.getByRole("button", { name: "保存并应用", exact: true }).click();
 	await page.screenshot({ path: ".runtime/qa-schedules-desktop.png" });
-	await page.getByRole("button", { name: "实时监看", exact: true }).click();
+	await page.getByRole("link", { name: "实时监看", exact: true }).click();
 	if (
 		await page
 			.getByRole("button", { name: "隐私停止", exact: true })
@@ -133,7 +133,7 @@ test("访客授权隔离与八种界面语言", async ({ page, browser }) => {
 	await page.getByLabel("账号", { exact: true }).fill("admin");
 	await page.getByLabel("密码", { exact: true }).fill(password);
 	await page.getByRole("button", { name: "进入控制台" }).click();
-	await page.getByRole("button", { name: "访问安全", exact: true }).click();
+	await page.getByRole("link", { name: "访问安全", exact: true }).click();
 	await page.getByRole("switch", { name: /允许访客登录/ }).check();
 	await page.getByLabel("设置新的访客密码", { exact: false }).fill(password);
 	await page.getByRole("button", { name: "设置访客密码并开放" }).click();
@@ -170,16 +170,11 @@ test("访客授权隔离与八种界面语言", async ({ page, browser }) => {
 	await expect(
 		mobile.getByRole("button", { name: "进入控制台" }),
 	).toBeVisible();
-	for (const [code, label] of [
-		["zh-TW", "連線你的現場"],
-		["en", "Connect to your space"],
-		["ja", "あなたの現場につながる"],
-		["ko", "내 현장에 연결하기"],
-		["es", "Conecta con tu espacio"],
-		["fr", "Connectez-vous à votre espace"],
-		["de", "Mit Ihrem Bereich verbinden"],
-		["zh-CN", "连接你的现场"],
-	]) {
+	for (const code of ["zh-TW", "en", "ja", "ko", "es", "fr", "de", "zh-CN"]) {
+		const dictionary = JSON.parse(
+			await readFile(`apps/web/src/locales/${code}.json`, "utf8"),
+		);
+		const label = dictionary["登录"];
 		await mobile
 			.getByRole("combobox", { name: "Language / 语言" })
 			.selectOption(code!);

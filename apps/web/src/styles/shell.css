@@ -51,7 +51,7 @@
 	flex-direction: column;
 	gap: 7px;
 }
-.sidebar nav button {
+.sidebar nav a {
 	height: 45px;
 	display: flex;
 	align-items: center;
@@ -64,14 +64,14 @@
 	font-size: 12px;
 	transition: background 0.18s;
 }
-.sidebar nav button > span {
+.sidebar nav a > span {
 	flex: 1;
 }
-.sidebar nav button:hover {
+.sidebar nav a:hover {
 	background: var(--tone-222a22);
 	color: var(--tone-e6eee0);
 }
-.sidebar nav button.active {
+.sidebar nav a.active {
 	background: var(--tone-293421);
 	color: var(--tone-d0eea8);
 	border: 1px solid var(--tone-3c4e2d);
