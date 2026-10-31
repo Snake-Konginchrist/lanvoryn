@@ -240,7 +240,9 @@ export default function App() {
 			</>
 		);
 	const current = navigation.find((item) => item.id === page)!;
-	const dirty = JSON.stringify(saved?.config) !== JSON.stringify(draft);
+	const dirty = Boolean(
+		saved && draft && JSON.stringify(saved.config) !== JSON.stringify(draft),
+	);
 	const address = status?.addresses[0] ?? window.location.origin;
 	const captureLabel =
 		status?.state === "running" && status.streamReady

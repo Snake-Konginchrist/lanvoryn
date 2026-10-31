@@ -88,10 +88,11 @@ export function SaveBar({
 	onSave: () => void;
 	onReset: () => void;
 }) {
+	if (!dirty) return null;
 	return (
 		<div className="save-bar">
 			<span>
-				{dirty ? t("有尚未保存的更改") : t("所有更改已保存")}
+				{t("有尚未保存的更改")}
 				<small>{t("采集参数变更会重新连接播放")}</small>
 			</span>
 			<div className="actions">
