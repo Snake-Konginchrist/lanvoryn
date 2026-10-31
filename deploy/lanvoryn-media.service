@@ -18,7 +18,8 @@ PrivateTmp=true
 ProtectHome=true
 ProtectSystem=strict
 ReadWritePaths=/var/lib/lanvoryn
-RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+# MediaMTX 枚举 WebRTC 网卡候选地址需要 AF_NETLINK。
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
 
 [Install]
 WantedBy=multi-user.target
