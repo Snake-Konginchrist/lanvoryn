@@ -346,5 +346,7 @@
 	"局域网或保留地址": "Local or reserved address",
 	"属地暂不可用": "Location unavailable",
 	"属地查询已关闭": "Location lookup disabled",
-	"退出全屏": "Exit fullscreen"
+	"退出全屏": "Exit fullscreen",
+	"偏好设置": "Preferences",
+	"语言": "Language"
 }

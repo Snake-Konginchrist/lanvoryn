@@ -3,8 +3,7 @@ import { ArrowUpRight, AudioLines, LockKeyhole } from "lucide-react";
 import { useState } from "react";
 import { api } from "../api";
 import { t } from "../i18n";
-import { LanguageSwitch } from "./LanguageSwitch";
-import { ThemeSwitch } from "./ThemeSwitch";
+import { Preferences } from "./Preferences";
 
 export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 	const [username, setUsername] = useState("admin");
@@ -39,8 +38,7 @@ export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 			</div>
 			<div className="login-side">
 				<div className="appearance-controls">
-					<ThemeSwitch />
-					<LanguageSwitch />
+					<Preferences compact />
 				</div>
 				<form
 					className="login-card"

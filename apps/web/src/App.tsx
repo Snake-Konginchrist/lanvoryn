@@ -39,13 +39,12 @@ import {
 import { api } from "./api";
 import { ConfigTransfer } from "./components/ConfigTransfer";
 import { Events } from "./components/Events";
-import { LanguageSwitch } from "./components/LanguageSwitch";
 import { Login } from "./components/Login";
 import { Player } from "./components/Player";
+import { Preferences } from "./components/Preferences";
 import { Schedules } from "./components/Schedules";
 import { Security } from "./components/Security";
 import { Settings } from "./components/Settings";
-import { ThemeSwitch } from "./components/ThemeSwitch";
 import { SaveBar } from "./components/ui";
 import { afterControl, afterSave } from "./config-draft";
 import { locale, t, translateMessage } from "./i18n";
@@ -369,6 +368,7 @@ export default function App() {
 						))}
 				</nav>
 				<div className="sidebar-bottom">
+					<Preferences />
 					<div className="account-row">
 						<span className="avatar">{role === "admin" ? "A" : "V"}</span>
 						<span>
@@ -407,8 +407,6 @@ export default function App() {
 						<strong>{t(current.title)}</strong>
 					</div>
 					<div className="topbar-right">
-						<ThemeSwitch />
-						<LanguageSwitch />
 						<span className="private-badge">
 							<ShieldCheck size={13} />
 							{t("密码保护")}

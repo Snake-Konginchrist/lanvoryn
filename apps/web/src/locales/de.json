@@ -346,5 +346,7 @@
 	"局域网或保留地址": "Lokale oder reservierte Adresse",
 	"属地暂不可用": "Standort nicht verfügbar",
 	"属地查询已关闭": "Standortabfrage deaktiviert",
-	"退出全屏": "Vollbild beenden"
+	"退出全屏": "Vollbild beenden",
+	"偏好设置": "Einstellungen",
+	"语言": "Sprache"
 }

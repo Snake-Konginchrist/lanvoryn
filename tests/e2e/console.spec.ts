@@ -170,14 +170,13 @@ test("访客授权隔离与八种界面语言", async ({ page, browser }) => {
 	await expect(
 		mobile.getByRole("button", { name: "进入控制台" }),
 	).toBeVisible();
+	await mobile.locator(".preferences summary").click();
 	for (const code of ["zh-TW", "en", "ja", "ko", "es", "fr", "de", "zh-CN"]) {
 		const dictionary = JSON.parse(
 			await readFile(`apps/web/src/locales/${code}.json`, "utf8"),
 		);
 		const label = dictionary["登录"];
-		await mobile
-			.getByRole("combobox", { name: "Language / 语言" })
-			.selectOption(code!);
+		await mobile.locator(".language-switch select").selectOption(code!);
 		await expect(
 			mobile.getByRole("heading", { name: label!, exact: true }),
 		).toBeVisible();

@@ -346,5 +346,7 @@
 	"局域网或保留地址": "Adresse locale ou réservée",
 	"属地暂不可用": "Localisation indisponible",
 	"属地查询已关闭": "Recherche de localisation désactivée",
-	"退出全屏": "Quitter le plein écran"
+	"退出全屏": "Quitter le plein écran",
+	"偏好设置": "Préférences",
+	"语言": "Langue"
 }

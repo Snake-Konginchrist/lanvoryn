@@ -1,6 +1,6 @@
 import { Languages } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { languages } from "../i18n";
+import { languages, t } from "../i18n";
 
 export function LanguageSwitch() {
 	const { i18n } = useTranslation();
@@ -8,7 +8,7 @@ export function LanguageSwitch() {
 		<label className="language-switch">
 			<Languages size={15} aria-hidden="true" />
 			<select
-				aria-label="Language / 语言"
+				aria-label={t("语言")}
 				value={i18n.resolvedLanguage ?? "en"}
 				onChange={(event) => {
 					void i18n.changeLanguage(event.target.value);

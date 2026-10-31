@@ -1,0 +1,96 @@
+.sidebar {
+	overflow-y: auto;
+}
+.preferences {
+	position: relative;
+	min-width: 0;
+}
+.preferences summary {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 44px;
+	padding: 8px;
+	border-radius: 8px;
+	color: var(--muted);
+	cursor: pointer;
+	list-style: none;
+	font-size: 13px;
+}
+.preferences summary::-webkit-details-marker {
+	display: none;
+}
+.preferences summary:hover,
+.preferences[open] summary {
+	color: var(--accent);
+	background: var(--tone-293421);
+}
+.preferences summary:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+.preferences summary > span {
+	flex: 1;
+}
+.preferences[open] .preferences-chevron {
+	transform: rotate(180deg);
+}
+.preferences-panel {
+	display: grid;
+	gap: 12px;
+	padding: 12px 8px;
+	min-width: 0;
+}
+.preferences-panel .theme-switch,
+.preferences-panel .language-switch {
+	min-width: 0;
+	width: 100%;
+}
+.preferences-panel select {
+	flex: 1;
+	min-width: 0;
+	width: 100%;
+	max-width: none;
+	min-height: 40px;
+	font-size: 13px;
+}
+.preferences.compact summary {
+	justify-content: center;
+	width: 44px;
+	padding: 8px;
+	border: 1px solid var(--border);
+}
+.preferences.compact .preferences-panel {
+	position: absolute;
+	top: calc(100% + 8px);
+	right: 0;
+	z-index: 30;
+	width: min(250px, calc(100vw - 48px));
+	padding: 16px;
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	background: var(--tone-151915);
+	box-shadow: 0 8px 24px #0002;
+}
+@media (max-width: 720px) {
+	.topbar {
+		flex-wrap: nowrap;
+	}
+	.topbar-right {
+		display: none;
+	}
+	.breadcrumb {
+		flex: 1;
+	}
+	.preferences-panel select {
+		min-height: 44px;
+		font-size: 16px;
+	}
+	.sidebar-bottom {
+		padding-top: 24px;
+	}
+}
+
+.preferences:not([open]) > .preferences-panel {
+	display: none;
+}
