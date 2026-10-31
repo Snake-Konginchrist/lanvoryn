@@ -12,11 +12,13 @@ import {
 	Video,
 	Volume2,
 	VolumeX,
+	X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { downloadBlob, fileStamp } from "../api";
 import { useWebRTC } from "../hooks/useWebRTC";
 import { t } from "../i18n";
+import { enterFullscreen } from "../fullscreen";
 
 export function Player({
 	status,
@@ -46,6 +48,20 @@ export function Player({
 	const [volume, setVolume] = useState(0.7);
 	const [recording, setRecording] = useState(false);
 	const [playBlocked, setPlayBlocked] = useState(false);
+	const [expanded, setExpanded] = useState(false);
+	useEffect(() => {
+		if (!expanded) return;
+		const previous = document.body.style.overflow;
+		document.body.style.overflow = "hidden";
+		const escape = (event: KeyboardEvent) => {
+			if (event.key === "Escape") setExpanded(false);
+		};
+		window.addEventListener("keydown", escape);
+		return () => {
+			document.body.style.overflow = previous;
+			window.removeEventListener("keydown", escape);
+		};
+	}, [expanded]);
 	const connected = connection === "connected";
 	const hasVideo = mode !== "audio" && status.video.enabled;
 	const hasAudio = mode !== "video" && status.audio.enabled;
@@ -200,9 +216,19 @@ export function Player({
 				</fieldset>
 			</div>
 			<div
-				className={`player-stage ${connected ? "has-signal" : ""}`}
+				className={`player-stage ${connected ? "has-signal" : ""} ${expanded ? "expanded" : ""}`}
 				ref={stage}
 			>
+				{expanded && (
+					<button
+						type="button"
+						className="expanded-close icon-button"
+						onClick={() => setExpanded(false)}
+						aria-label={t("退出全屏")}
+					>
+						<X size={24} />
+					</button>
+				)}
 				<video
 					ref={video}
 					autoPlay
@@ -359,9 +385,11 @@ export function Player({
 						type="button"
 						className="icon-button"
 						onClick={() => {
-							void stage.current
-								?.requestFullscreen?.()
-								.catch(() => notify(t("此浏览器无法进入全屏")));
+							void enterFullscreen(stage.current, video.current, hasVideo).then(
+								(native) => {
+									if (!native) setExpanded(true);
+								},
+							);
 						}}
 						aria-label={t("全屏")}
 					>
