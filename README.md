@@ -10,19 +10,14 @@ Lanvoryn captures video and audio with FFmpeg, routes H.264 + Opus through Media
 
 ## Features
 
-- Live video + audio, video-only and audio-only playback. Single-track modes request only the selected media track.
-- Resolution, frame rate, bitrate, CPU/NVENC encoding, keyframe interval, rotation and mirroring.
-- Audio device, input sample rate, channels, gain, noise reduction, high-pass filter and A/V offset.
-- Camera/microphone discovery, supported mode inspection and actual V4L2 hardware controls.
-- Separate administrator and read-only guest accounts; scrypt password hashes, HttpOnly sessions, login rate limiting and request origin checks.
-- Session revocation closes associated media connections. Privacy stop releases capture devices and disconnects viewers.
-- Manual, always-on and weekly capture schedules, including overnight windows and IANA time zones.
-- Received frame rate, bitrate, packet loss, network RTT, viewing sessions, automatic reconnection and capture retries.
-- Browser snapshots, local recording with a 10-minute limit, fullscreen and picture-in-picture, where supported.
-- Configuration import/export without credentials, responsive layout, event history and systemd deployment.
-- System, light and dark themes, with remembered preferences and live system-theme updates.
-
-The interface supports language switching with locally bundled translations. See [language settings](docs/CONFIGURATION.md#languages).
+- Real-time LAN audio/video streaming, with audio-only and video-only playback modes.
+- Select a camera and microphone independently from multiple connected devices; inspect supported capture modes and hardware controls.
+- Adjust resolution, frame rate, encoding, video/audio bitrate, channels, capture gain, noise reduction and A/V synchronization offset.
+- Password-protected access, separate administrator and read-only guest accounts, and revocable viewing sessions.
+- Manual, continuous or scheduled capture, including overnight windows, time zones and privacy stop.
+- Stream statistics, automatic playback reconnection and capture failure recovery.
+- Snapshots and browser-local recording.
+- Configuration import/export, event logs and systemd service management.
 
 ## Stack
 
