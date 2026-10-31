@@ -6,7 +6,7 @@ Deploy directly on the Linux host with the camera and microphone. systemd manage
 
 ## 1. Runtime and devices
 
-Install the current stable LTS from [Node.js](https://nodejs.org/en/download). Node.js 24+ is required. For systemd, install Node in a system-accessible path such as `/usr/bin` or `/usr/local/bin`; the service intentionally cannot access an administrator's home directory.
+Use your existing Node.js 24+ installation, including nvm installations in your home directory. No specific installation path is required. If Node is missing or too old, choose a current stable LTS using your preferred supported installation method; see [Node.js downloads](https://nodejs.org/en/download).
 
 ```bash
 node --version
@@ -64,10 +64,20 @@ Keep its configuration for rollback. Disable its automatic startup only after th
 ## 4. Install systemd services
 
 ```bash
-sudo bash scripts/install-systemd.sh
+bash scripts/install-systemd.sh
 ```
 
-The installer creates a non-login `lanvoryn` user with `video` and `audio` groups. It installs the application in `/opt/lanvoryn`, environment and media settings in `/etc/lanvoryn`, and writable state in `/var/lib/lanvoryn`. On first installation it prompts for an administrator password in the local terminal without echoing it. Do not put passwords in chat, shell arguments or tracked files.
+Run the installer from the user shell where your preferred Node/npm are available. It resolves the selected Node executable before requesting sudo and defaults to running the services as that user, so private nvm directories remain accessible without permission changes. The service user is added to `video` and `audio`. It installs the application in `/opt/lanvoryn`, environment and media settings in `/etc/lanvoryn`, and writable state in `/var/lib/lanvoryn`. On first installation it prompts for an administrator password in the local terminal without echoing it. Do not put passwords in chat, shell arguments or tracked files.
+
+To choose executables or a different service account explicitly:
+
+```bash
+bash scripts/install-systemd.sh --node "$(node -p 'process.execPath')" --npm "$(command -v npm)" --user "$(id -un)"
+```
+
+When invoking through sudo directly, pass those paths explicitly because sudo may replace PATH. `LANVORYN_NODE_BIN`, `LANVORYN_NPM_BIN` and `LANVORYN_SERVICE_USER` are optional installer overrides. A root-only installation without a caller defaults to the dedicated `lanvoryn` account; `--user lanvoryn` also selects that account explicitly. The selected account must be able to execute the chosen Node; the installer reports incompatible permissions rather than changing home-directory access.
+
+The generated application unit uses the actual absolute Node path and `ProtectHome=read-only`, retaining read-only home access and ordinary Unix ownership permissions. It does not run a shell or initialize nvm at every startup. Only the application state directory is writable. After removing or changing the selected Node version, rerun the installer to update the unit. Unit files in `deploy/` are templates, not files to copy without rendering. This is Linux systemd deployment; no server changes are made by editing these local templates.
 
 Both services start at boot. Capture remains off initially. Open the application, configure actual devices and start capture. Choose NVIDIA NVENC only after testing support; the application reports encoder errors rather than silently changing encoders.
 

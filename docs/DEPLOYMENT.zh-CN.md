@@ -6,7 +6,7 @@
 
 ## 1. 准备运行时和设备
 
-从 [Node.js 官方下载页](https://nodejs.org/en/download)安装当前稳定 LTS；项目要求 Node.js 24+。systemd 示例需要可由系统用户执行的 Node（通常 `/usr/bin/node` 或 `/usr/local/bin/node`）。不要把服务运行时只放在管理员的家目录下。
+直接使用现有 Node.js 24+，包括安装在用户家目录中的 nvm 版本，不要求移动或重新安装到任何指定目录。只有未安装或版本不足时，才需要按自己选择的受支持方式安装稳定 LTS，参考 [Node.js 官方下载页](https://nodejs.org/en/download)。
 
 ```bash
 node --version
@@ -72,10 +72,20 @@ sudo systemctl stop ustreamer.service
 ## 4. 安装 systemd 服务
 
 ```bash
-sudo bash scripts/install-systemd.sh
+bash scripts/install-systemd.sh
 ```
 
-安装器创建无登录权限的 `lanvoryn` 用户，加入 `video`、`audio` 组；安装应用到 `/opt/lanvoryn`，环境与媒体配置到 `/etc/lanvoryn`，可写数据到 `/var/lib/lanvoryn`。首次会在服务器终端交互设置管理员密码，输入不回显，不要在聊天或命令行参数里提供密码。
+请从已加载所需 Node/npm 的用户终端运行安装器。脚本在申请 sudo 之前解析当前选中的 Node 路径，并默认使用该用户运行服务，使私有 nvm 目录正常可用，无需修改家目录权限。服务用户加入 `video`、`audio` 组；安装应用到 `/opt/lanvoryn`，环境与媒体配置到 `/etc/lanvoryn`，可写数据到 `/var/lib/lanvoryn`。首次会在服务器终端交互设置管理员密码，输入不回显，不要在聊天或命令行参数里提供密码。
+
+如需显式指定现有运行时和服务用户：
+
+```bash
+bash scripts/install-systemd.sh --node "$(node -p 'process.execPath')" --npm "$(command -v npm)" --user "$(id -un)"
+```
+
+如果直接通过 sudo 调用，也应传入这些路径，避免 sudo 替换 PATH。安装器还接受 `LANVORYN_NODE_BIN`、`LANVORYN_NPM_BIN`、`LANVORYN_SERVICE_USER` 覆盖值。纯 root 安装、没有原始调用用户时默认使用独立的 `lanvoryn` 账号，也可以通过 `--user lanvoryn` 主动选择。所选账号必须有权执行所选 Node；权限不匹配会明确报错，不会自动放宽家目录权限。
+
+生成的应用服务使用实际 Node 绝对路径与 `ProtectHome=read-only`，保留只读家目录和 Unix 权限限制，仅应用数据目录可写。每次启动不需要加载 shell 或 nvm。以后删除或切换该 Node 版本时，重新运行安装器更新服务路径即可。`deploy/` 下的文件是模板，需由安装器渲染；本次修改模板不会直接操作服务器。
 
 服务默认开机启动。第一次打开网页后，默认仍停止采集；登录后选择设备与参数再开始。NVIDIA 1050 可选择 `h264_nvenc`，但需要 NVIDIA 驱动和 FFmpeg 的 NVENC 实际可用。未配置真实硬件的机器不要直接套用 GPU 设置。
 

@@ -5,8 +5,8 @@ After=network-online.target
 
 [Service]
 Type=simple
-User=lanvoryn
-Group=lanvoryn
+User=@SERVICE_USER@
+Group=@SERVICE_GROUP@
 WorkingDirectory=/var/lib/lanvoryn
 ExecStart=/opt/lanvoryn/bin/mediamtx /etc/lanvoryn/mediamtx.yml
 Restart=on-failure
