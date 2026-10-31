@@ -57,7 +57,9 @@ install -d -m 0700 -o "$SERVICE_USER" -g "$SERVICE_GROUP" /var/lib/lanvoryn
 chown -R --no-dereference "$SERVICE_USER:$SERVICE_GROUP" /var/lib/lanvoryn
 rsync -a --delete --exclude=.git --exclude=node_modules --exclude=.runtime --exclude=.env --exclude=data --exclude=test-results --exclude=playwright-report "$PROJECT_DIR/" /opt/lanvoryn/
 cd /opt/lanvoryn
-env PATH="$(dirname "$NODE_BIN"):$PATH" "$NPM_BIN" ci --omit=dev --ignore-scripts
+# 依赖是公开程序文件；不要继承调用方保护凭据用的 077 umask。
+(umask 022; env PATH="$(dirname "$NODE_BIN"):$PATH" "$NPM_BIN" ci --omit=dev --ignore-scripts)
+chmod -R a+rX /opt/lanvoryn/node_modules
 install -d -m 0755 /opt/lanvoryn/bin
 install -m 0755 "$PROJECT_DIR/.runtime/media/mediamtx" /opt/lanvoryn/bin/mediamtx
 install -m 0644 "$PROJECT_DIR/.runtime/mediamtx.yml" /etc/lanvoryn/mediamtx.yml
