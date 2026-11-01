@@ -1,4 +1,5 @@
 import {
+	APP_VERSION,
 	type AppConfig,
 	type ConfigDocument,
 	configSchema,
@@ -414,7 +415,7 @@ export default function App() {
 							<ShieldCheck size={13} />
 							{t("密码保护")}
 						</span>
-						<span className="mono">v0.1.0</span>
+						<span className="mono">v{APP_VERSION}</span>
 					</div>
 				</header>
 				<main className="main-content">

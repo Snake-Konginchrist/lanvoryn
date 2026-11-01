@@ -1,4 +1,4 @@
-import type { Role } from "@lanvoryn/shared";
+import { APP_VERSION, type Role } from "@lanvoryn/shared";
 import { ArrowUpRight, AudioLines, LockKeyhole } from "lucide-react";
 import { useState } from "react";
 import { api } from "../api";
@@ -100,7 +100,7 @@ export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 						<ArrowUpRight size={18} />
 					</button>
 				</form>
-				<span className="login-version">Lanvoryn / v0.1.0</span>
+				<span className="login-version">Lanvoryn / v{APP_VERSION}</span>
 			</div>
 		</main>
 	);

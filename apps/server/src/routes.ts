@@ -1,4 +1,5 @@
 import {
+	APP_VERSION,
 	type AppConfig,
 	type ConfigDocument,
 	configSchema,
@@ -37,7 +38,7 @@ export async function routes(
 		return document;
 	};
 
-	app.get("/api/health", async () => ({ ok: true, version: "0.1.0" }));
+	app.get("/api/health", async () => ({ ok: true, version: APP_VERSION }));
 	app.post(
 		"/api/auth/login",
 		{ config: { rateLimit: { max: 8, timeWindow: "1 minute" } } },
