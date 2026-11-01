@@ -1,5 +1,4 @@
 import {
-	APP_VERSION,
 	type AppConfig,
 	type ConfigDocument,
 	configSchema,
@@ -28,7 +27,7 @@ import {
 	Users,
 	X,
 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
 	Link,
@@ -43,6 +42,7 @@ import { Events } from "./components/Events";
 import { Login } from "./components/Login";
 import { Player } from "./components/Player";
 import { Preferences } from "./components/Preferences";
+import { ProjectLinks } from "./components/ProjectLinks";
 import { Schedules } from "./components/Schedules";
 import { Security } from "./components/Security";
 import { Settings } from "./components/Settings";
@@ -97,6 +97,11 @@ export default function App() {
 	const navigate = useNavigate();
 	const page = pageFromPath(location.pathname) ?? "live";
 	const [role, setRole] = useState<Role | null | undefined>(undefined);
+	const roleRef = useRef<Role | null | undefined>(undefined);
+	const changeRole = useCallback((next: Role | null) => {
+		roleRef.current = next;
+		setRole(next);
+	}, []);
 	const [sidebar, setSidebar] = useState(false);
 	const [status, setStatus] = useState<RuntimeStatus | null>(null);
 	const [saved, setSaved] = useState<ConfigDocument | null>(null);
@@ -112,25 +117,35 @@ export default function App() {
 		setNoticeSequence((value) => value + 1);
 	};
 	const logoutLocal = useCallback(() => {
-		setRole(null);
+		changeRole(null);
+		setNotice("");
 		setStatus(null);
 		setSaved(null);
 		setDraft(null);
-	}, []);
+	}, [changeRole]);
 
 	useEffect(() => {
 		const expired = () => {
+			if (!roleRef.current) return;
 			logoutLocal();
 			setNotice(t("登录已结束，请重新登录"));
 			setNoticeKind("info");
 			setNoticeSequence((value) => value + 1);
 		};
 		window.addEventListener("lanvoryn:unauthorized", expired);
-		void api<{ role: Role }>("/auth/me")
-			.then((result) => setRole(result.role))
-			.catch(() => setRole(null));
-		return () => window.removeEventListener("lanvoryn:unauthorized", expired);
-	}, [logoutLocal]);
+		let active = true;
+		void api<{ role: Role }>("/auth/me", { silentUnauthorized: true })
+			.then((result) => {
+				if (active) changeRole(result.role);
+			})
+			.catch(() => {
+				if (active) changeRole(null);
+			});
+		return () => {
+			active = false;
+			window.removeEventListener("lanvoryn:unauthorized", expired);
+		};
+	}, [logoutLocal, changeRole]);
 	useEffect(() => {
 		if (!notice) return;
 		const timer = setTimeout(() => setNotice(""), 6000);
@@ -288,7 +303,12 @@ export default function App() {
 	if (!role)
 		return (
 			<>
-				<Login onLogin={setRole} />
+				<Login
+					onLogin={(next) => {
+						setNotice("");
+						changeRole(next);
+					}}
+				/>
 				{toast}
 			</>
 		);
@@ -373,6 +393,7 @@ export default function App() {
 				</nav>
 				<div className="sidebar-bottom">
 					<Preferences />
+					<ProjectLinks />
 					<div className="account-row">
 						<span className="avatar">{role === "admin" ? "A" : "V"}</span>
 						<span>
@@ -409,13 +430,6 @@ export default function App() {
 						<span>{t("我的空间")}</span>
 						<ChevronRight size={13} />
 						<strong>{t(current.title)}</strong>
-					</div>
-					<div className="topbar-right">
-						<span className="private-badge">
-							<ShieldCheck size={13} />
-							{t("密码保护")}
-						</span>
-						<span className="mono">v{APP_VERSION}</span>
 					</div>
 				</header>
 				<main className="main-content">

@@ -1,0 +1,58 @@
+.project-links {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 4px 12px;
+	margin-top: 10px;
+}
+.repository-link,
+.version-link {
+	display: inline-flex;
+	align-items: center;
+	min-height: 40px;
+	color: var(--muted);
+	border-radius: 6px;
+}
+.repository-link {
+	gap: 8px;
+	min-width: 0;
+	font-size: 12px;
+}
+.repository-link > svg {
+	width: 17px;
+	height: 17px;
+	flex-shrink: 0;
+}
+.repository-link > span {
+	overflow-wrap: anywhere;
+}
+.version-link {
+	font-family: "IBM Plex Mono", monospace;
+	font-size: 11px;
+}
+.repository-link:hover,
+.version-link:hover {
+	color: var(--accent);
+}
+.project-links a:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+}
+.login-project-links {
+	width: 100%;
+	max-width: 355px;
+	margin-top: 28px;
+}
+@media (max-width: 720px) {
+	.repository-link,
+	.version-link {
+		min-height: 44px;
+	}
+	.repository-link {
+		font-size: 13px;
+	}
+	.login-project-links {
+		max-width: 420px;
+	}
+}

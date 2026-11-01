@@ -1,9 +1,10 @@
-import { APP_VERSION, type Role } from "@lanvoryn/shared";
+import type { Role } from "@lanvoryn/shared";
 import { ArrowUpRight, AudioLines, LockKeyhole } from "lucide-react";
 import { useState } from "react";
 import { api } from "../api";
 import { t } from "../i18n";
 import { Preferences } from "./Preferences";
+import { ProjectLinks } from "./ProjectLinks";
 
 export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 	const [username, setUsername] = useState("admin");
@@ -100,7 +101,7 @@ export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 						<ArrowUpRight size={18} />
 					</button>
 				</form>
-				<span className="login-version">Lanvoryn / v{APP_VERSION}</span>
+				<ProjectLinks login />
 			</div>
 		</main>
 	);

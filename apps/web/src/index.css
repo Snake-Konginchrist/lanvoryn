@@ -12,3 +12,6 @@
 @import "./styles/mobile.css";
 
 @import "./styles/preferences.css";
+
+@import "@fortawesome/fontawesome-svg-core/styles.css";
+@import "./styles/project-links.css";

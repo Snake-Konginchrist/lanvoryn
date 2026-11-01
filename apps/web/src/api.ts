@@ -7,10 +7,17 @@ export class ApiError extends Error {
 	}
 }
 
+let authRevision = 0;
+
 export async function api<T>(
 	path: string,
-	options: { method?: string; body?: unknown } = {},
+	options: {
+		method?: string;
+		body?: unknown;
+		silentUnauthorized?: boolean;
+	} = {},
 ): Promise<T> {
+	const revision = authRevision;
 	const response = await fetch(`/api${path}`, {
 		method: options.method ?? "GET",
 		credentials: "same-origin",
@@ -25,15 +32,19 @@ export async function api<T>(
 			: { body: JSON.stringify(options.body) }),
 	});
 	if (!response.ok) {
-		const error = await response
-			.json()
-			.catch(() => ({
-				message: t("请求失败（{{status}}）", { status: response.status }),
-			}));
-		if (response.status === 401 && path !== "/auth/login")
+		const error = await response.json().catch(() => ({
+			message: t("请求失败（{{status}}）", { status: response.status }),
+		}));
+		if (
+			response.status === 401 &&
+			path !== "/auth/login" &&
+			!options.silentUnauthorized &&
+			revision === authRevision
+		)
 			window.dispatchEvent(new Event("lanvoryn:unauthorized"));
 		throw new ApiError(t(error.message ?? "操作失败"), response.status);
 	}
+	if (path === "/auth/login" || path === "/auth/logout") authRevision++;
 	return response.status === 204
 		? (undefined as T)
 		: (response.json() as Promise<T>);
