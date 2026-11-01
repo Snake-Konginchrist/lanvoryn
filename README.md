@@ -1,40 +1,43 @@
 # Lanvoryn
 
-**Real-time audio & video on your LAN.**
+Self-hosted, real-time camera and microphone streaming for your local network.
 
-**English** · [简体中文](README.zh-CN.md)
+Connect a camera and microphone to a Linux host, then watch and listen from a phone, tablet or computer in a browser. Choose video, audio or both, with password-protected access and no cloud account.
 
-**Your network. Your live space.** A self-hosted, password-protected LAN audio/video console for Linux USB cameras and microphones.
+![Lanvoryn live view with video, playback controls and stream status](docs/images/live-view.en.png)
 
-Lanvoryn captures video and audio with FFmpeg, routes H.264 + Opus through MediaMTX, and plays them in a browser using WebRTC. Other computers, phones and tablets on your LAN can open the server address and sign in. No cloud account is required.
+*Local demo with generated video and audio. The hostname and address shown are examples.*
 
 ## Features
 
-- Real-time LAN audio/video streaming, with audio-only and video-only playback modes.
-- Select a camera and microphone independently from multiple connected devices; inspect supported capture modes and hardware controls.
-- Adjust resolution, frame rate, encoding, video/audio bitrate, channels, capture gain, noise reduction and A/V synchronization offset.
-- Password-protected access, separate administrator and read-only guest accounts, and revocable viewing sessions.
-- On-demand device capture, with manual or scheduled viewing availability, overnight windows, time zones and privacy stop.
-- Stream statistics, automatic playback reconnection and capture failure recovery.
-- Snapshots and browser-local recording.
-- Configuration import/export, event logs and systemd service management.
-
-## Stack
-
-React, TypeScript, Vite, Fastify, Zod, i18next, FFmpeg, MediaMTX and WebRTC/WHEP; npm workspaces; Node.js 24+. Application source is MIT licensed; upstream software retains its own licenses.
-
-The project was initialized with the official `npm init -y` and `npm create vite@latest apps/web -- --template react-ts --no-interactive` commands. Direct dependencies were installed with official npm commands and current stable `@latest` tags. The lockfile records the tested versions; deployments use `npm ci`. See [research and versions](docs/RESEARCH.md).
+- **Live audio and video:** browser playback over WebRTC, with video-only, audio-only and combined modes.
+- **Devices free when idle:** capture starts on demand and stops when the last player leaves. Only inputs needed by active players are opened; video-only playback does not request the microphone.
+- **Device and quality controls:** select a camera and microphone independently; adjust supported resolution, frame rate, encoding, bitrates, audio gain, filters and synchronization.
+- **Private access:** separate administrator and read-only guest access, revocable sessions, and a privacy stop that releases devices and disconnects viewers.
+- **Viewing schedules:** manual, continuous or weekly availability, including overnight windows and time zones. Devices stay free when nobody is playing.
+- **Playback tools:** snapshots, browser-local recording, stream statistics and automatic reconnection; configuration import/export and event logs.
 
 ## Quick start
 
-Install a current stable [Node.js LTS](https://nodejs.org/en/download) and [FFmpeg](https://ffmpeg.org/download.html). Real capture requires Linux, `v4l-utils`, `alsa-utils`, and camera/microphone permissions.
+The capture host needs **Linux, Node.js 24+, npm, FFmpeg, `v4l-utils` and `alsa-utils`**, plus permission to access the selected devices. Viewing devices only need a compatible browser. For startup at boot, follow the [systemd deployment guide](docs/DEPLOYMENT.md).
 
 ```bash
+git clone https://github.com/Snake-Konginchrist/lanvoryn.git
+cd lanvoryn
 npm ci
 npm run setup
 ```
 
-Edit `.env`. Use `LANVORYN_SOURCE=linux` for real devices, or explicitly choose `demo` for generated test video and a 440 Hz test tone. Set `LANVORYN_MEDIA_HOST` to the server's LAN IP, reachable by viewing devices.
+Setup creates your web administrator account and copies `.env.example` to `.env` if it does not exist. Choose a username and a password of 12–128 characters in the terminal; there is no default password.
+
+Edit `.env` and set the media host to the Linux host's LAN IP, reachable by your viewing devices. For example:
+
+```dotenv
+LANVORYN_SOURCE=linux
+LANVORYN_MEDIA_HOST=192.168.1.50
+```
+
+For a local demo without capture hardware, explicitly use `LANVORYN_SOURCE=demo`. It generates test video and a 440 Hz tone; device failures never silently switch to a demo.
 
 ```bash
 npm run media:install
@@ -42,40 +45,48 @@ npm run media:config
 npm run build
 ```
 
-Run these in separate terminals:
+Start MediaMTX in one terminal:
 
 ```bash
 npm run media:start
 ```
 
+Start the application in another terminal, from the same project directory:
+
 ```bash
 npm start
 ```
 
-Open `http://SERVER_LAN_IP:3210`, sign in with your own administrator password, choose devices, save settings, and start capture. Capture is off by default. Click **Enable sound** if the browser requires a user gesture.
+Open `http://192.168.1.50:3210` using your host's actual LAN IP. Sign in, choose your devices in **Capture settings**, save, then return to **Live monitor** and click **Start capture**. This enables viewing; devices are opened only while a player needs them. Click **Enable sound** to hear audio if the browser requires it.
 
-Allow **3210/TCP** for the application and authenticated signaling, plus **8189/UDP and TCP** for media. RTSP, raw WHEP and management ports remain loopback-only. HTTP password login does not encrypt login data; use HTTPS on shared or untrusted networks.
+Allow **3210/TCP** for the web application and **8189/UDP and TCP** for WebRTC media. Keep internal media and management ports private. Use HTTPS on shared or untrusted networks because HTTP does not encrypt login data.
 
 ## Documentation
 
-- [Linux / Ubuntu and systemd deployment](docs/DEPLOYMENT.md)
-- [Architecture and security boundaries](docs/ARCHITECTURE.md)
+- [Linux and systemd deployment](docs/DEPLOYMENT.md)
 - [Configuration and troubleshooting](docs/CONFIGURATION.md)
-- [Official sources and installed versions](docs/RESEARCH.md)
+- [Architecture and access boundaries](docs/ARCHITECTURE.md)
+- [Technology choices and dependency policy](docs/RESEARCH.md)
 - [Verification scope](docs/VERIFICATION.md)
-- [Contributing](CONTRIBUTING.md) and [security reporting](SECURITY.md)
 
-## Development
+## Development and contributing
+
+React, TypeScript and Vite provide the interface; Fastify serves the application and APIs. FFmpeg encodes H.264/Opus, and MediaMTX delivers media through WebRTC/WHEP. The repository uses npm workspaces, with tested dependencies recorded in `package-lock.json`.
 
 ```bash
-npm run dev       # Vite at 127.0.0.1:5173, API at 3210
+npm run dev
 npm run check
 npm run lint
 npm test
 npm run build
-npm run media:install
-npx playwright install chromium
-npm run test:e2e
 ```
 
-End-to-end tests use actual FFmpeg → MediaMTX → Chromium media transmission with synthetic inputs, an isolated data directory, random test credentials and a loopback-only web server. They do not establish real-camera performance, production deployment or phone compatibility. Device failures are reported; the application never silently substitutes demo media.
+For contribution guidelines and browser test setup, see [Contributing](CONTRIBUTING.md). Report vulnerabilities through the [security policy](SECURITY.md).
+
+## License
+
+[MIT](LICENSE). Upstream software retains its own licenses.
+
+---
+
+Documentation: **English** | [Simplified Chinese](README.zh-CN.md)

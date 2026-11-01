@@ -32,7 +32,7 @@ nvidia-smi
 
 ## 2. 安装和构建项目
 
-在独立源码文件夹中执行，不要把所有项目共用的父文件夹初始化为仓库：
+在独立源码文件夹中执行：
 
 ```bash
 git clone https://github.com/Snake-Konginchrist/lanvoryn.git
@@ -60,15 +60,15 @@ npm run build
 
 MediaMTX 安装器查询上游 GitHub 最新稳定 Release，下载与系统/架构匹配的官方包，核对官方 `checksums.sha256`，校验不通过就停止。安装不包含 FFmpeg 或显卡驱动。可用 `LANVORYN_MEDIAMTX_VERSION=v版本 npm run media:install` 固定经验证的版本。
 
-## 3. 切换现有 uStreamer
+## 3. 释放其他应用占用的设备（按需）
 
-不要让 uStreamer 和新采集进程争用同一个摄像头。准备切换时运行：
+没有其他应用占用设备时，跳过此步；否则，切换前先停止原采集应用。例如，已有 uStreamer systemd 服务时运行：
 
 ```bash
 sudo systemctl stop ustreamer.service
 ```
 
-先保留原服务配置。在新方案通过真机验收后，再决定是否执行 `sudo systemctl disable ustreamer.service`。
+此命令只停止服务，不卸载 uStreamer 软件。保留原配置用于回退，在新方案通过真机验收后再决定是否禁用原服务的开机启动。其他占用摄像头或麦克风的服务同样处理。
 
 ## 4. 安装 systemd 服务
 
@@ -94,9 +94,9 @@ bash scripts/install-systemd.sh --node "$(node -p 'process.execPath')" --npm "$(
 
 如果直接通过 sudo 调用，也应传入这些路径，避免 sudo 替换 PATH。安装器还接受 `LANVORYN_NODE_BIN`、`LANVORYN_NPM_BIN`、`LANVORYN_SERVICE_USER` 覆盖值。纯 root 安装、没有原始调用用户时默认使用独立的 `lanvoryn` 账号，也可以通过 `--user lanvoryn` 主动选择。所选账号必须有权执行所选 Node；权限不匹配会明确报错，不会自动放宽家目录权限。
 
-生成的应用服务使用实际 Node 绝对路径与 `ProtectHome=read-only`，保留只读家目录和 Unix 权限限制，仅应用数据目录可写。每次启动不需要加载 shell 或 nvm。以后删除或切换该 Node 版本时，重新运行安装器更新服务路径即可。`deploy/` 下的文件是模板，需由安装器渲染；本次修改模板不会直接操作服务器。
+生成的应用服务使用实际 Node 绝对路径与 `ProtectHome=read-only`，保留只读家目录和 Unix 权限限制，仅应用数据目录可写。每次启动不需要加载 shell 或 nvm。以后删除或切换该 Node 版本时，重新运行安装器更新服务路径即可。`deploy/` 下的文件是模板，由安装器渲染。
 
-服务默认开机启动。第一次打开网页后，默认仍停止采集；登录后选择设备与参数再开始。支持 NVENC 的 NVIDIA 显卡可选择 `h264_nvenc`，但需要 NVIDIA 驱动和 FFmpeg 的 NVENC 实际可用。未配置真实硬件的机器不要直接套用 GPU 设置。
+两个服务默认开机启动，首次安装后尚未开放观看。登录后在“采集参数”中选择设备并保存，再到“实时监看”点击“开始采集”开放观看；设备只在有播放需求时占用，服务空闲时会释放。选择 NVIDIA NVENC 前应先验证驱动与 FFmpeg 支持，编码失败会明确报错，不会自动切换编码器。
 
 ```bash
 sudo systemctl status lanvoryn.service lanvoryn-media.service
@@ -104,6 +104,8 @@ sudo journalctl -u lanvoryn.service -u lanvoryn-media.service -f
 sudo systemctl restart lanvoryn.service
 sudo systemctl stop lanvoryn.service
 ```
+
+状态分页界面按 `q` 退出，也可使用 `systemctl --no-pager status lanvoryn lanvoryn-media`。跟随日志时按 Ctrl+C 结束查看。
 
 `systemctl stop lanvoryn` 会终止 FFmpeg 子进程并释放设备。网页里的“隐私停止”停止采集且切回手动模式，后台服务仍保持在线以便以后重新开启。
 
@@ -135,9 +137,20 @@ LANVORYN_SECURE_COOKIE=true
 
 ## 更新、备份与回退
 
-备份 `/etc/lanvoryn`、`/var/lib/lanvoryn` 和原来的 uStreamer 服务文件；凭据备份必须保密。升级时在独立源码目录 `npm ci`、构建、安装上游媒体包并重新运行安装脚本。已有账号和环境文件会保留，媒体配置会采用你本次生成的版本；先检查 IP 和端口。
+备份 `/etc/lanvoryn` 和 `/var/lib/lanvoryn`，凭据备份必须保密。在源码目录拉取更新、安装依赖和所需媒体版本、重新生成媒体配置、构建并运行安装器：
 
-回退：停止 `lanvoryn` 和 `lanvoryn-media`，运行 `sudo systemctl start ustreamer.service`。不要同时启用两套摄像头采集。需要卸载时先 disable/stop 两个 Lanvoryn 服务，再按实际需要删除部署文件；不要未经备份删除 `/var/lib/lanvoryn`。
+```bash
+git pull --ff-only
+npm ci
+npm run media:install
+npm run media:config
+npm run build
+bash scripts/install-systemd.sh
+```
+
+已有账号和 `/etc/lanvoryn/lanvoryn.env` 会保留。新生成的媒体配置会替换部署中的版本，生成前先确认源码 `.env` 中的媒体地址和端口正确。升级后刷新已打开的网页；重启应用后需要重新登录。
+
+回退 Lanvoryn 时，在源码目录切换到之前的 Release，重新构建和安装，必要时恢复匹配的配置与数据备份。从其他采集应用迁移时，还应保留原应用的服务配置；恢复原应用前先停止两个 Lanvoryn 服务。卸载时先禁用并停止这两个服务，再按需删除部署文件；数据应保留到备份确认可用后再处理。
 
 ## IP 属地
 
@@ -149,6 +162,6 @@ LANVORYN_SECURE_COOKIE=true
 
 ## 按需采集
 
-服务在线不代表持续采集。只在播放页实际请求播放时占用所需设备：仅视频不打开麦克风，仅音频不打开摄像头。暂停、离开播放页、切到后台或关闭网页后撤销需求（主动本地录制时允许后台继续）；多个观看者的需求合并，最后一个退出后停止采集。异常断网或浏览器未发出关闭请求时，需求在最后一次心跳后 30 秒到期，后台在约 2 秒内回收。
+服务在线不代表持续采集。在允许观看的时段，每个播放器只请求所需输入：仅视频不请求麦克风，仅音频不请求摄像头。多个观看者的需求合并，因此其他观看者仍可能占用某个输入。暂停、离开播放页、切到后台或关闭网页后撤销该播放器的需求，主动开启的本地录制可在后台继续；最后一个观看者离开后停止采集。异常断网或浏览器未发出关闭请求时，需求在最后一次心跳后 30 秒到期，后台在约 2 秒内回收。
 
 定时计划和持续开放控制可观看的时段，无人播放时仍释放设备。“隐私停止”会禁止观看并断开现有播放。浏览器默认静音仅控制本机输出；如只要画面，请选择“仅视频”。播放轨道组合变化可能短暂重连其他观看者。

@@ -33,9 +33,9 @@ Input audio rate must be supported by the device. Opus output uses 48 kHz, with 
 | Write request rejected          | Same origin, preserved Host, X-Lanvoryn-Request: 1 header; do not enable arbitrary cross-origin access                   |
 | Privacy stop changed scheduling | Manual operations intentionally select manual mode; restore scheduled mode explicitly                                 |
 
-## Languages
+## Preferences
 
-Bundled i18next resources cover Simplified/Traditional Chinese, English, Japanese, Korean, Spanish, French and German. Browser language is detected and can be overridden on the login page or console. `zh-Hant`, `zh-TW`, `zh-HK` and `zh-MO` select Traditional Chinese.
+Open Preferences on the login page or at the bottom of the console sidebar to choose the language and system, light or dark theme. These choices are saved in the browser. Bundled i18next resources cover Simplified/Traditional Chinese, English, Japanese, Korean, Spanish, French and German. Browser language is detected initially; `zh-Hant`, `zh-TW`, `zh-HK` and `zh-MO` select Traditional Chinese.
 
 Device names, V4L2 identifiers and raw FFmpeg/system diagnostics retain their original technical text. Displayed dates follow the selected language, while capture windows always execute in the saved schedule time zone.
 
@@ -53,6 +53,6 @@ With `trustProxy=false`, the connection peer is used. Behind a reverse proxy thi
 
 ## On-demand capture
 
-An online service does not keep devices open. Playback requests capture only the required inputs: video-only leaves the microphone closed and audio-only leaves the camera closed. Pausing, leaving the playback page, moving it to the background or closing it releases that player’s demand. An explicit local recording can continue in the background. Multiple players share the union of their requested inputs; capture stops after the final player leaves. If a browser disappears without cleanup, its demand expires 30 seconds after its last heartbeat and is reclaimed within approximately two more seconds.
+An online service does not keep devices open. In an allowed viewing period, each player requests only the inputs it needs: video-only does not request a microphone and audio-only does not request a camera. Multiple players share the union of their requested inputs, so another player may keep an input in use. Pausing, leaving the playback page, moving it to the background or closing it releases that player’s demand. An explicit local recording can continue in the background. Capture stops after the final player leaves. If a browser disappears without cleanup, its demand expires 30 seconds after its last heartbeat and is reclaimed within approximately two more seconds.
 
 Schedules and continuous availability determine when playback is permitted; idle devices are still released. Privacy stop blocks playback and disconnects current players. Browser mute only affects local output; select video-only to avoid requesting audio. Changes to the active track combination can briefly reconnect other players.

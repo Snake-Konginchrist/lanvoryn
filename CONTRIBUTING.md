@@ -6,6 +6,10 @@ Use a current stable Node.js LTS and npm. Install with `npm ci`; add or upgrade 
 
 Before submitting, run `npm run check`, `npm run lint`, `npm test` and `npm run build`. Changes to playback, permissions or capture also require `npm run test:e2e`. Hardware reports should identify the OS, camera mode, encoder and browser. Do not present synthetic tests as real-camera acceptance.
 
+Browser tests also need FFmpeg, the MediaMTX binary and Playwright Chromium. Install the test dependencies with `npm run media:install` and `npx playwright install chromium`, then run `npm run test:e2e`. The test stack creates its own temporary account and state under `.runtime/e2e`; it uses generated video and audio instead of physical devices.
+
+Keep English and Simplified Chinese documentation synchronized. Public screenshots must use isolated demo data, generated media, and example hostnames and addresses, without real device details or credentials.
+
 Keep shared validation/scheduling, server device/security logic and browser presentation separate. Never add endpoints accepting arbitrary commands, filter expressions or media URLs. Locale files must have identical keys and interpolation variables. Passwords, tokens and SDP do not belong in locale resources or browser persistent storage.
 
 ## What belongs in Git

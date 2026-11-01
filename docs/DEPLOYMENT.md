@@ -52,15 +52,15 @@ npm run build
 
 The installer downloads the latest stable official MediaMTX GitHub release for the current platform and verifies its official SHA-256 checksum. It does not install FFmpeg or GPU drivers. Set `LANVORYN_MEDIAMTX_VERSION=vVERSION` when you need a specific previously tested release.
 
-## 3. Release the camera from uStreamer
+## 3. Release devices from other applications (if needed)
 
-When ready to switch, stop the existing capture service:
+Skip this step if no other application uses the devices. Otherwise, stop the conflicting capture application before switching. For an existing uStreamer systemd service, for example:
 
 ```bash
 sudo systemctl stop ustreamer.service
 ```
 
-Keep its configuration for rollback. Disable its automatic startup only after the new installation passes hardware acceptance. Two capture processes must not compete for the same camera.
+This stops that service; it does not uninstall uStreamer. Keep the previous configuration for rollback and disable automatic startup only after the new installation passes hardware acceptance. The same applies to other camera or microphone capture services.
 
 ## 4. Install systemd services
 
@@ -73,7 +73,7 @@ Run the installer from the user shell where your preferred Node/npm are availabl
 The first installation prompts for:
 
 1. Your current Linux user's password for `sudo`.
-2. `管理员账号 [admin]：`: press Enter to use `admin`, or enter a custom username. This web administrator account is separate from the Linux user.
+2. Administrator username: press Enter to use `admin`, or enter a custom username. This web administrator account is separate from the Linux user.
 3. An administrator password of 12–128 characters, followed by confirmation. Password input is hidden.
 
 Credentials are stored in `/var/lib/lanvoryn/credentials.json`; passwords use salted scrypt hashes, without a database. If setup fails, keep the terminal open, address its final error and rerun the installation command. Existing credentials are retained on subsequent installations.
@@ -86,9 +86,9 @@ bash scripts/install-systemd.sh --node "$(node -p 'process.execPath')" --npm "$(
 
 When invoking through sudo directly, pass those paths explicitly because sudo may replace PATH. `LANVORYN_NODE_BIN`, `LANVORYN_NPM_BIN` and `LANVORYN_SERVICE_USER` are optional installer overrides. A root-only installation without a caller defaults to the dedicated `lanvoryn` account; `--user lanvoryn` also selects that account explicitly. The selected account must be able to execute the chosen Node; the installer reports incompatible permissions rather than changing home-directory access.
 
-The generated application unit uses the actual absolute Node path and `ProtectHome=read-only`, retaining read-only home access and ordinary Unix ownership permissions. It does not run a shell or initialize nvm at every startup. Only the application state directory is writable. After removing or changing the selected Node version, rerun the installer to update the unit. Unit files in `deploy/` are templates, not files to copy without rendering. This is Linux systemd deployment; no server changes are made by editing these local templates.
+The generated application unit uses the actual absolute Node path and `ProtectHome=read-only`, retaining read-only home access and ordinary Unix ownership permissions. It does not run a shell or initialize nvm at every startup. Only the application state directory is writable. After removing or changing the selected Node version, rerun the installer to update the unit. Unit files in `deploy/` are templates rendered by the installer.
 
-Both services start at boot. Capture remains off initially. Open the application, configure actual devices and start capture. Choose NVIDIA NVENC only after testing support; the application reports encoder errors rather than silently changing encoders.
+Both services start at boot. Viewing is disabled on first installation. Sign in, select actual devices in Capture settings and save, then click Start capture in Live monitor to allow viewing. Devices are opened only for active playback; an idle service leaves them free. Choose NVIDIA NVENC only after testing support; the application reports encoder errors rather than silently changing encoders.
 
 ```bash
 sudo systemctl status lanvoryn.service lanvoryn-media.service
@@ -96,6 +96,8 @@ sudo journalctl -u lanvoryn.service -u lanvoryn-media.service -f
 sudo systemctl restart lanvoryn.service
 sudo systemctl stop lanvoryn.service
 ```
+
+Press `q` to leave the status pager, or use `systemctl --no-pager status lanvoryn lanvoryn-media`. Press Ctrl+C to stop following the journal.
 
 Stopping Lanvoryn terminates its FFmpeg process. The web **Privacy stop** action stops capture and selects manual mode while keeping the console available.
 
@@ -127,9 +129,20 @@ Permit SDP requests of at least 64 KB. WHEP uses HTTP POST/DELETE, not WebSocket
 
 ## Updates and rollback
 
-Back up `/etc/lanvoryn`, `/var/lib/lanvoryn` and the original uStreamer unit. Protect credential backups. Update from a separate source checkout, run `npm ci`, build, install and regenerate the desired media release, then rerun the installation script. Existing accounts and the deployed environment file are retained; the newly generated media configuration replaces the previous one, so check IPs and ports first.
+Back up `/etc/lanvoryn` and `/var/lib/lanvoryn`; protect credential backups. In your source checkout, pull the desired update, run `npm ci`, install the desired media release, regenerate its configuration, build and rerun the installer:
 
-To roll back, stop `lanvoryn` and `lanvoryn-media`, then start `ustreamer.service`. Do not run both camera capture pipelines. To uninstall, disable and stop both Lanvoryn units, then remove deployment files as appropriate; retain state until you have a verified backup.
+```bash
+git pull --ff-only
+npm ci
+npm run media:install
+npm run media:config
+npm run build
+bash scripts/install-systemd.sh
+```
+
+Existing accounts and `/etc/lanvoryn/lanvoryn.env` are retained. The generated media configuration replaces the deployed one: check that the source `.env` has the intended media address and ports before generating it. Refresh open browser tabs after updating; restarting the application requires signing in again.
+
+To roll back Lanvoryn, check out the previous release in your source directory, rebuild and reinstall it, restoring the matching configuration and state backup if necessary. If migrating from another capture application, also retain its service configuration; stop both Lanvoryn units before restoring that application. To uninstall, disable and stop both Lanvoryn units, then remove deployment files as appropriate; retain state until you have a verified backup.
 
 ## IP geolocation
 
@@ -141,6 +154,6 @@ With `trustProxy=false`, the connection peer is used. Behind a reverse proxy thi
 
 ## On-demand capture
 
-An online service does not keep devices open. Playback requests capture only the required inputs: video-only leaves the microphone closed and audio-only leaves the camera closed. Pausing, leaving the playback page, moving it to the background or closing it releases that player’s demand. An explicit local recording can continue in the background. Multiple players share the union of their requested inputs; capture stops after the final player leaves. If a browser disappears without cleanup, its demand expires 30 seconds after its last heartbeat and is reclaimed within approximately two more seconds.
+An online service does not keep devices open. In an allowed viewing period, each player requests only the inputs it needs: video-only does not request a microphone and audio-only does not request a camera. Multiple players share the union of their requested inputs, so another player may keep an input in use. Pausing, leaving the playback page, moving it to the background or closing it releases that player’s demand. An explicit local recording can continue in the background. Capture stops after the final player leaves. If a browser disappears without cleanup, its demand expires 30 seconds after its last heartbeat and is reclaimed within approximately two more seconds.
 
 Schedules and continuous availability determine when playback is permitted; idle devices are still released. Privacy stop blocks playback and disconnects current players. Browser mute only affects local output; select video-only to avoid requesting audio. Changes to the active track combination can briefly reconnect other players.

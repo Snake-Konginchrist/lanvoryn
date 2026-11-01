@@ -6,6 +6,10 @@
 
 提交前运行 `npm run check`、`npm run lint`、`npm test`、`npm run build`。涉及播放器、权限或媒体管线时运行 `npm run test:e2e`。真实硬件验证应说明系统、摄像头格式、编码器和浏览器，不能用合成源测试冒充硬件成功。
 
+浏览器测试还需要 FFmpeg、MediaMTX 程序和 Playwright Chromium。先运行 `npm run media:install` 和 `npx playwright install chromium`，再运行 `npm run test:e2e`。测试栈在 `.runtime/e2e` 创建独立的临时账号与数据，使用程序生成的画面和声音，不调用真实设备。
+
+英文与简体中文文档保持同步。公开截图必须使用隔离的演示数据、合成媒体和示例主机名与地址，不包含真实设备信息或凭据。
+
 语言资源位于 `apps/web/src/locales`，所有语言的键和插值参数必须一致。前端使用 i18next / react-i18next；密码和会话信息不进入翻译资源或浏览器 localStorage。
 
 保持模块职责清楚：shared 定义参数与时间逻辑；server 处理权限、设备和进程；web 只通过 API/WHEP 与后端通信。不接受客户端传入的任意命令、过滤器表达式或媒体地址。
