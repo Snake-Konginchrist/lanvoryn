@@ -10,6 +10,7 @@ import type { Capture } from "./capture.js";
 import { getDevices, setCameraControl } from "./devices.js";
 import { env } from "./environment.js";
 import { Geolocation } from "./geolocation.js";
+import { playbackRoutes, preparePlayback } from "./playback.js";
 import type { Store } from "./storage.js";
 import type { WebRTC } from "./webrtc.js";
 
@@ -137,7 +138,10 @@ export async function routes(
 				const config = structuredClone(store.document.config);
 				config.capture.policy = "manual";
 				config.capture.manualEnabled = action === "start";
-				if (action === "stop") await rtc.closeAll();
+				if (action === "stop") {
+					capture.demand.clear();
+					await rtc.closeAll();
+				}
 				await persist(config);
 			}
 			store.event(
@@ -190,12 +194,10 @@ export async function routes(
 		viewerEnabled: auth.credentials.viewer.enabled,
 		username: auth.credentials.admin.username,
 		sessions: await Promise.all(
-			auth
-				.list(request.session!.id)
-				.map(async (session) => ({
-					...session,
-					location: await geolocation.lookup(session.ip),
-				})),
+			auth.list(request.session!.id).map(async (session) => ({
+				...session,
+				location: await geolocation.lookup(session.ip),
+			})),
 		),
 		secureCookie: env.LANVORYN_SECURE_COOKIE === "true",
 		sessionHours: env.LANVORYN_SESSION_HOURS,
@@ -244,6 +246,7 @@ export async function routes(
 			return { ok: true };
 		},
 	);
+	playbackRoutes(app, auth, capture, store);
 	app.addContentTypeParser(
 		"application/sdp",
 		{ parseAs: "string", bodyLimit: 65536 },
@@ -257,11 +260,20 @@ export async function routes(
 				throw failure("需要 application/sdp");
 			const offer = z.string().min(20).max(65536).parse(request.body);
 			const session = request.session!;
+			const lease = z
+				.string()
+				.uuid()
+				.parse(request.headers["x-lanvoryn-playback"]);
+			await preparePlayback(capture, store, lease, session.id, offer);
 			const result = await rtc.offer(session.id, offer);
 			// 协商期间如果发生退出或撤销，立即销毁刚刚建立的媒体会话。
 			if (!auth.get(request)) {
 				await rtc.remove(result.id);
 				return reply.code(401).send({ message: "会话已过期" });
+			}
+			if (!capture.demand.has(lease, session.id)) {
+				await rtc.remove(result.id);
+				return reply.code(409).send({ message: "采集已停止" });
 			}
 			return reply
 				.code(201)

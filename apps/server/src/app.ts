@@ -55,7 +55,10 @@ export async function createApp(
 	const capture = new Capture(store);
 	const rtc = new WebRTC();
 	auth.onRevoke = (id) => {
-		void rtc.revokeOwner(id);
+		capture.demand.revokeOwner(id);
+		void Promise.all([rtc.revokeOwner(id), capture.reconcile()]).catch(
+			(error) => app.log.error(error),
+		);
 	};
 	await routes(app, store, auth, capture, rtc);
 	const webRoot = fileURLToPath(new URL("../../web/dist/", import.meta.url));
@@ -92,17 +95,19 @@ export async function createApp(
 			ticking = true;
 			try {
 				auth.prune();
+				capture.demand.prune();
 				await Promise.all([capture.reconcile(), rtc.prune()]);
 			} catch (error) {
 				app.log.error(error);
 			} finally {
 				ticking = false;
 			}
-		}, 10000);
+		}, 2000);
 		tick.unref();
 	}
 	app.addHook("onClose", async () => {
 		clearInterval(tick);
+		capture.demand.clear();
 		await rtc.closeAll();
 		await capture.stop();
 		await store.flush();

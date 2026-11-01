@@ -1,6 +1,7 @@
 import type { PlaybackMode } from "@lanvoryn/shared";
 import { useEffect, useRef, useState } from "react";
 import { t } from "../i18n";
+import { usePlaybackDemand } from "./usePlaybackDemand";
 
 export interface StreamStats {
 	fps: number;
@@ -42,6 +43,10 @@ async function gather(peer: RTCPeerConnection, signal: AbortSignal) {
 }
 
 export function useWebRTC(mode: PlaybackMode, active: boolean) {
+	const demand = usePlaybackDemand(
+		mode,
+		active && Boolean(window.RTCPeerConnection),
+	);
 	const [stream, setStream] = useState<MediaStream | null>(null);
 	const [connection, setConnection] = useState<
 		"idle" | "connecting" | "connected" | "retrying"
@@ -55,14 +60,17 @@ export function useWebRTC(mode: PlaybackMode, active: boolean) {
 		setStream(null);
 		setStats(empty);
 		setError(null);
-		if (!active) {
+		if (active && !window.RTCPeerConnection) {
+			setError(t("此浏览器不支持 WebRTC，请使用现代浏览器"));
 			setConnection("idle");
 			return;
 		}
-		if (!window.RTCPeerConnection) {
-			setError(t("此浏览器不支持 WebRTC，请使用现代浏览器"));
+		if (!active || !demand.lease) {
+			setConnection(active ? "connecting" : "idle");
 			return;
 		}
+
+		const lease = demand.lease;
 		const controller = new AbortController();
 		const peer = new RTCPeerConnection({
 			iceServers: [],
@@ -115,6 +123,7 @@ export function useWebRTC(mode: PlaybackMode, active: boolean) {
 				headers: {
 					"Content-Type": "application/sdp",
 					"X-Lanvoryn-Request": "1",
+					"X-Lanvoryn-Playback": lease,
 				},
 				body: peer.localDescription!.sdp,
 			});
@@ -200,14 +209,14 @@ export function useWebRTC(mode: PlaybackMode, active: boolean) {
 					method: "DELETE",
 					headers: { "X-Lanvoryn-Request": "1" },
 					keepalive: true,
-				});
+				}).catch(() => {});
 		};
-	}, [active, mode, attempt]);
+	}, [active, mode, attempt, demand.lease]);
 
 	return {
 		stream,
 		connection,
-		error,
+		error: demand.error ?? error,
 		stats,
 		reconnect: () => setAttempt((value) => value + 1),
 	};

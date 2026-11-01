@@ -7,6 +7,7 @@ import {
 } from "@lanvoryn/shared";
 import { env } from "./environment.js";
 import { ffmpegArgs } from "./ffmpeg.js";
+import { PlaybackDemand } from "./playback-demand.js";
 import type { Store } from "./storage.js";
 
 export class Capture {
@@ -24,7 +25,17 @@ export class Capture {
 	private logs: string[] = [];
 	private nextCache: { key: string; value: RuntimeStatus["next"] } | undefined;
 
+	readonly demand = new PlaybackDemand();
+	private inputs = { video: false, audio: false };
 	constructor(private store: Store) {}
+
+	private effectiveConfig() {
+		const config = structuredClone(this.store.document.config);
+		const wanted = this.demand.inputs;
+		config.video.enabled &&= wanted.video;
+		config.audio.enabled &&= wanted.audio;
+		return config;
+	}
 
 	reconcile(force = false) {
 		const task = this.serial.then(() => this.apply(force));
@@ -33,8 +44,11 @@ export class Capture {
 	}
 
 	private async apply(force: boolean) {
-		const config = this.store.document.config;
-		if (!shouldCapture(config.capture)) {
+		const config = this.effectiveConfig();
+		if (
+			!shouldCapture(config.capture) ||
+			(!config.video.enabled && !config.audio.enabled)
+		) {
 			if (this.child || this.retry) await this.stop();
 			this.state = "stopped";
 			this.error = null;
@@ -50,16 +64,18 @@ export class Capture {
 	}
 
 	private launch() {
-		if (!shouldCapture(this.store.document.config.capture)) return;
+		const config = this.effectiveConfig();
+		if (
+			!shouldCapture(config.capture) ||
+			(!config.video.enabled && !config.audio.enabled)
+		)
+			return;
+		this.inputs = { video: config.video.enabled, audio: config.audio.enabled };
 		this.logs = [];
 		const generation = ++this.generation;
 		const child = spawn(
 			env.LANVORYN_FFMPEG,
-			ffmpegArgs(
-				this.store.document.config,
-				env.LANVORYN_SOURCE,
-				env.LANVORYN_RTSP_URL,
-			),
+			ffmpegArgs(config, env.LANVORYN_SOURCE, env.LANVORYN_RTSP_URL),
 			{ stdio: ["ignore", "pipe", "pipe"], shell: false },
 		);
 		this.child = child;
@@ -96,6 +112,7 @@ export class Capture {
 			if (generation !== this.generation) return;
 			clearTimeout(this.watchdog);
 			this.child = null;
+			this.inputs = { video: false, audio: false };
 			this.error = this.logs.slice(-6).join("\n") || `FFmpeg 已退出（${code}）`;
 			this.store.event("error", this.error);
 			if (shouldCapture(this.store.document.config.capture)) {
@@ -129,6 +146,7 @@ export class Capture {
 			this.store.event("info", "采集已停止，摄像头和麦克风已释放");
 		}
 		this.state = "stopped";
+		this.inputs = { video: false, audio: false };
 		this.since = null;
 	}
 
@@ -154,6 +172,7 @@ export class Capture {
 			state: this.state,
 			desired: shouldCapture(config.capture),
 			source: env.LANVORYN_SOURCE,
+			capturing: this.inputs,
 			since: this.since,
 			pid: this.child?.pid ?? null,
 			restarts: this.restarts,

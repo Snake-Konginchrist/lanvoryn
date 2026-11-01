@@ -171,10 +171,10 @@
 	"六": "Sa",
 	"日": "So",
 	"让现场按你的时间开放": "Live nach Ihrem Zeitplan",
-	"计划控制服务器的摄像头与麦克风采集。停止时会释放设备，也会中断所有正在观看的连接。": "Zeitpläne steuern Kamera und Mikrofon. Beim Stoppen werden Geräte freigegeben und Wiedergaben getrennt.",
+	"计划控制服务器的摄像头与麦克风采集。停止时会释放设备，也会中断所有正在观看的连接。": "Zeitpläne begrenzen die Wiedergabezeiten. Ohne Wiedergabe werden Geräte freigegeben.",
 	"由管理员开启或停止": "Start und Stopp durch Administrator",
-	"服务启动后持续采集": "Aufnahme während des Dienstbetriebs",
-	"仅在指定每周时段内采集": "Nur in wöchentlichen Zeitfenstern",
+	"服务启动后持续采集": "Jederzeit ansehen; Aufnahme nur bei Bedarf",
+	"仅在指定每周时段内采集": "Wiedergabe nur in geplanten Zeitfenstern",
 	"计划时区": "Zeitzone des Zeitplans",
 	"使用 IANA 时区，例如 Asia/Shanghai、Europe/London。": "IANA-Zeitzone verwenden, z. B. Asia/Shanghai oder Europe/London.",
 	"手动模式保存后的状态": "Zustand nach Speichern des manuellen Modus",
@@ -276,7 +276,7 @@
 	"当前未读取到可用的硬件控制项。": "Keine Hardwaresteuerung verfügbar.",
 	"有尚未保存的更改": "Nicht gespeicherte Änderungen",
 	"所有更改已保存": "Alle Änderungen gespeichert",
-	"采集参数变更会重新连接播放": "Änderungen verbinden die Wiedergabe neu",
+	"采集参数变更会重新连接播放": "Änderungen an Parametern oder Spuren verbinden die Wiedergabe neu",
 	"放弃更改": "Änderungen verwerfen",
 	"保存并应用": "Speichern und anwenden",
 	"账号或密码错误": "Benutzername oder Passwort falsch",
@@ -349,5 +349,6 @@
 	"退出全屏": "Vollbild beenden",
 	"偏好设置": "Einstellungen",
 	"语言": "Sprache",
-	"关闭偏好设置": "Einstellungen schließen"
+	"关闭偏好设置": "Einstellungen schließen",
+	"等待观看，设备已释放": "Warten auf Wiedergabe - Geräte freigegeben"
 }

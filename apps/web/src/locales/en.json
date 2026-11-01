@@ -171,10 +171,10 @@
 	"六": "Sat",
 	"日": "Sun",
 	"让现场按你的时间开放": "Go live on your schedule",
-	"计划控制服务器的摄像头与麦克风采集。停止时会释放设备，也会中断所有正在观看的连接。": "Schedules control camera and microphone capture. Stopping releases devices and closes all viewing connections.",
+	"计划控制服务器的摄像头与麦克风采集。停止时会释放设备，也会中断所有正在观看的连接。": "Schedules limit playback availability. Idle devices are released.",
 	"由管理员开启或停止": "Started or stopped by an admin",
-	"服务启动后持续采集": "Capture whenever the service runs",
-	"仅在指定每周时段内采集": "Capture only during weekly windows",
+	"服务启动后持续采集": "Playback available anytime; capture on demand",
+	"仅在指定每周时段内采集": "Playback allowed during scheduled windows",
 	"计划时区": "Schedule time zone",
 	"使用 IANA 时区，例如 Asia/Shanghai、Europe/London。": "Use an IANA time zone, e.g. Asia/Shanghai or Europe/London.",
 	"手动模式保存后的状态": "State after saving manual mode",
@@ -276,7 +276,7 @@
 	"当前未读取到可用的硬件控制项。": "No hardware controls are available.",
 	"有尚未保存的更改": "You have unsaved changes",
 	"所有更改已保存": "All changes saved",
-	"采集参数变更会重新连接播放": "Capture changes reconnect playback",
+	"采集参数变更会重新连接播放": "Parameter or track changes reconnect playback",
 	"放弃更改": "Discard changes",
 	"保存并应用": "Save and apply",
 	"账号或密码错误": "Incorrect username or password",
@@ -349,5 +349,6 @@
 	"退出全屏": "Exit fullscreen",
 	"偏好设置": "Preferences",
 	"语言": "Language",
-	"关闭偏好设置": "Close preferences"
+	"关闭偏好设置": "Close preferences",
+	"等待观看，设备已释放": "Waiting for playback - devices released"
 }

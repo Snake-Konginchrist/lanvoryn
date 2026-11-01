@@ -171,10 +171,10 @@
 	"六": "Sam",
 	"日": "Dim",
 	"让现场按你的时间开放": "Diffusez selon votre planning",
-	"计划控制服务器的摄像头与麦克风采集。停止时会释放设备，也会中断所有正在观看的连接。": "Le planning contrôle caméra et micro. À l’arrêt, les appareils sont libérés et les lectures interrompues.",
+	"计划控制服务器的摄像头与麦克风采集。停止时会释放设备，也会中断所有正在观看的连接。": "Le planning limite l’accès. Sans lecture, les périphériques sont libérés.",
 	"由管理员开启或停止": "Démarrage et arrêt par l’administrateur",
-	"服务启动后持续采集": "Capture tant que le service fonctionne",
-	"仅在指定每周时段内采集": "Capture selon les plages hebdomadaires",
+	"服务启动后持续采集": "Accès permanent ; capture à la demande",
+	"仅在指定每周时段内采集": "Accès limité aux horaires prévus",
 	"计划时区": "Fuseau horaire du planning",
 	"使用 IANA 时区，例如 Asia/Shanghai、Europe/London。": "Utilisez un fuseau IANA, tel que Asia/Shanghai ou Europe/London.",
 	"手动模式保存后的状态": "État après enregistrement du mode manuel",
@@ -276,7 +276,7 @@
 	"当前未读取到可用的硬件控制项。": "Aucune commande matérielle disponible.",
 	"有尚未保存的更改": "Modifications non enregistrées",
 	"所有更改已保存": "Toutes les modifications sont enregistrées",
-	"采集参数变更会重新连接播放": "Les modifications reconnectent la lecture",
+	"采集参数变更会重新连接播放": "Les changements de paramètres ou de pistes relancent la connexion",
 	"放弃更改": "Annuler les modifications",
 	"保存并应用": "Enregistrer et appliquer",
 	"账号或密码错误": "Identifiant ou mot de passe incorrect",
@@ -349,5 +349,6 @@
 	"退出全屏": "Quitter le plein écran",
 	"偏好设置": "Préférences",
 	"语言": "Langue",
-	"关闭偏好设置": "Fermer les préférences"
+	"关闭偏好设置": "Fermer les préférences",
+	"等待观看，设备已释放": "En attente de lecture - périphériques libérés"
 }

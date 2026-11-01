@@ -47,6 +47,7 @@ export interface RuntimeStatus {
 	error: string | null;
 	mediaOnline: boolean;
 	streamReady: boolean;
+	capturing: { video: boolean; audio: boolean };
 	viewers: number;
 	hostname: string;
 	addresses: string[];

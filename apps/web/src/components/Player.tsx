@@ -16,9 +16,9 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { downloadBlob, fileStamp } from "../api";
+import { enterFullscreen } from "../fullscreen";
 import { useWebRTC } from "../hooks/useWebRTC";
 import { t } from "../i18n";
-import { enterFullscreen } from "../fullscreen";
 
 export function Player({
 	status,
@@ -29,6 +29,13 @@ export function Player({
 }) {
 	const [preference, setPreference] = useState<PlaybackMode>("av");
 	const [watching, setWatching] = useState(true);
+	const [recording, setRecording] = useState(false);
+	const [visible, setVisible] = useState(document.visibilityState !== "hidden");
+	useEffect(() => {
+		const update = () => setVisible(document.visibilityState !== "hidden");
+		document.addEventListener("visibilitychange", update);
+		return () => document.removeEventListener("visibilitychange", update);
+	}, []);
 	const mode: PlaybackMode = !status.video.enabled
 		? "audio"
 		: !status.audio.enabled
@@ -36,7 +43,7 @@ export function Player({
 			: preference;
 	const { stream, connection, error, stats, reconnect } = useWebRTC(
 		mode,
-		status.streamReady && watching,
+		status.desired && watching && (visible || recording),
 	);
 	const video = useRef<HTMLVideoElement>(null);
 	const stage = useRef<HTMLDivElement>(null);
@@ -46,20 +53,20 @@ export function Player({
 	);
 	const [muted, setMuted] = useState(true);
 	const [volume, setVolume] = useState(0.7);
-	const [recording, setRecording] = useState(false);
+
 	const [playBlocked, setPlayBlocked] = useState(false);
 	const [expanded, setExpanded] = useState(false);
 	useEffect(() => {
 		if (!expanded) return;
 		const previous = document.body.style.overflow;
 		document.body.style.overflow = "hidden";
-		const escape = (event: KeyboardEvent) => {
+		const exitExpanded = (event: KeyboardEvent) => {
 			if (event.key === "Escape") setExpanded(false);
 		};
-		window.addEventListener("keydown", escape);
+		window.addEventListener("keydown", exitExpanded);
 		return () => {
 			document.body.style.overflow = previous;
-			window.removeEventListener("keydown", escape);
+			window.removeEventListener("keydown", exitExpanded);
 		};
 	}, [expanded]);
 	const connected = connection === "connected";
@@ -399,7 +406,7 @@ export function Player({
 						type="button"
 						className="icon-button"
 						onClick={reconnect}
-						disabled={!watching || !status.streamReady}
+						disabled={!watching || !status.desired}
 						aria-label={t("重新连接")}
 					>
 						<RefreshCw size={17} />

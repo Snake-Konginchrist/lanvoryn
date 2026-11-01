@@ -50,3 +50,9 @@ With `trustProxy=false`, the connection peer is used. Behind a reverse proxy thi
 ## Page URLs
 
 `/login` signs in; `/live` monitors the stream; `/settings` configures capture; `/schedules` manages schedules; `/security` manages access; `/events` shows logs. Direct links, refresh and browser history are supported. Guests can only access live monitoring.
+
+## On-demand capture
+
+An online service does not keep devices open. Playback requests capture only the required inputs: video-only leaves the microphone closed and audio-only leaves the camera closed. Pausing, leaving the playback page, moving it to the background or closing it releases that player’s demand. An explicit local recording can continue in the background. Multiple players share the union of their requested inputs; capture stops after the final player leaves. If a browser disappears without cleanup, its demand expires 30 seconds after its last heartbeat and is reclaimed within approximately two more seconds.
+
+Schedules and continuous availability determine when playback is permitted; idle devices are still released. Privacy stop blocks playback and disconnects current players. Browser mute only affects local output; select video-only to avoid requesting audio. Changes to the active track combination can briefly reconnect other players.

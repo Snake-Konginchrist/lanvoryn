@@ -313,7 +313,9 @@ export default function App() {
 		status?.state === "running" && status.streamReady
 			? t("采集中")
 			: {
-					stopped: t("采集已停止"),
+					stopped: status?.desired
+						? t("等待观看，设备已释放")
+						: t("采集已停止"),
 					starting: t("启动中"),
 					retrying: t("故障重试中"),
 					running: t("等待媒体就绪"),

@@ -138,3 +138,9 @@ Administrators can view IP locations in the Access & security session list. The 
 `LANVORYN_IP_GEOLOCATION=true` is enabled by default. Set it to `false` and restart the application to disable public lookups. Successful results stay in memory for 24 hours and failures for one minute. Queries are deduplicated and limited to eight per ten seconds. The provider currently allows 60 per minute and ten per ten seconds on its free plan. Errors and timeouts do not affect authentication or playback. Only session addresses are queried; event logs retain their original IPs.
 
 With `trustProxy=false`, the connection peer is used. Behind a reverse proxy this may be the proxy address; arbitrary forwarded client headers are not trusted.
+
+## On-demand capture
+
+An online service does not keep devices open. Playback requests capture only the required inputs: video-only leaves the microphone closed and audio-only leaves the camera closed. Pausing, leaving the playback page, moving it to the background or closing it releases that player’s demand. An explicit local recording can continue in the background. Multiple players share the union of their requested inputs; capture stops after the final player leaves. If a browser disappears without cleanup, its demand expires 30 seconds after its last heartbeat and is reclaimed within approximately two more seconds.
+
+Schedules and continuous availability determine when playback is permitted; idle devices are still released. Privacy stop blocks playback and disconnects current players. Browser mute only affects local output; select video-only to avoid requesting audio. Changes to the active track combination can briefly reconnect other players.

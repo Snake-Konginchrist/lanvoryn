@@ -14,7 +14,7 @@ Lanvoryn captures video and audio with FFmpeg, routes H.264 + Opus through Media
 - Select a camera and microphone independently from multiple connected devices; inspect supported capture modes and hardware controls.
 - Adjust resolution, frame rate, encoding, video/audio bitrate, channels, capture gain, noise reduction and A/V synchronization offset.
 - Password-protected access, separate administrator and read-only guest accounts, and revocable viewing sessions.
-- Manual, continuous or scheduled capture, including overnight windows, time zones and privacy stop.
+- On-demand device capture, with manual or scheduled viewing availability, overnight windows, time zones and privacy stop.
 - Stream statistics, automatic playback reconnection and capture failure recovery.
 - Snapshots and browser-local recording.
 - Configuration import/export, event logs and systemd service management.

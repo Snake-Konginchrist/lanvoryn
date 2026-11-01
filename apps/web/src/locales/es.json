@@ -171,10 +171,10 @@
 	"六": "Sáb",
 	"日": "Dom",
 	"让现场按你的时间开放": "Emite según tu horario",
-	"计划控制服务器的摄像头与麦克风采集。停止时会释放设备，也会中断所有正在观看的连接。": "El horario controla cámara y micrófono. Al detener se liberan los dispositivos y se cierran las conexiones.",
+	"计划控制服务器的摄像头与麦克风采集。停止时会释放设备，也会中断所有正在观看的连接。": "El horario limita el acceso. Sin reproducción, se liberan los dispositivos.",
 	"由管理员开启或停止": "El administrador inicia o detiene",
-	"服务启动后持续采集": "Captura mientras funciona el servicio",
-	"仅在指定每周时段内采集": "Captura solo en los horarios semanales",
+	"服务启动后持续采集": "Acceso en cualquier momento; captura bajo demanda",
+	"仅在指定每周时段内采集": "Acceso solo en el horario programado",
 	"计划时区": "Zona horaria",
 	"使用 IANA 时区，例如 Asia/Shanghai、Europe/London。": "Usa una zona IANA, como Asia/Shanghai o Europe/London.",
 	"手动模式保存后的状态": "Estado al guardar el modo manual",
@@ -276,7 +276,7 @@
 	"当前未读取到可用的硬件控制项。": "No hay controles físicos disponibles.",
 	"有尚未保存的更改": "Hay cambios sin guardar",
 	"所有更改已保存": "Todos los cambios guardados",
-	"采集参数变更会重新连接播放": "Los cambios reconectan la reproducción",
+	"采集参数变更会重新连接播放": "Los cambios de parámetros o pistas reconectan la reproducción",
 	"放弃更改": "Descartar cambios",
 	"保存并应用": "Guardar y aplicar",
 	"账号或密码错误": "Usuario o contraseña incorrectos",
@@ -349,5 +349,6 @@
 	"退出全屏": "Salir de pantalla completa",
 	"偏好设置": "Preferencias",
 	"语言": "Idioma",
-	"关闭偏好设置": "Cerrar preferencias"
+	"关闭偏好设置": "Cerrar preferencias",
+	"等待观看，设备已释放": "Esperando reproducción - dispositivos liberados"
 }
