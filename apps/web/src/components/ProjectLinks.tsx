@@ -18,7 +18,7 @@ export function ProjectLinks({ login = false }: { login?: boolean }) {
 				rel="noopener noreferrer"
 			>
 				<FontAwesomeIcon icon={faGithub} aria-hidden="true" />
-				<span>{t("开源仓库")}</span>
+				<span>GitHub</span>
 			</a>
 			<a
 				className="version-link"
