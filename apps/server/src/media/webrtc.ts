@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { env } from "./environment.js";
+import { env } from "../environment.js";
 
 interface Reader {
 	owner: string;

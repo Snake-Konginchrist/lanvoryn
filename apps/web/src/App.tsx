@@ -37,17 +37,18 @@ import {
 	useNavigate,
 } from "react-router";
 import { api } from "./api";
-import { ConfigTransfer } from "./components/ConfigTransfer";
+import { Login } from "./components/auth/Login";
+import { Security } from "./components/auth/Security";
 import { Events } from "./components/Events";
-import { Login } from "./components/Login";
-import { Player } from "./components/Player";
-import { Preferences } from "./components/Preferences";
 import { ProjectLinks } from "./components/ProjectLinks";
-import { Schedules } from "./components/Schedules";
-import { Security } from "./components/Security";
-import { Settings } from "./components/Settings";
+import { Player } from "./components/player/Player";
+import { Preferences } from "./components/preferences/Preferences";
+import { ConfigTransfer } from "./components/settings/ConfigTransfer";
+import { Schedules } from "./components/settings/Schedules";
+import { Settings } from "./components/settings/Settings";
 import { SaveBar } from "./components/ui";
 import { afterControl, afterSave } from "./config-draft";
+import { useSessionActivity } from "./hooks/useSessionActivity";
 import { locale, t, translateMessage } from "./i18n";
 import { loginDestination, pageFromPath, pagePaths } from "./routes";
 
@@ -92,11 +93,12 @@ async function copyAddress(text: string) {
 }
 
 export default function App() {
-	const { i18n } = useTranslation();
+	const { t: translate } = useTranslation();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const page = pageFromPath(location.pathname) ?? "live";
 	const [role, setRole] = useState<Role | null | undefined>(undefined);
+	useSessionActivity(Boolean(role));
 	const roleRef = useRef<Role | null | undefined>(undefined);
 	const changeRole = useCallback((next: Role | null) => {
 		roleRef.current = next;
@@ -146,6 +148,7 @@ export default function App() {
 			window.removeEventListener("lanvoryn:unauthorized", expired);
 		};
 	}, [logoutLocal, changeRole]);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: 同一条通知再次出现时也要重置关闭计时。
 	useEffect(() => {
 		if (!notice) return;
 		const timer = setTimeout(() => setNotice(""), 6000);
@@ -199,8 +202,8 @@ export default function App() {
 			location.pathname === "/login"
 				? "登录"
 				: (navigation.find((item) => item.id === page)?.title ?? "实时监看");
-		document.title = `Lanvoryn - ${t(title)}`;
-	}, [location.pathname, page, i18n.resolvedLanguage]);
+		document.title = `Lanvoryn - ${translate(title)}`;
+	}, [location.pathname, page, translate]);
 
 	// 抽屉打开时锁定背景滚动；返回页面或切到桌面布局时释放。
 	useEffect(() => {
@@ -224,6 +227,7 @@ export default function App() {
 			window.removeEventListener("keydown", closeOnEscape);
 		};
 	}, [sidebar]);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: 页面路径变化时关闭移动端抽屉。
 	useEffect(() => {
 		setSidebar(false);
 	}, [location.pathname]);

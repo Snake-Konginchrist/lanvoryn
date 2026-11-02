@@ -2,7 +2,7 @@
 
 **English** · [简体中文](RESEARCH.zh-CN.md)
 
-Research and initial dependency resolution: **2026-10-31**. Recommendations are based on the following primary sources:
+Research and initial dependency resolution: **2026-10-31**. Latest npm dependency refresh: **2026-11-02**. Recommendations are based on the following primary sources:
 
 | Decision                                          | Official source                                                                                            |
 | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
@@ -39,8 +39,8 @@ The dependency snapshot below is generated from installed workspace manifests. O
 | ---------------- | --------- |
 | fastify          | 5.12.7    |
 | zod              | 4.6.7     |
-| i18next          | 26.5.12   |
-| react-i18next    | 17.1.9    |
+| i18next          | 26.7.1    |
+| react-i18next    | 17.1.11   |
 | react            | 19.3.1    |
 | typescript       | 7.0.2     |
 | vite             | 8.3.5     |

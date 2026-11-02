@@ -15,10 +15,10 @@ import {
 	X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { downloadBlob, fileStamp } from "../api";
-import { enterFullscreen } from "../fullscreen";
-import { useWebRTC } from "../hooks/useWebRTC";
-import { t } from "../i18n";
+import { downloadBlob, fileStamp } from "../../api";
+import { t } from "../../i18n";
+import { enterFullscreen } from "./fullscreen";
+import { useWebRTC } from "./useWebRTC";
 
 export function Player({
 	status,

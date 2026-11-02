@@ -15,7 +15,7 @@ flowchart LR
 
 Fastify serves the production React application and same-origin APIs. Browsers receive media through RTCPeerConnection and WHEP; they never need to grant access to their own camera or microphone.
 
-`packages/shared` defines validated settings, DTOs and weekly scheduling. Server modules separate authentication, playback demand (`playback-demand.ts` / `playback.ts`), capture supervision, FFmpeg argument construction, device inspection, WHEP session ownership and persistence. Local JSON resources supply eight UI languages through i18next.
+`packages/shared` defines validated settings, DTOs and weekly scheduling. Server modules separate authentication, playback demand (`media/playback-demand.ts` / `media/playback.ts`), capture supervision, FFmpeg argument construction, device inspection, WHEP session ownership and persistence. Browser components are grouped into `auth`, `player`, `settings` and `preferences`; server `security` and `media` modules group their corresponding responsibilities. Local JSON resources supply eight UI languages through i18next.
 
 MediaMTX routes media; it does not automatically convert MJPEG to H.264. FFmpeg captures the requested inputs in one process and performs video/audio encoding. Opus output is 48 kHz, independently of the selected input sample rate. Viewers share capture and encoding, while each media connection consumes network bandwidth.
 
@@ -29,7 +29,7 @@ Browser mute controls local output only and does not release an audio request. P
 
 ## Access boundary
 
-Administrators change settings, schedules and credentials; guests can only inspect status and watch/listen. Credentials require local setup, have no default password, and use salted scrypt hashes. Opaque in-memory sessions are carried by HttpOnly / SameSite=Strict cookies. Restarting the application invalidates all logins. Only language and theme preferences go into localStorage.
+Administrators change settings, schedules and credentials; guests can only inspect status and watch/listen. Credentials require local setup, have no default password, and use salted scrypt hashes. Opaque session tokens are carried by HttpOnly / SameSite=Strict cookies. Session records are persisted in `sessions.json` using SHA-256 token hashes, so normal restarts retain valid logins. Sessions expire after seven days without qualifying activity and no later than thirty days after login. Status polling does not renew them; foreground user activity and playback do. Only language and theme preferences go into localStorage.
 
 Raw RTSP, WHEP and management listeners bind to loopback. MediaMTX internal permissions also restrict source IPs to loopback. External clients must pass Lanvoryn authentication before negotiating a media session. The media port is not an anonymous player and uses WebRTC session keys. The host OS and local users are trusted; this is not an isolation mechanism between local system accounts.
 

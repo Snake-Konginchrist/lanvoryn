@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { enterFullscreen } from "../apps/web/src/fullscreen.js";
+import { enterFullscreen } from "../apps/web/src/components/player/fullscreen.js";
 
 test("fullscreen selects standard, iOS video or page fallback", async () => {
 	let native = 0;

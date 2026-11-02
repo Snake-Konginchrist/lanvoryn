@@ -18,11 +18,12 @@ flowchart LR
 ## 模块
 
 - `packages/shared`：Zod 参数约束、默认设置、DTO 和周计划算法。
-- `apps/server/src/auth.ts`：密码验证与内存会话；服务重启后必须重新登录。
-- `playback-demand.ts` / `playback.ts`：按登录会话登记播放需求、续期与回收。
-- `capture.ts` / `ffmpeg.ts`：单个 FFmpeg 进程、参数数组、退避重试和主动停止。
-- `webrtc.ts`：对每个登录会话登记 WHEP 连接，注销、密码变更、撤销或到期时删除对应媒体会话。
-- `devices.ts`：V4L2 / ALSA 枚举和受验证的硬件控制。
+- `apps/server/src/security/auth.ts`：密码验证与持久会话，正常重启保留有效登录。
+- `media/playback-demand.ts` / `media/playback.ts`：按登录会话登记播放需求、续期与回收。
+- `media/capture.ts` / `media/ffmpeg.ts`：单个 FFmpeg 进程、参数数组、退避重试和主动停止。
+- `media/webrtc.ts`：对每个登录会话登记 WHEP 连接，注销、密码变更、撤销或到期时删除对应媒体会话。
+- `media/devices.ts`：V4L2 / ALSA 枚举和受验证的硬件控制。
+- `apps/web/src/components`：按 `auth`、`player`、`settings`、`preferences` 分组。
 - `apps/web/src/locales`：八种语言的本地资源，不依赖在线翻译。
 
 MediaMTX 负责媒体路由，不负责把 MJPEG 自动转成 H.264。FFmpeg 在单个进程中采集所需输入并编码；音频输入采样率可配置，Opus 发布输出统一为 48 kHz。多个观看者共享采集和编码，但每个观看连接都会增加网络带宽。
@@ -37,7 +38,7 @@ MediaMTX 负责媒体路由，不负责把 MJPEG 自动转成 H.264。FFmpeg 在
 
 ## 权限
 
-管理员可设置设备、参数、计划和密码；访客仅能读取运行状态并观看。账号由本地交互设置，没有默认密码。密码使用独立随机盐的 scrypt，令牌放 HttpOnly / SameSite=Strict Cookie，不进入 localStorage；localStorage 仅记录语言与主题偏好。
+管理员可设置设备、参数、计划和密码；访客仅能读取运行状态并观看。账号由本地交互设置，没有默认密码。密码使用独立随机盐的 scrypt，令牌放 HttpOnly / SameSite=Strict Cookie，不进入 localStorage；localStorage 仅记录语言与主题偏好。会话记录持久保存在 `sessions.json` 中，只保存令牌的 SHA-256 哈希，正常重启不会清除有效登录。连续 7 天无有效使用或登录满 30 天后过期；前台用户操作和实际播放会续期，后台状态轮询不会。
 
 MediaMTX 的信令、管理和 RTSP 只绑定回环地址，内部用户也只允许回环源 IP。外部客户端必须通过 Lanvoryn 认证后才能取得 WebRTC 协商结果。8189 是媒体端口，不是匿名播放网页；媒体使用 WebRTC 的会话密钥。信任本机 OS 和本机用户，不能把这个边界当成本机多用户隔离。
 

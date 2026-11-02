@@ -8,12 +8,12 @@ export function renderUnit(template, { node, user, group }) {
 	if (!node.startsWith("/") || /[\r\n\0]/.test(node))
 		throw new Error("Node must be an absolute executable path");
 	// systemd expands %, and quoted arguments require escaping backslashes and quotes.
-	const escape = (value) =>
+	const escapeArgument = (value) =>
 		value.replaceAll("\\", "\\\\").replaceAll('"', '\\"').replaceAll("%", "%%");
 	return template
 		.replaceAll("@SERVICE_USER@", user)
 		.replaceAll("@SERVICE_GROUP@", group)
-		.replaceAll("@NODE_COMMAND@", `"${escape(node)}"`);
+		.replaceAll("@NODE_COMMAND@", `"${escapeArgument(node)}"`);
 }
 
 if (

@@ -8,9 +8,9 @@ import {
 	Video,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { api } from "../api";
-import { t } from "../i18n";
-import { Field, NumberField, Section, SelectField, Toggle } from "./ui";
+import { api } from "../../api";
+import { t } from "../../i18n";
+import { Field, NumberField, Section, SelectField, Toggle } from "../ui";
 
 interface Props {
 	config: AppConfig;

@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { defaultConfig } from "@lanvoryn/shared";
-import { parseControls, parseModes } from "../apps/server/src/devices.js";
-import { ffmpegArgs } from "../apps/server/src/ffmpeg.js";
+import { parseControls, parseModes } from "../apps/server/src/media/devices.js";
+import { ffmpegArgs } from "../apps/server/src/media/ffmpeg.js";
 
 test("正确解析 V4L2 格式，排除浏览器管线不支持的输入格式", () => {
 	assert.deepEqual(

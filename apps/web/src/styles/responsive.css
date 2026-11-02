@@ -613,9 +613,6 @@
 		line-height: 1.4;
 		letter-spacing: -1px;
 	}
-	.story-copy h1 > br {
-		display: none;
-	}
 	.story-copy p {
 		font-size: 11px;
 		line-height: 1.9;
@@ -643,11 +640,11 @@
 		display: none;
 	}
 	.login-card h2 {
-		font-size: 23px;
+		font-size: 27px;
 	}
 	.login-card > p {
 		margin-bottom: 27px;
-		font-size: 11px;
+		font-size: 13px;
 	}
 	.login-card > .eyebrow {
 		font-size: 8px;

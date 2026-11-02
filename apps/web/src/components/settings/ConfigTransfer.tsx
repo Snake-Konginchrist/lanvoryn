@@ -1,8 +1,8 @@
 import { type AppConfig, configSchema } from "@lanvoryn/shared";
 import { Download, Upload } from "lucide-react";
 import { useRef } from "react";
-import { downloadBlob, fileStamp } from "../api";
-import { t } from "../i18n";
+import { downloadBlob, fileStamp } from "../../api";
+import { t } from "../../i18n";
 
 export function ConfigTransfer({
 	config,

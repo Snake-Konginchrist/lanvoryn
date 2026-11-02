@@ -5,10 +5,10 @@ import {
 	type RuntimeStatus,
 	shouldCapture,
 } from "@lanvoryn/shared";
-import { env } from "./environment.js";
+import { env } from "../environment.js";
+import type { Store } from "../storage.js";
 import { ffmpegArgs } from "./ffmpeg.js";
 import { PlaybackDemand } from "./playback-demand.js";
-import type { Store } from "./storage.js";
 
 export class Capture {
 	private child: ChildProcess | null = null;

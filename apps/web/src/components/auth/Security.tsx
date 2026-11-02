@@ -1,16 +1,17 @@
 import type { IpLocation, SessionInfo } from "@lanvoryn/shared";
 import { KeyRound, RefreshCw, ShieldCheck, Users } from "lucide-react";
 import { useEffect, useState } from "react";
-import { api } from "../api";
-import { locale, t } from "../i18n";
-import { Field, Section, Toggle } from "./ui";
+import { api } from "../../api";
+import { locale, t } from "../../i18n";
+import { Field, Section, Toggle } from "../ui";
 
 interface SecurityData {
 	viewerEnabled: boolean;
 	username: string;
 	sessions: SessionInfo[];
 	secureCookie: boolean;
-	sessionHours: number;
+	sessionIdleHours: number;
+	sessionMaxHours: number;
 }
 function locationLabel(location?: IpLocation): string {
 	if (!location) return "";

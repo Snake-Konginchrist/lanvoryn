@@ -22,7 +22,9 @@
 		document.documentElement.dataset.themePreference = preference;
 		const meta = document.querySelector('meta[name="theme-color"]');
 		if (meta) meta.content = resolved === "dark" ? "#151915" : "#f4f6ef";
-		listeners.forEach((listener) => listener());
+		listeners.forEach((listener) => {
+			listener();
+		});
 	}
 	window.lanvorynTheme = {
 		get: () => preference,

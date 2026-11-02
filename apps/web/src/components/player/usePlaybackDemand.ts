@@ -1,6 +1,6 @@
 import type { PlaybackMode } from "@lanvoryn/shared";
 import { useEffect, useState } from "react";
-import { t } from "../i18n";
+import { t } from "../../i18n";
 
 // HTTP 局域网也能使用；不依赖仅安全上下文提供的 randomUUID。
 function randomId() {

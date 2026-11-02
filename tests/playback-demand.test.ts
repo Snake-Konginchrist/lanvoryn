@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { test } from "node:test";
-import { PlaybackDemand } from "../apps/server/src/playback-demand.js";
+import { PlaybackDemand } from "../apps/server/src/media/playback-demand.js";
 
 test("idle releases both devices; capture follows the union of active playback modes", () => {
 	const demand = new PlaybackDemand();

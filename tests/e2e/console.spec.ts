@@ -10,7 +10,13 @@ test("真实 WebRTC：登录、音视频、单轨切换、截图录制、参数�
 	await page.goto("/");
 	await page.getByLabel("账号", { exact: true }).fill("admin");
 	await page.getByLabel("密码", { exact: true }).fill(password);
+	const activity = page.waitForResponse(
+		(response) =>
+			response.url().endsWith("/api/auth/activity") &&
+			response.status() === 204,
+	);
 	await page.getByRole("button", { name: "进入控制台" }).click();
+	await activity;
 	await page.getByRole("button", { name: "开始采集", exact: true }).click();
 	const media = page.locator("video");
 	await expect
@@ -56,7 +62,7 @@ test("真实 WebRTC：登录、音视频、单轨切换、截图录制、参数�
 		)
 		.toBe("audio");
 	await expect(
-		page.getByRole("heading", { name: "声音，也是现场。" }),
+		page.getByRole("heading", { name: "仅音频", exact: true }),
 	).toBeVisible();
 	await page.getByRole("button", { name: "仅视频", exact: true }).click();
 	await expect
@@ -150,7 +156,7 @@ test("访客授权隔离与八种界面语言", async ({ page, browser }) => {
 	await mobile.getByLabel("密码", { exact: true }).fill(password);
 	await mobile.getByRole("button", { name: "进入控制台" }).click();
 	await expect(
-		mobile.getByRole("heading", { name: "与此刻，保持连接。" }),
+		mobile.getByRole("heading", { name: "实时监看", exact: true }),
 	).toBeVisible();
 	expect(
 		(await viewer.request.get("http://127.0.0.1:13210/api/config")).status(),
@@ -170,17 +176,39 @@ test("访客授权隔离与八种界面语言", async ({ page, browser }) => {
 	await expect(
 		mobile.getByRole("button", { name: "进入控制台" }),
 	).toBeVisible();
-	await mobile.locator(".preferences-trigger").click();
 	for (const code of ["zh-TW", "en", "ja", "ko", "es", "fr", "de", "zh-CN"]) {
 		const dictionary = JSON.parse(
 			await readFile(`apps/web/src/locales/${code}.json`, "utf8"),
 		);
 		const label = dictionary["登录"];
+		await mobile.locator(".preferences-trigger").click();
 		await mobile.locator(".language-switch select").selectOption(code!);
+		await mobile.locator(".preferences-dialog .icon-button").click();
 		await expect(
 			mobile.getByRole("heading", { name: label!, exact: true }),
 		).toBeVisible();
 		await expect(mobile.locator("html")).toHaveAttribute("lang", code!);
+		const font =
+			(
+				{
+					"zh-CN": "Noto Sans SC Variable",
+					"zh-TW": "Noto Sans TC Variable",
+					ja: "Noto Sans JP Variable",
+					ko: "Noto Sans KR Variable",
+				} as Record<string, string>
+			)[code] ?? "DM Sans Variable";
+		await expect
+			.poll(() =>
+				mobile.evaluate(
+					(family) =>
+						[...document.fonts].some(
+							(face) =>
+								face.family.includes(family) && face.status === "loaded",
+						),
+					font,
+				),
+			)
+			.toBe(true);
 		expect(
 			await mobile.evaluate(
 				() => document.documentElement.scrollWidth > window.innerWidth,

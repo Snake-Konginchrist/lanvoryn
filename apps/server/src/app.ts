@@ -6,16 +6,16 @@ import rateLimit from "@fastify/rate-limit";
 import staticFiles from "@fastify/static";
 import Fastify from "fastify";
 import { ZodError } from "zod";
-import { Auth } from "./auth.js";
-import { Capture } from "./capture.js";
 import { dataDir, env } from "./environment.js";
-import { networkGuards } from "./network.js";
+import { Capture } from "./media/capture.js";
+import { WebRTC } from "./media/webrtc.js";
 import { routes } from "./routes.js";
+import { Auth } from "./security/auth.js";
+import { networkGuards } from "./security/network.js";
 import { Store } from "./storage.js";
-import { WebRTC } from "./webrtc.js";
 
 export async function createApp(
-	options: { timers?: boolean; logger?: boolean } = {},
+	options: { timers?: boolean; logger?: boolean; now?: () => number } = {},
 ) {
 	const app = Fastify({
 		logger: options.logger ?? true,
@@ -48,8 +48,10 @@ export async function createApp(
 	await store.init();
 	const auth = new Auth(
 		dataDir,
-		env.LANVORYN_SESSION_HOURS,
+		env.LANVORYN_SESSION_IDLE_HOURS,
 		env.LANVORYN_SECURE_COOKIE === "true",
+		env.LANVORYN_SESSION_MAX_HOURS,
+		options.now,
 	);
 	await auth.init();
 	const capture = new Capture(store);
@@ -94,7 +96,7 @@ export async function createApp(
 			if (ticking) return;
 			ticking = true;
 			try {
-				auth.prune();
+				await auth.prune();
 				capture.demand.prune();
 				await Promise.all([capture.reconcile(), rtc.prune()]);
 			} catch (error) {
@@ -110,6 +112,7 @@ export async function createApp(
 		capture.demand.clear();
 		await rtc.closeAll();
 		await capture.stop();
+		await auth.flush();
 		await store.flush();
 	});
 	return { app, store, auth, capture, rtc };

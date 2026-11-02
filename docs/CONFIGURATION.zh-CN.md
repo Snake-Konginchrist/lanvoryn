@@ -6,9 +6,17 @@
 
 以 `.env.example` 为准。`LANVORYN_SOURCE=linux` 使用真实设备，`demo` 明确产生测试画面和 440 Hz 测试音。不会自动降级。`LANVORYN_MEDIA_HOST` 决定媒体候选地址；`LANVORYN_PUBLIC_ORIGIN` 决定反向代理后的合法网页来源。`LANVORYN_ALLOWED_CIDRS` 可填写逗号分隔的 IPv4/IPv6 网段，设置后必须包含实际访问来源和运维所需的回环地址。
 
-运行时凭据与配置保存在 `LANVORYN_DATA_DIR` 下；systemd 安装默认使用 `/var/lib/lanvoryn`。`credentials.json` 只存密码哈希，`config.json` 是带 revision 的设置，`events.json` 最多 200 条。导出的配置不包含账号或密码。
+运行时凭据与配置保存在 `LANVORYN_DATA_DIR` 下；systemd 安装默认使用 `/var/lib/lanvoryn`。`credentials.json` 保存密码哈希，`sessions.json` 保存登录会话与令牌哈希，`config.json` 是带 revision 的设置，`events.json` 最多 200 条。导出的配置不包含账号或密码。
 
 使用 systemd 部署时，服务实际读取 `/etc/lanvoryn/lanvoryn.env`。源码目录 `.env` 仅在首次安装时复制，重新安装会保留已部署的环境文件。修改后执行 `sudo systemctl restart lanvoryn`。若修改 `LANVORYN_MEDIA_HOST`，还需重新生成并安装媒体配置，仅重启应用不够。
+
+## 登录会话
+
+`LANVORYN_SESSION_IDLE_HOURS=168` 表示连续 7 天未使用后过期，`LANVORYN_SESSION_MAX_HOURS=720` 表示从登录起最长有效 30 天，续期不会延长这一上限。两项均可配置，最大值为 720 小时。原固定有效期设置 `LANVORYN_SESSION_HOURS` 不再读取。
+
+打开或返回可见页面、鼠标/触摸/键盘操作、实际播放会延长闲置有效期，每个会话最多每分钟持久记录一次续期。后台状态轮询不计为使用；主动开启的浏览器本地录制可在后台继续续期。Cookie 通过同源 API 按剩余有效期更新。
+
+会话记录以 `0600` 权限原子保存在数据目录的 `sessions.json` 中，只保存随机令牌的 SHA-256 哈希，不保存可直接复用的 Cookie 值。有效登录在正常重启后保留；退出、改密码和管理员撤销后，受影响的会话在重启后也不会恢复。离线重置账号凭据也会使原账号的持久会话失效。从 v0.1.1 升级时需重新登录一次，因为旧会话只保存在内存中。
 
 ## 视频
 
@@ -24,7 +32,7 @@
 
 | 现象                 | 检查                                                                                    |
 | -------------------- | --------------------------------------------------------------------------------------- |
-| 网页能开，媒体连不上 | 8189/UDP、8189/TCP；LANVORYN_MEDIA_HOST；Wi-Fi 客户端隔离和 VLAN；媒体进程是否在线         |
+| 网页能开，媒体连不上 | 8189/UDP、8189/TCP；LANVORYN_MEDIA_HOST；Wi-Fi 客户端隔离和 VLAN；媒体进程是否在线      |
 | 有画面没声音         | 点击开启声音；选择音视频而非仅视频；检查 audio.enabled、ALSA 设备、采样率和声道；看日志 |
 | 摄像头 busy          | 停止 uStreamer、会议软件或其他占用程序；不要让两套采集同时运行                          |
 | Permission denied    | 服务用户的 video/audio 组；设备节点权限；systemd 重启后生效                             |
@@ -32,7 +40,7 @@
 | 高延迟或卡顿         | 先降低分辨率、码率/帧率，检查 USB 带宽和 CPU/GPU；RTT 小不代表编码延迟小                |
 | 登录后立即退出       | HTTP 下不要启用 Secure Cookie；检查反代 Host、PUBLIC_ORIGIN、服务器时间和会话期限       |
 | 保存出现 409         | 其他页面已更新配置。重新加载后再编辑，避免覆盖别人的更改                                |
-| 拒绝写请求           | 同源访问；反代保留 Host；原生 API 客户端带 X-Lanvoryn-Request: 1；不要开启任意跨域         |
+| 拒绝写请求           | 同源访问；反代保留 Host；原生 API 客户端带 X-Lanvoryn-Request: 1；不要开启任意跨域      |
 | 定时停止后又手动开始 | 手动操作会转为手动模式；要恢复定时，重新选择计划策略并保存                              |
 
 ## 偏好设置

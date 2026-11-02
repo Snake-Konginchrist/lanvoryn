@@ -3,7 +3,7 @@ import { access, readdir, readFile } from "node:fs/promises";
 import { basename } from "node:path";
 import { promisify } from "node:util";
 import type { CameraControl, DeviceMode, Devices } from "@lanvoryn/shared";
-import { env } from "./environment.js";
+import { env } from "../environment.js";
 
 const exec = promisify(execFile);
 async function run(command: string, args: string[]) {
@@ -171,7 +171,11 @@ export async function setCameraControl(
 	value: number,
 ) {
 	const controls = parseControls(
-		await run(env.LANVORYN_V4L2_CTL, ["--device", device, "--list-ctrls-menus"]),
+		await run(env.LANVORYN_V4L2_CTL, [
+			"--device",
+			device,
+			"--list-ctrls-menus",
+		]),
 	);
 	const control = controls.find((c) => c.name === name);
 	if (!control || control.readOnly)

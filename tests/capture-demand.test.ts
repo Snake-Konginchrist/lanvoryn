@@ -15,7 +15,7 @@ test("FFmpeg never starts without viewers and opens only requested inputs", asyn
 	);
 	process.env.LANVORYN_FFMPEG = program;
 	process.env.LANVORYN_SOURCE = "linux";
-	const { Capture } = await import("../apps/server/src/capture.js");
+	const { Capture } = await import("../apps/server/src/media/capture.js");
 	const store = new Store(dir);
 	await store.init();
 	store.document.config.capture.policy = "always";

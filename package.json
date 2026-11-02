@@ -1,6 +1,6 @@
 {
 	"name": "lanvoryn",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Private, low-latency audio and video for your local network",
 	"main": "index.js",
 	"scripts": {

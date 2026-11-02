@@ -34,9 +34,12 @@ test("systemd uses the chosen runtime and service user, including private nvm pa
 
 // 两个进程都会枚举 Linux 网卡；媒体流 ready 不能代替 WebRTC 协商验证。
 test("application and media services allow interface discovery", async () => {
- const { readFile } = await import("node:fs/promises");
- for (const name of ["lanvoryn.service", "lanvoryn-media.service"]) {
-  const unit = await readFile(new URL(`../deploy/${name}`, import.meta.url), "utf8");
-  assert.match(unit, /^RestrictAddressFamilies=.*\bAF_NETLINK\b/m);
- }
+	const { readFile } = await import("node:fs/promises");
+	for (const name of ["lanvoryn.service", "lanvoryn-media.service"]) {
+		const unit = await readFile(
+			new URL(`../deploy/${name}`, import.meta.url),
+			"utf8",
+		);
+		assert.match(unit, /^RestrictAddressFamilies=.*\bAF_NETLINK\b/m);
+	}
 });

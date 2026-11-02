@@ -1,6 +1,6 @@
-import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { test } from "node:test";
 
 test("所有八种语言具有相同键和插值，不以中文代替其他语言", async () => {
 	const locales = ["zh-CN", "zh-TW", "en", "ja", "ko", "es", "fr", "de"];

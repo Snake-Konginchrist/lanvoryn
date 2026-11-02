@@ -17,14 +17,14 @@ MediaMTX 通过官方稳定 Release 下载并校验 SHA-256，本机验证为 **
 
 `@fastify/static` 当前依赖较旧 glob 主版本，根配置通过 npm override 选择已修复的 **glob 14.0.3**（minimatch 11），未降级静态插件。已在该依赖组合下完成静态页面与认证 API 测试；上游依赖更新后应重新评估此 override。
 
-实际安装的主要版本如下，由工作区清单生成：
+2026-11-02 已通过官方 npm 命令批量更新依赖；实际安装的主要版本如下，由工作区清单生成：
 
 | Package          | Installed |
 | ---------------- | --------- |
 | fastify          | 5.12.7    |
 | zod              | 4.6.7     |
-| i18next          | 26.5.12   |
-| react-i18next    | 17.1.9    |
+| i18next          | 26.7.1    |
+| react-i18next    | 17.1.11   |
 | react            | 19.3.1    |
 | typescript       | 7.0.2     |
 | vite             | 8.3.5     |

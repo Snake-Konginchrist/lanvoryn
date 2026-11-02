@@ -1,7 +1,7 @@
 import { Settings2, X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { t } from "../i18n";
+import { t } from "../../i18n";
 import { LanguageSwitch } from "./LanguageSwitch";
 import { ThemeSwitch } from "./ThemeSwitch";
 

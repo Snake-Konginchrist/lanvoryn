@@ -140,7 +140,7 @@ npm run build
 bash scripts/install-systemd.sh
 ```
 
-Existing accounts and `/etc/lanvoryn/lanvoryn.env` are retained. The generated media configuration replaces the deployed one: check that the source `.env` has the intended media address and ports before generating it. Refresh open browser tabs after updating; restarting the application requires signing in again.
+Existing accounts and `/etc/lanvoryn/lanvoryn.env` are retained. The generated media configuration replaces the deployed one: check that the source `.env` has the intended media address and ports before generating it. Refresh open browser tabs after updating. From v0.1.2 onward, valid sessions survive normal application restarts. Upgrading from v0.1.1 requires signing in once because older sessions existed only in memory. Replace the old `LANVORYN_SESSION_HOURS` setting with the idle and maximum limits described in the [session configuration](CONFIGURATION.md#login-sessions).
 
 To roll back Lanvoryn, check out the previous release in your source directory, rebuild and reinstall it, restoring the matching configuration and state backup if necessary. If migrating from another capture application, also retain its service configuration; stop both Lanvoryn units before restoring that application. To uninstall, disable and stop both Lanvoryn units, then remove deployment files as appropriate; retain state until you have a verified backup.
 

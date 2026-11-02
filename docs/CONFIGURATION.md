@@ -6,9 +6,17 @@
 
 See `.env.example`. `LANVORYN_SOURCE=linux` selects real devices; `demo` explicitly generates test video and a 440 Hz tone. There is no automatic demo fallback. `LANVORYN_MEDIA_HOST` advertises a reachable media address, while `LANVORYN_PUBLIC_ORIGIN` controls allowed request origin behind a proxy.
 
-`LANVORYN_ALLOWED_CIDRS` accepts comma-separated IPv4/IPv6 networks. If enabled, include every required client and loopback management address. State lives under `LANVORYN_DATA_DIR` (`/var/lib/lanvoryn` for systemd): password hashes in `credentials.json`, revisioned settings in `config.json`, and the latest 200 events in `events.json`. Exported settings exclude credentials.
+`LANVORYN_ALLOWED_CIDRS` accepts comma-separated IPv4/IPv6 networks. If enabled, include every required client and loopback management address. State lives under `LANVORYN_DATA_DIR` (`/var/lib/lanvoryn` for systemd): password hashes in `credentials.json`, hashed login sessions in `sessions.json`, revisioned settings in `config.json`, and the latest 200 events in `events.json`. Exported settings exclude credentials.
 
 For systemd deployments, the running service reads `/etc/lanvoryn/lanvoryn.env`. The source checkout’s `.env` is copied only on first installation; reinstalling preserves the deployed environment file. After editing it, run `sudo systemctl restart lanvoryn`. If `LANVORYN_MEDIA_HOST` changes, regenerate and install the media configuration too; restarting the application alone is insufficient.
+
+## Login sessions
+
+`LANVORYN_SESSION_IDLE_HOURS=168` expires a login after seven days without use. `LANVORYN_SESSION_MAX_HOURS=720` sets a thirty-day absolute maximum from login; renewal never extends that deadline. Both values are configurable, up to 720 hours. The old fixed `LANVORYN_SESSION_HOURS` setting is no longer read.
+
+Opening or returning to a visible page, pointer/keyboard input and active playback renew the idle period. Renewal timestamps are persisted at most once per minute per session. Background status polling does not count as activity. Explicit browser-local recording may continue to renew playback in the background. Cookies are renewed with the remaining lifetime through the same-origin API.
+
+Session records are saved atomically in `sessions.json` under the data directory with mode `0600`; only SHA-256 hashes of random tokens are stored, not reusable cookie values. Valid sessions survive normal restarts. Logout, password changes and administrator revocation invalidate affected sessions, including after restart. Offline credential resets also invalidate the previous account's saved sessions. Upgrading from v0.1.1 requires one new login because old sessions were memory-only.
 
 ## Capture settings
 
@@ -30,7 +38,7 @@ Input audio rate must be supported by the device. Opus output uses 48 kHz, with 
 | Delay or stuttering             | Lower resolution/bitrate/frame rate; inspect USB bandwidth and CPU/GPU use; low RTT does not prove low encoding delay |
 | Login immediately expires       | Secure cookies on plain HTTP, proxy Host, PUBLIC_ORIGIN, server clock and session lifetime                            |
 | Save returns 409                | Another console updated settings. Reload before editing again                                                         |
-| Write request rejected          | Same origin, preserved Host, X-Lanvoryn-Request: 1 header; do not enable arbitrary cross-origin access                   |
+| Write request rejected          | Same origin, preserved Host, X-Lanvoryn-Request: 1 header; do not enable arbitrary cross-origin access                |
 | Privacy stop changed scheduling | Manual operations intentionally select manual mode; restore scheduled mode explicitly                                 |
 
 ## Preferences

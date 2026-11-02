@@ -6,14 +6,14 @@ Connect a camera and microphone to a Linux host, then watch and listen from a ph
 
 ![Lanvoryn live view with video, playback controls and stream status](docs/images/live-view.en.png)
 
-*Local demo with generated video and audio. The hostname and address shown are examples.*
+_Local demo with generated video and audio. The hostname and address shown are examples._
 
 ## Features
 
 - **Live audio and video:** browser playback over WebRTC, with video-only, audio-only and combined modes.
 - **Devices free when idle:** capture starts on demand and stops when the last player leaves. Only inputs needed by active players are opened; video-only playback does not request the microphone.
 - **Device and quality controls:** select a camera and microphone independently; adjust supported resolution, frame rate, encoding, bitrates, audio gain, filters and synchronization.
-- **Private access:** separate administrator and read-only guest access, revocable sessions, and a privacy stop that releases devices and disconnects viewers.
+- **Private access:** separate administrator and read-only guest access, persistent, revocable sessions, and a privacy stop that releases devices and disconnects viewers.
 - **Viewing schedules:** manual, continuous or weekly availability, including overnight windows and time zones. Devices stay free when nobody is playing.
 - **Playback tools:** snapshots, browser-local recording, stream statistics and automatic reconnection; configuration import/export and event logs.
 

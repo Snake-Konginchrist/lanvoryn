@@ -1,6 +1,6 @@
 import type { PlaybackMode } from "@lanvoryn/shared";
 import { useEffect, useRef, useState } from "react";
-import { t } from "../i18n";
+import { t } from "../../i18n";
 import { usePlaybackDemand } from "./usePlaybackDemand";
 
 export interface StreamStats {

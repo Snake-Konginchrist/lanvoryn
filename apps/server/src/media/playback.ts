@@ -2,10 +2,10 @@ import { setTimeout as delay } from "node:timers/promises";
 import { type PlaybackMode, shouldCapture } from "@lanvoryn/shared";
 import type { FastifyInstance } from "fastify";
 import { z } from "zod";
-import type { Auth } from "./auth.js";
+import { env } from "../environment.js";
+import type { Auth } from "../security/auth.js";
+import type { Store } from "../storage.js";
 import type { Capture } from "./capture.js";
-import { env } from "./environment.js";
-import type { Store } from "./storage.js";
 
 const denied = () =>
 	Object.assign(new Error("采集已停止"), { statusCode: 409 });
@@ -20,7 +20,7 @@ export function playbackRoutes(
 	app.put(
 		"/api/playback/:id",
 		{ preHandler: auth.require },
-		async (request) => {
+		async (request, reply) => {
 			const id = idSchema.parse((request.params as { id: string }).id);
 			const { mode } = z
 				.object({ mode: z.enum(["av", "video", "audio"]) })
@@ -38,6 +38,8 @@ export function playbackRoutes(
 					statusCode: 429,
 				});
 			await capture.reconcile();
+			if (!(await auth.touch(request, reply)))
+				return reply.code(401).send({ message: "请先登录" });
 			return { ok: true };
 		},
 	);

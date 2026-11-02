@@ -1,6 +1,6 @@
 import { BlockList, isIP } from "node:net";
 import type { FastifyInstance } from "fastify";
-import { env } from "./environment.js";
+import { env } from "../environment.js";
 
 export function networkGuards(app: FastifyInstance) {
 	const allowed = new BlockList();

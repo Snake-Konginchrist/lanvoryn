@@ -6,14 +6,14 @@ import {
 } from "@lanvoryn/shared";
 import type { FastifyInstance } from "fastify";
 import { z } from "zod";
-import { type Auth, passwordSchema, verifyPassword } from "./auth.js";
-import type { Capture } from "./capture.js";
-import { getDevices, setCameraControl } from "./devices.js";
 import { env } from "./environment.js";
-import { Geolocation } from "./geolocation.js";
-import { playbackRoutes, preparePlayback } from "./playback.js";
+import type { Capture } from "./media/capture.js";
+import { getDevices, setCameraControl } from "./media/devices.js";
+import { playbackRoutes, preparePlayback } from "./media/playback.js";
+import type { WebRTC } from "./media/webrtc.js";
+import { type Auth, passwordSchema, verifyPassword } from "./security/auth.js";
+import { Geolocation } from "./security/geolocation.js";
 import type { Store } from "./storage.js";
-import type { WebRTC } from "./webrtc.js";
 
 const failure = (message: string, statusCode = 400) =>
 	Object.assign(new Error(message), { statusCode });
@@ -72,10 +72,19 @@ export async function routes(
 		role: request.session!.role,
 	}));
 	app.post(
+		"/api/auth/activity",
+		{ preHandler: auth.require },
+		async (request, reply) => {
+			if (!(await auth.touch(request, reply)))
+				return reply.code(401).send({ message: "请先登录" });
+			return reply.code(204).send();
+		},
+	);
+	app.post(
 		"/api/auth/logout",
 		{ preHandler: auth.require },
 		async (request, reply) => {
-			auth.revoke(request.session!.id);
+			await auth.revoke(request.session!.id);
 			reply.clearCookie("lanvoryn_session", { path: "/" });
 			return { ok: true };
 		},
@@ -195,13 +204,14 @@ export async function routes(
 		viewerEnabled: auth.credentials.viewer.enabled,
 		username: auth.credentials.admin.username,
 		sessions: await Promise.all(
-			auth.list(request.session!.id).map(async (session) => ({
+			(await auth.list(request.session!.id)).map(async (session) => ({
 				...session,
 				location: await geolocation.lookup(session.ip),
 			})),
 		),
 		secureCookie: env.LANVORYN_SECURE_COOKIE === "true",
-		sessionHours: env.LANVORYN_SESSION_HOURS,
+		sessionIdleHours: env.LANVORYN_SESSION_IDLE_HOURS,
+		sessionMaxHours: env.LANVORYN_SESSION_MAX_HOURS,
 	}));
 	app.put("/api/security/viewer", { preHandler: auth.admin }, (request) =>
 		serialize(async () => {
@@ -243,7 +253,7 @@ export async function routes(
 				.string()
 				.uuid()
 				.parse((request.params as { id: string }).id);
-			auth.revoke(id);
+			await auth.revoke(id);
 			return { ok: true };
 		},
 	);
@@ -268,7 +278,7 @@ export async function routes(
 			await preparePlayback(capture, store, lease, session.id, offer);
 			const result = await rtc.offer(session.id, offer);
 			// 协商期间如果发生退出或撤销，立即销毁刚刚建立的媒体会话。
-			if (!auth.get(request)) {
+			if (!(await auth.get(request))) {
 				await rtc.remove(result.id);
 				return reply.code(401).send({ message: "会话已过期" });
 			}

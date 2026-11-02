@@ -4,7 +4,7 @@ import {
 	Geolocation,
 	isPublicIp,
 	normalizeIp,
-} from "../apps/server/src/geolocation.js";
+} from "../apps/server/src/security/geolocation.js";
 
 test("local, reserved and invalid IPs never leave the server", async () => {
 	let calls = 0;

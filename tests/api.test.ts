@@ -9,7 +9,7 @@ test("真实 HTTP 路由：认证、访客隔离、CSRF、配置冲突和会话�
 	const dir = await mkdtemp(join(tmpdir(), "lanvoryn-api-"));
 	process.env.LANVORYN_DATA_DIR = dir;
 	process.env.LANVORYN_SOURCE = "demo";
-	const { hashPassword } = await import("../apps/server/src/auth.js");
+	const { hashPassword } = await import("../apps/server/src/security/auth.js");
 	const { createApp } = await import("../apps/server/src/app.js");
 	const password = randomBytes(24).toString("hex");
 	await writeFile(
@@ -247,7 +247,7 @@ test("真实 HTTP 路由：认证、访客隔离、CSRF、配置冲突和会话�
 				.statusCode,
 			401,
 		);
-		assert.equal(auth.list("").length, 1);
+		assert.equal((await auth.list("")).length, 1);
 	} finally {
 		await app.close();
 		await rm(dir, { recursive: true, force: true });

@@ -1,12 +1,25 @@
 import type { Role } from "@lanvoryn/shared";
 import { ArrowUpRight, AudioLines, LockKeyhole } from "lucide-react";
-import { useState } from "react";
-import { api } from "../api";
-import { t } from "../i18n";
-import { Preferences } from "./Preferences";
-import { ProjectLinks } from "./ProjectLinks";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import "@fontsource-variable/dm-sans/wght.css";
+import { api } from "../../api";
+import { t } from "../../i18n";
+import { ProjectLinks } from "../ProjectLinks";
+import { Preferences } from "../preferences/Preferences";
 
 export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
+	const { i18n } = useTranslation();
+	const language = i18n.resolvedLanguage;
+	useEffect(() => {
+		const fonts: Record<string, () => Promise<unknown>> = {
+			"zh-CN": () => import("@fontsource-variable/noto-sans-sc"),
+			"zh-TW": () => import("@fontsource-variable/noto-sans-tc"),
+			ja: () => import("@fontsource-variable/noto-sans-jp"),
+			ko: () => import("@fontsource-variable/noto-sans-kr"),
+		};
+		void fonts[language ?? ""]?.().catch(() => {});
+	}, [language]);
 	const [username, setUsername] = useState("admin");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
@@ -26,9 +39,8 @@ export function Login({ onLogin }: { onLogin: (role: Role) => void }) {
 				</a>
 				<div className="story-copy">
 					<h1>
-						{t("在场，")}
-						<br />
-						{t("不必在现场")}
+						<span>{t("在场，")}</span>
+						<span className="story-emphasis">{t("不必在现场")}</span>
 					</h1>
 					<p>{t("把画面与声音留在你的网络。")}</p>
 				</div>

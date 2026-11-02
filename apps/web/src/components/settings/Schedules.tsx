@@ -1,7 +1,7 @@
 import type { AppConfig, RuntimeStatus } from "@lanvoryn/shared";
 import { CalendarDays, Clock3, Plus, Trash2 } from "lucide-react";
-import { locale, t } from "../i18n";
-import { Field, Section, SelectField } from "./ui";
+import { locale, t } from "../../i18n";
+import { Field, Section, SelectField } from "../ui";
 
 const dayNames = ["一", "二", "三", "四", "五", "六", "日"];
 function uuid() {
